@@ -1,7 +1,10 @@
-﻿namespace Catalog.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Catalog.Models
 {
     public class ItemStatus
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
     }
