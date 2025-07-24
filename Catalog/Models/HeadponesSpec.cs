@@ -7,13 +7,11 @@ namespace Catalog.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Manufacturer")]
-        public int ManufacturerId { get; set; }
-        public Manufacturer Manufacturer { get; set; }
-
         public bool IsWireless { get; set; }
         public string FrequencyRangeHz { get; set; }
-        public string Codec { get; set; }
+        [ForeignKey("Codec")]
+        public int CodecId { get; set; }
+        public CodecType Codec { get; set; }
     }
 
 }

@@ -9,7 +9,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<CatalogDbContext>(options =>
-    options.UseSqlite("Data Source=smartRentCar.db"));
+    options.UseSqlite("Data Source=catalog.db"));
 
 var app = builder.Build();
 

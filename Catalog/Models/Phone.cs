@@ -16,6 +16,9 @@ namespace Catalog.Models
         [ForeignKey("Model")]
         public int? ModelId { get; set; }
         public PhoneModel Model { get; set; }
+        [ForeignKey("PhonePrice")]
+        public int PhonePriceId { get; set; }
+        public PhonePrice PhonePrice { get; set; }
     }
 
 }
