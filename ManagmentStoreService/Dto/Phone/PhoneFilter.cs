@@ -1,4 +1,4 @@
-﻿namespace StoreService.Dto
+﻿namespace ManagmentStoreService.Dto.Phone
 {
     public class PhoneFilter
     {
@@ -8,7 +8,7 @@
 
         public string Color { get; set; }
 
-    
+
         public int? MinStorageGb { get; set; }
         public int? MaxStorageGb { get; set; }
 

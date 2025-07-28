@@ -1,4 +1,4 @@
-﻿namespace StoreService.Models
+﻿namespace StoreService.Models.HeadphonesEntities
 {
     public class HeadphonesPrice
     {

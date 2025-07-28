@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ManagmentStoreService.Dto
+namespace ManagmentStoreService.Dto.Phone
 {
     public class CreatePhoneModelDto
     {

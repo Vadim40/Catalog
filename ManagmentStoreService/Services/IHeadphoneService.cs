@@ -1,9 +1,11 @@
-﻿namespace ManagmentStoreService.Services
+﻿using ManagmentStoreService.Dto.Headphones;
+
+namespace ManagmentStoreService.Services
 {
     public interface IHeadphoneService
     {
-        public Task AddNewHeadphonesModel(HeadphonesModelDto phoneModelDto);
-        public Task AddNewHeadphonesSpec(HeadphonesSpecDto phoneSpesDto);
-        public Task AddNewHeadphones(HeadphonesDto headphonesDto);
+        public Task AddNewHeadphonesModel(CreateHeadponesModelDto phoneModelDto);
+        public Task AddNewHeadphonesSpec(CreateHeadphonesSpecDto phoneSpesDto);
+        public Task AddNewHeadphones(CreateHeadphonesDto headphonesDto);
     }
 }

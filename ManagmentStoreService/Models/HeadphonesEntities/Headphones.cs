@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StoreService.Models
+namespace StoreService.Models.HeadphonesEntities
 {
     public class Headphones
     {
@@ -16,13 +16,13 @@ namespace StoreService.Models
         public int ModelId { get; set; }
         public HeadphonesModel Model { get; set; }
 
-        [ForeignKey("HeadphoneSpec")]
-        public int HeadphonesSpecId { get; set; }
-        public HeadphonesSpec HeadphonesSpec { get; set; }
+        [ForeignKey("Spec")]
+        public int SpecId { get; set; }
+        public HeadphonesSpec Spec { get; set; }
 
-        [ForeignKey("HeadphonesPrice")]
-        public int HeadphonesPriceId { get; set; }
-        public HeadphonesPrice HeadphonesPrice { get; set; }
+        [ForeignKey("Price")]
+        public int PriceId { get; set; }
+        public HeadphonesPrice Price { get; set; }
     }
 
 }

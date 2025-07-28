@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ManagmentStoreService.Dto
+namespace ManagmentStoreService.Dto.Phone
 {
     public class CreatePhoneSpecDto
     {
         [Required]
         public int StorageGb { get; set; }
 
-        [Required] 
+        [Required]
         public int RamGb { get; set; }
         [Required]
         public float DisplayIn { get; set; }

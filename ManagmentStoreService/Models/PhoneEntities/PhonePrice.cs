@@ -1,4 +1,4 @@
-﻿namespace StoreService.Models
+﻿namespace StoreService.Models.PhoneEntities
 {
     public class PhonePrice
     {

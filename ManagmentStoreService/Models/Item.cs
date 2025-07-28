@@ -7,6 +7,8 @@ namespace StoreService.Models
     {
         [Key]
         public int Id { get; set; }
+        public string SerialNumber { get; set; }
+
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
@@ -16,6 +18,8 @@ namespace StoreService.Models
         [ForeignKey("Location")]
         public int? LocationId { get; set; }
         public Location Location { get; set; }
+        public int? OrderId { get; set; }
+        public Order? Order { get; set; }
     }
 
 }

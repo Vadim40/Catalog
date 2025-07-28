@@ -2,7 +2,7 @@
 {
     public interface IItemService
     {
-        public Task<ItemDto> GetItemDtoByIdAsync( int id);
+      //  public Task<ItemDto> GetItemDtoBySerialNumberAsync( int serialNumber);
 
     }
 }

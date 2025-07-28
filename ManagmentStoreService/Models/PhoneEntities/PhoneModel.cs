@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StoreService.Models
+namespace StoreService.Models.PhoneEntities
 {
-    public class HeadphonesModel
+    public class PhoneModel
     {
         [Key]
         public int Id { get; set; }
@@ -12,7 +12,6 @@ namespace StoreService.Models
         public Manufacturer Manufacturer { get; set; }
 
         public string Name { get; set; }
-
         public string Color { get; set; }
     }
 

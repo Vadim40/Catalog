@@ -1,3 +1,5 @@
+using CloudinaryDotNet;
+using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 using StoreService.Config;
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddDbContext<StoreDbContext>(options =>
+DotEnv.Load();
+builder.Services.AddDbContext<ManagStoreDbContext>(options =>
     options.UseSqlite("Data Source=catalog.db"));
 
 var app = builder.Build();
