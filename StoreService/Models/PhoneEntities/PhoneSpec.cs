@@ -7,6 +7,9 @@ namespace StoreService.Models.PhoneEntities
     {
         [Key]
         public int Id { get; set; }
+        [ForeignKey("Model")]
+        public int ModelId { get; set; }
+        public PhoneModel Model { get; set; }
         public int StorageGb { get; set; }
         public int RamGb { get; set; }
         public float DisplayIn { get; set; }

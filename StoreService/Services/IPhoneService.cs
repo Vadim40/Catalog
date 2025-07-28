@@ -1,5 +1,6 @@
 ﻿using StoreService.Dto;
-using StoreService.Models.Phonesad;
+using StoreService.Models.PhoneEntities;
+
 
 namespace StoreService.Repositories
 {

@@ -2,8 +2,9 @@
 
 using StoreService.Models;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Models.Phonesad;
-using StoreService.Models.Headphones;
+using StoreService.Models.HeadphonesEntities;
+using StoreService.Models.PhoneEntities;
+
 
 namespace StoreService.Config
 {
@@ -28,5 +29,14 @@ namespace StoreService.Config
         public DbSet<PhonePrice> PhonePrices => Set<PhonePrice>();
         public DbSet<HeadphonesPrice> HeadphonesPrices => Set<HeadphonesPrice>();
 
+        public DbSet<Order> Orders => Set<Order>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>()
+                .HasIndex(i => i.SerialNumber)
+                .IsUnique();
+        }
     }
+
 }

@@ -7,13 +7,13 @@ namespace StoreService.Models.PhoneEntities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("PhoneModel")]
-        public int PhoneModelId { get; set; }
-        public PhoneModel PhoneModel { get; set; }
+        [ForeignKey("Model")]
+        public int ModelId { get; set; }
+        public PhoneModel Model { get; set; }
         public string Url { get; set; }
         public bool IsMain { get; set; }
 
-        public int PublicId { get; set; }
+        public string PublicId { get; set; }
 
     }
 }

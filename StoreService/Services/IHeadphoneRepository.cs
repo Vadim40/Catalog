@@ -1,5 +1,6 @@
 ﻿using StoreService.Dto;
-using StoreService.Models.Headphones;
+using StoreService.Models.HeadphonesEntities;
+
 
 namespace StoreService.Repositories
 {

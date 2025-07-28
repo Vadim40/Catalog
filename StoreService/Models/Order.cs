@@ -1,7 +1,10 @@
-﻿namespace StoreService.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StoreService.Models
 {
     public class Order
     {
+        [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
         public int StatusId { get; set; }

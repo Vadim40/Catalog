@@ -2,8 +2,8 @@
 using StoreService.Dto;
 using StoreService.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
-using StoreService.Models.Headphones;
+using StoreService.Models.HeadphonesEntities;
+
 
 namespace StoreService.Services.Impl
 {
@@ -19,8 +19,8 @@ namespace StoreService.Services.Impl
         {
             var headphones = await _dbContext.Headphones
             .Include(h => h.Model)
-            .Include(h => h.HeadphonesSpec)
-            .Include(h => h.HeadphonesPrice)
+            .Include(h => h.Spec)
+            .Include(h => h.Price)
             .FirstOrDefaultAsync(h => h.Id == headphonesId);
 
             if (headphones is null)
@@ -33,20 +33,20 @@ namespace StoreService.Services.Impl
         {
             return await _dbContext.Headphones
                 .Include(h => h.Model)
-                .Include(h => h.HeadphonesSpec)
-                .Include(h => h.HeadphonesPrice)
+                .Include(h => h.Spec)
+                .Include(h => h.Price)
                 .Where(h =>
                    (filter.Manufacturers == null || filter.Manufacturers.Count == 0 ||
                     filter.Manufacturers.Contains(h.Model.ManufacturerId))
                     &&
                      (filter.Codecs == null || filter.Codecs.Count == 0 ||
-                    filter.Codecs.Contains(h.HeadphonesSpec.CodecId))
+                    filter.Codecs.Contains(h.Spec.CodecId))
                     &&
-                    (!filter.IsWireless.HasValue ||h.HeadphonesSpec.IsWireless == filter.IsWireless)
+                    (!filter.IsWireless.HasValue ||h.Spec.IsWireless == filter.IsWireless)
                     &&
-                     (!filter.MinCost.HasValue || h.HeadphonesPrice.Cost >= filter.MinCost.Value)
+                     (!filter.MinCost.HasValue || h.Price.Cost >= filter.MinCost.Value)
                     &&
-                    (!filter.MaxCost.HasValue || h.HeadphonesPrice.Cost <= filter.MaxCost.Value)
+                    (!filter.MaxCost.HasValue || h.Price.Cost <= filter.MaxCost.Value)
                      )
                     .ToListAsync();
         }
@@ -57,18 +57,18 @@ namespace StoreService.Services.Impl
 
             return await _dbContext.Headphones
                .Include(h => h.Model)
-               .Include(h => h.HeadphonesSpec)
-               .Include(h => h.HeadphonesPrice)
+               .Include(h => h.Spec)
+               .Include(h => h.Price)
                .Where(h =>
                h.Id != headphonesId
                 &&
                headphones.Model.ManufacturerId == h.Model.ManufacturerId
                && 
-               h.HeadphonesPrice.Cost <= headphones.HeadphonesPrice.Cost*1.15m
+               h.Price.Cost <= headphones.Price.Cost*1.15m
                &&
-                 h.HeadphonesPrice.Cost >= headphones.HeadphonesPrice.Cost * 0.85m
+                 h.Price.Cost >= headphones.Price.Cost * 0.85m
                &&
-               headphones.HeadphonesSpec.IsWireless == h.HeadphonesSpec.IsWireless
+               headphones.Spec.IsWireless == h.Spec.IsWireless
                )
                .ToListAsync();
         }

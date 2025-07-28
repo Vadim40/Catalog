@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -24,18 +25,16 @@ namespace StoreService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HeadphonesSpecs",
+                name: "CodecType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IsWireless = table.Column<bool>(type: "INTEGER", nullable: false),
-                    FrequencyRangeHz = table.Column<string>(type: "TEXT", nullable: false),
-                    Codec = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HeadphonesSpecs", x => x.Id);
+                    table.PrimaryKey("PK_CodecType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,31 +94,47 @@ namespace StoreService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "HeadphonesSpecs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StatusId = table.Column<int>(type: "INTEGER", nullable: true),
-                    LocationId = table.Column<int>(type: "INTEGER", nullable: true)
+                    IsWireless = table.Column<bool>(type: "INTEGER", nullable: false),
+                    FrequencyRangeHz = table.Column<string>(type: "TEXT", nullable: false),
+                    CodecId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_HeadphonesSpecs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        name: "FK_HeadphonesSpecs_CodecType_CodecId",
+                        column: x => x.CodecId,
+                        principalTable: "CodecType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatusId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TrackingNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    LocationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsDelivery = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    PaymentAmount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PaymentAmountDelivery = table.Column<decimal>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_ItemsStatuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "ItemsStatuses",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Items_Locations_LocationId",
+                        name: "FK_Orders_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "Id");
@@ -131,7 +146,7 @@ namespace StoreService.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ManufacturerId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ManufacturerId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Color = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -142,7 +157,8 @@ namespace StoreService.Migrations
                         name: "FK_HeadphonesModels_Manufacturer_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturer",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,6 +180,44 @@ namespace StoreService.Migrations
                         principalTable: "Manufacturer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SerialNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatusId = table.Column<int>(type: "INTEGER", nullable: true),
+                    LocationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Items_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Items_ItemsStatuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "ItemsStatuses",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -345,12 +399,12 @@ namespace StoreService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Headphones_HeadphonesPriceId",
                 table: "Headphones",
-                column: "HeadphonesPriceId");
+                column: "PriceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Headphones_HeadphonesSpecId",
                 table: "Headphones",
-                column: "HeadphonesSpecId");
+                column: "SpecId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Headphones_ItemId",
@@ -365,7 +419,7 @@ namespace StoreService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_HeadphonesImages_HeadphonesModelId",
                 table: "HeadphonesImages",
-                column: "HeadphonesModelId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HeadphonesModels_ManufacturerId",
@@ -383,6 +437,11 @@ namespace StoreService.Migrations
                 column: "SpecId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HeadphonesSpecs_CodecId",
+                table: "HeadphonesSpecs",
+                column: "CodecId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_CategoryId",
                 table: "Items",
                 column: "CategoryId");
@@ -393,14 +452,30 @@ namespace StoreService.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Items_OrderId",
+                table: "Items",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_SerialNumber",
+                table: "Items",
+                column: "SerialNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_StatusId",
                 table: "Items",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_LocationId",
+                table: "Orders",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PhoneImages_PhoneModelId",
                 table: "PhoneImages",
-                column: "PhoneModelId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhoneModels_ManufacturerId",
@@ -430,12 +505,12 @@ namespace StoreService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Phones_PhonePriceId",
                 table: "Phones",
-                column: "PhonePriceId");
+                column: "PriceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Phones_PhoneSpecId",
                 table: "Phones",
-                column: "PhoneSpecId");
+                column: "SpecId");
         }
 
         /// <inheritdoc />
@@ -475,13 +550,19 @@ namespace StoreService.Migrations
                 name: "ItemsStatuses");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "PhoneModels");
 
             migrationBuilder.DropTable(
                 name: "PhoneSpecs");
+
+            migrationBuilder.DropTable(
+                name: "CodecType");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Manufacturer");
