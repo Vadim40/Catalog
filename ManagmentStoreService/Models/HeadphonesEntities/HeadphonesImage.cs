@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using ManagmentStoreService.Models.HeadphonesEntities;
 
 namespace StoreService.Models.HeadphonesEntities
 {
@@ -7,13 +8,13 @@ namespace StoreService.Models.HeadphonesEntities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Model")]
-        public int ModelId { get; set; }
-        public HeadphonesModel Model { get; set; }
+
         public string Url { get; set; }
         public bool IsMain { get; set; }
 
-        public int PublicId { get; set; }
+        public string PublicId { get; set; }
+
+        List<HeadphonesVariantImage> VariantImages { get; set; }
 
     }
 }

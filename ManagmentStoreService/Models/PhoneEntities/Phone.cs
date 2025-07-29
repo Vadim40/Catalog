@@ -14,14 +14,9 @@ namespace StoreService.Models.PhoneEntities
         public int ItemId { get; set; }
         public Item Item { get; set; }
         [ForeignKey("Spec")]
-        public int? SpecId { get; set; }
-        public PhoneSpec Spec { get; set; }
-        [ForeignKey("Model")]
-        public int? ModelId { get; set; }
-        public PhoneModel Model { get; set; }
-        [ForeignKey("Price")]
-        public int PriceId { get; set; }
-        public PhonePrice Price { get; set; }
+       
+        public int VariantId { get; set; }
+        public PhoneVariant Variant { get; set; }
     }
 
 }

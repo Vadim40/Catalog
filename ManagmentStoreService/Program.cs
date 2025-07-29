@@ -1,5 +1,6 @@
-using CloudinaryDotNet;
 using dotenv.net;
+using ManagmentStoreService.Services;
+using ManagmentStoreService.Services.Impl;
 using Microsoft.EntityFrameworkCore;
 using StoreService.Config;
 var builder = WebApplication.CreateBuilder(args);
@@ -7,11 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<ICloudinaryService, CloudinaryServiceImpl>();
+builder.Services.AddScoped<IPhoneService, PhoneServiceImpl>();
+builder.Services.AddScoped<IHeadphoneService, HeadphonesServiceImpl>();
 DotEnv.Load();
 builder.Services.AddDbContext<ManagStoreDbContext>(options =>
     options.UseSqlite("Data Source=catalog.db"));
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
@@ -21,4 +28,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpsRedirection();
+app.UseRouting();
+app.MapControllers();
+
+
+app.Run();
+
 

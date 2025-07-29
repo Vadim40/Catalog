@@ -8,21 +8,12 @@ namespace StoreService.Models.HeadphonesEntities
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Item")]
+        
         public int ItemId { get; set; }
         public Item Item { get; set; }
 
-        [ForeignKey("Model")]
-        public int ModelId { get; set; }
-        public HeadphonesModel Model { get; set; }
-
-        [ForeignKey("Spec")]
-        public int SpecId { get; set; }
-        public HeadphonesSpec Spec { get; set; }
-
-        [ForeignKey("Price")]
-        public int PriceId { get; set; }
-        public HeadphonesPrice Price { get; set; }
+        public int VariantId { get; set; }
+        public HeadphonesVariant Variant { get; set; }
     }
 
 }

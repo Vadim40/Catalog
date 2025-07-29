@@ -10,7 +10,7 @@ namespace ManagmentStoreService.Services
         public Task AddNewPhoneSpecAsync(CreatePhoneSpecDto phoneSpesDto);
         public Task AddNewPhoneAsync(CreatePhoneDto phonDto);
         public Task<IEnumerable<PhoneModelDto>> GetPhoneModelsByNameAsync(string name);
-        public Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecByModelIdAsync(int modelId);
+        public Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecsByModelIdAsync(int modelId);
 
         public Task AddImagesToPhoneModelAsync(CreateImagesDto images);
     }

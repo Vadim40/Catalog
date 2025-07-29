@@ -4,14 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreService.Models.PhoneEntities
 {
-    public class PhoneImage
+    public class PhoneVariant
     {
         [Key]
         public int Id { get; set; }
-        public string Url { get; set; }
-        public bool IsMain { get; set; }
 
-        public string PublicId { get; set; }
+        public int ModelId { get; set; }
+        public PhoneModel Model { get; set; }
+        public int SpecId { get; set; }
+        public PhoneSpec Spec { get; set; }
+        public string Color { get; set; }
+        public decimal Cost { get; set; }
+
         public List<PhoneVariantImage> VariantImages { get; set; }
 
     }

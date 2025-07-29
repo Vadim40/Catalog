@@ -9,7 +9,6 @@ namespace ManagmentStoreService.Dto.Phone
 
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Color { get; set; }
+
     }
 }

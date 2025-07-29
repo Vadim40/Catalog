@@ -4,7 +4,7 @@ namespace ManagmentStoreService.Dto
 {
     public class CreateImagesDto
     {
-        public int ModelId { get; set; }
+        public int VariantId { get; set; }
         public List<IFormFile> Images { get; set; }
     }
 }

@@ -4,13 +4,13 @@ using CloudinaryDotNet.Actions;
 
 namespace ManagmentStoreService.Services.Impl
 {
-    public class CloudinaryService : ICloudinaryService
+    public class CloudinaryServiceImpl : ICloudinaryService
     {
         private readonly Cloudinary _cloudinary;
         private readonly string _cloudName;
         private readonly string _apiKey;
         private readonly string _apiSecret;
-        public CloudinaryService()
+        public CloudinaryServiceImpl()
         {
             _cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
             _apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");

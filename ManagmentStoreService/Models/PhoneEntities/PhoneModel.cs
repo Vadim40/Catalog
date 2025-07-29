@@ -7,12 +7,11 @@ namespace StoreService.Models.PhoneEntities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Manufacturer")]
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }
 
         public string Name { get; set; }
-        public string Color { get; set; }
+        public List<PhoneVariant> PhoneVariants { get; set; }
     }
 
 }

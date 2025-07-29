@@ -9,7 +9,7 @@ namespace StoreService.Models
         public int Id { get; set; }
         public string SerialNumber { get; set; }
 
-        [ForeignKey("Category")]
+        [ForeignKey("CategoryType")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         [ForeignKey("Status")]

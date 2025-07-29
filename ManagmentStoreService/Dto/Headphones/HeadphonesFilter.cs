@@ -1,4 +1,4 @@
-﻿namespace StoreService.Dto
+﻿namespace ManagmentStoreService.Dto.Headphones
 {
     public class HeadphonesFilter
     {

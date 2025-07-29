@@ -7,13 +7,12 @@ namespace StoreService.Models.HeadphonesEntities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Manufacturer")]
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }
 
         public string Name { get; set; }
 
-        public string Color { get; set; }
+        public List<HeadphonesVariant> Variants { get; set; }
     }
 
 }

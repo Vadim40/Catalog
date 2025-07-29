@@ -4,6 +4,8 @@ using StoreService.Models;
 using Microsoft.EntityFrameworkCore;
 using StoreService.Models.HeadphonesEntities;
 using StoreService.Models.PhoneEntities;
+using ManagmentStoreService.Models.PhoneEntities;
+using ManagmentStoreService.Models.HeadphonesEntities;
 
 namespace StoreService.Config
 {
@@ -25,16 +27,13 @@ namespace StoreService.Config
         public DbSet<Phone> Phones => Set<Phone>();
         public DbSet<PhoneModel> PhoneModels => Set<PhoneModel>();
         public DbSet<PhoneSpec> PhoneSpecs => Set<PhoneSpec>();
-        public DbSet<PhonePrice> PhonePrices => Set<PhonePrice>();
-        public DbSet<HeadphonesPrice> HeadphonesPrices => Set<HeadphonesPrice>();
+        public DbSet<PhoneVariant> PhoneVariants => Set<PhoneVariant>();
+        public DbSet<HeadphonesVariant> HeadphonesVariants => Set<HeadphonesVariant>();
+
+        public DbSet<PhoneVariantImage> PhoneVariantImages => Set<PhoneVariantImage>();
+        public DbSet<HeadphonesVariantImage> HeadphonesVariantImages => Set<HeadphonesVariantImage>();
 
         public DbSet<Order> Orders => Set<Order>();
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Item>()
-                .HasIndex(i => i.SerialNumber)
-                .IsUnique();
-        }
     }
 }
