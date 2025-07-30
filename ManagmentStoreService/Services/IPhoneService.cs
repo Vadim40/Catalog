@@ -1,6 +1,6 @@
 ﻿using ManagmentStoreService.Dto;
 using ManagmentStoreService.Dto.Phone;
-using StoreService.Models;
+using ManagmentStoreService.Models;
 
 namespace ManagmentStoreService.Services
 {

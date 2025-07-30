@@ -1,4 +1,4 @@
-﻿namespace StoreService.Models.HeadphonesEntities
+﻿namespace ManagmentStoreService.Models.HeadphonesEntities
 {
     public class CodecType
     {

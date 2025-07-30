@@ -2,7 +2,7 @@ using dotenv.net;
 using ManagmentStoreService.Services;
 using ManagmentStoreService.Services.Impl;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Config;
+using ManagmentStoreService.Config;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +15,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryServiceImpl>();
 builder.Services.AddScoped<IPhoneService, PhoneServiceImpl>();
 builder.Services.AddScoped<IHeadphoneService, HeadphonesServiceImpl>();
+builder.Services.AddScoped<IItemService, ItemServiceImpl>();
 DotEnv.Load();
 builder.Services.AddDbContext<ManagStoreDbContext>(options =>
     options.UseSqlite("Data Source=catalog.db"));

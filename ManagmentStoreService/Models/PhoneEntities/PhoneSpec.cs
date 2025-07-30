@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
-namespace StoreService.Models.PhoneEntities
+namespace ManagmentStoreService.Models.PhoneEntities
 {
     [Index(nameof(StorageGb), nameof(RamGb), nameof(DisplayIn), nameof(CameraMp), IsUnique = true, Name = "IX_UniquePhoneSpec")]
 

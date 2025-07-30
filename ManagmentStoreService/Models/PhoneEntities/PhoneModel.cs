@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StoreService.Models.PhoneEntities
+namespace ManagmentStoreService.Models.PhoneEntities
 {
     public class PhoneModel
     {

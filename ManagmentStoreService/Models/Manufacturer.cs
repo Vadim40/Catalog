@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StoreService.Models
+namespace ManagmentStoreService.Models
 {
     public class Manufacturer
     {

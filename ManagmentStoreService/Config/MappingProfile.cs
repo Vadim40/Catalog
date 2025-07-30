@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ManagmentStoreService.Dto.Phone;
-using StoreService.Models.PhoneEntities;
+using ManagmentStoreService.Models.PhoneEntities;
 
 namespace ManagmentStoreService.Config
 {

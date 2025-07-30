@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StoreService.Models.HeadphonesEntities
+namespace ManagmentStoreService.Models.HeadphonesEntities
 {
     public class HeadphonesSpec
     {

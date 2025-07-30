@@ -1,5 +1,5 @@
 ﻿using static System.Net.Mime.MediaTypeNames;
-using StoreService.Models.PhoneEntities;
+using ManagmentStoreService.Models.PhoneEntities;
 
 namespace ManagmentStoreService.Models.PhoneEntities
 {

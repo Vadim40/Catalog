@@ -1,8 +1,8 @@
 ﻿using ManagmentStoreService.Dto;
 using ManagmentStoreService.Models.Enums;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Config;
-using StoreService.Models;
+using ManagmentStoreService.Config;
+using ManagmentStoreService.Models;
 
 namespace ManagmentStoreService.Services.Impl
 {
@@ -19,8 +19,8 @@ namespace ManagmentStoreService.Services.Impl
             {
                 SerialNumber = serialNumber,
                 CategoryId = (int) category,
-                StatusId = 1, // TODO: define statuses and locations
-                LocationId = 1
+                StatusId = (int) StatusType.InStorage, // TODO: define statuses and locations
+                LocationId  = (int) LocationType.Storage
             };
 
             _context.Items.Add(item);

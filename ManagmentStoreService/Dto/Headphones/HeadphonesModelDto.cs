@@ -1,4 +1,4 @@
-﻿using StoreService.Models;
+﻿using ManagmentStoreService.Models;
 
 namespace ManagmentStoreService.Dto.Headphones
 {

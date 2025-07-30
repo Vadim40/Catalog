@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using ManagmentStoreService.Models.HeadphonesEntities;
 
-namespace StoreService.Models.HeadphonesEntities
+namespace ManagmentStoreService.Models.HeadphonesEntities
 {
     public class HeadphonesImage
     {

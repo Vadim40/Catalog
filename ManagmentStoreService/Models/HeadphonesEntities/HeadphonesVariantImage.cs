@@ -1,7 +1,8 @@
-﻿using StoreService.Models.HeadphonesEntities;
+﻿using ManagmentStoreService.Models.HeadphonesEntities;
 
 namespace ManagmentStoreService.Models.HeadphonesEntities
 {
+    
     public class HeadphonesVariantImage
     {
         public int VariantId { get; set; }

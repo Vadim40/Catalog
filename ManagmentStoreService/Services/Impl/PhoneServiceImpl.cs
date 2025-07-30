@@ -5,9 +5,9 @@ using ManagmentStoreService.Dto.Phone;
 using ManagmentStoreService.Models.Enums;
 using ManagmentStoreService.Models.PhoneEntities;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Config;
-using StoreService.Models;
-using StoreService.Models.PhoneEntities;
+using ManagmentStoreService.Config;
+using ManagmentStoreService.Models;
+using ManagmentStoreService.Models.PhoneEntities;
 
 namespace ManagmentStoreService.Services.Impl
 {
@@ -33,7 +33,7 @@ namespace ManagmentStoreService.Services.Impl
         }
         public async Task AddImagesToPhoneModelAsync(CreateImagesDto createImagesDto)
         {
-            await using var transaction = await _context.Database.BeginTransactionAsync();
+            using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
                 for (int i = 0; i < createImagesDto.Images.Count; i++)
@@ -56,7 +56,7 @@ namespace ManagmentStoreService.Services.Impl
                     };
 
                     _context.PhoneVariantImages.Add(variantImage);
-                  
+
                 }
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
@@ -73,7 +73,7 @@ namespace ManagmentStoreService.Services.Impl
 
         public async Task AddNewPhoneAsync(CreatePhoneDto phoneDto)
         {
-            await using var transaction = await _context.Database.BeginTransactionAsync();
+            using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
                 var itemId = await _itemService.SaveItemAsync(phoneDto.SerialNumber, CategoryType.Phones);
@@ -134,14 +134,14 @@ namespace ManagmentStoreService.Services.Impl
             return _mapper.Map<List<PhoneModelDto>>(phoneModels);
         }
 
-        public async Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecsByModelIdAsync(int variantId)
+        public async Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecsByModelIdAsync(int modelId)
         {
             var phoneSpecs = await _context.PhoneSpecs
                 .Join(_context.PhoneVariants,
                     s => s.Id,
                     p => p.SpecId,
                     (s, p) => new { Spec = s, Variant = p })
-                .Where(x => x.Variant.Id == variantId)
+                .Where(x => x.Variant.ModelId == modelId)
                 .Select(x => new PhoneSpec
                 {
                     Id = x.Spec.Id,

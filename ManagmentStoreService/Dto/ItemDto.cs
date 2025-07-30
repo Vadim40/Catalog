@@ -1,4 +1,4 @@
-﻿using StoreService.Models;
+﻿using ManagmentStoreService.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ManagmentStoreService.Dto

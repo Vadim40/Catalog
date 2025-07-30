@@ -1,18 +1,16 @@
 ﻿
 
-using StoreService.Models;
+using ManagmentStoreService.Models;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Models.HeadphonesEntities;
-using StoreService.Models.PhoneEntities;
-using ManagmentStoreService.Models.PhoneEntities;
 using ManagmentStoreService.Models.HeadphonesEntities;
+using ManagmentStoreService.Models.PhoneEntities;
 
-namespace StoreService.Config
+namespace ManagmentStoreService.Config
 {
     public class ManagStoreDbContext : DbContext
     {
-        public ManagStoreDbContext(DbContextOptions<ManagStoreDbContext> options) : base(options) 
-        { 
+        public ManagStoreDbContext(DbContextOptions<ManagStoreDbContext> options) : base(options)
+        {
         }
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<HeadphonesImage> HeadphonesImages => Set<HeadphonesImage>();
@@ -35,5 +33,13 @@ namespace StoreService.Config
 
         public DbSet<Order> Orders => Set<Order>();
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<HeadphonesVariantImage>()
+            .HasKey(hvi => new { hvi.VariantId, hvi.ImageId });
+
+            modelBuilder.Entity<PhoneVariantImage>()
+            .HasKey(pvi => new { pvi.VariantId, pvi.ImageId });
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ManagmentStoreService.Models.HeadphonesEntities;
 
-namespace StoreService.Models.HeadphonesEntities
+namespace ManagmentStoreService.Models.HeadphonesEntities
 {
     public class HeadphonesVariant
     {

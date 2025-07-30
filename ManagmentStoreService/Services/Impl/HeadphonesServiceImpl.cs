@@ -3,11 +3,12 @@ using FuzzySharp;
 using ManagmentStoreService.Dto;
 using ManagmentStoreService.Dto.Headphones;
 using ManagmentStoreService.Dto.Phone;
+using ManagmentStoreService.Models.Enums;
+using ManagmentStoreService.Models.HeadphonesEntities;
 using Microsoft.EntityFrameworkCore;
-using StoreService.Config;
-using StoreService.Models;
-using StoreService.Models.HeadphonesEntities;
-using StoreService.Models.PhoneEntities;
+using ManagmentStoreService.Config;
+using ManagmentStoreService.Models.HeadphonesEntities;
+
 
 namespace ManagmentStoreService.Services.Impl
 {
@@ -15,85 +16,91 @@ namespace ManagmentStoreService.Services.Impl
     {
         private readonly ManagStoreDbContext _context;
         private readonly ICloudinaryService _cloudinaryService;
+        private readonly IItemService _itemService;
         private readonly IMapper _mapper;
+        private readonly ILogger<PhoneServiceImpl> _logger;
 
-        public HeadphonesServiceImpl(ManagStoreDbContext context, IMapper mapper, ICloudinaryService cloudinaryService)
+        public HeadphonesServiceImpl(
+            ManagStoreDbContext context,
+            ICloudinaryService cloudinaryService,
+            IMapper mapper,
+            ILogger<PhoneServiceImpl> logger,
+            IItemService itemService)
         {
             _context = context;
-            _mapper = mapper;
             _cloudinaryService = cloudinaryService;
+            _mapper = mapper;
+            _logger = logger;
+            _itemService = itemService;
         }
         public async Task AddImagesToHeadphonesModelAsync(CreateImagesDto createImagesDto)
         {
-            for (int i = 0; i < createImagesDto.Images.Count; i++)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-
-                var result = await _cloudinaryService.UploadImageAsync(createImagesDto.Images[i]);
-                var headphonesImage = new HeadphonesImage
+                for (int i = 0; i < createImagesDto.Images.Count; i++)
                 {
-                    ModelId = createImagesDto.VariantId,
-                    IsMain = (i == 0),
-                    Url = result.Url,
-                    PublicId = result.PublicId
-                };
-                _context.HeadphonesImages.Add(headphonesImage);
+
+
+                    var result = await _cloudinaryService.UploadImageAsync(createImagesDto.Images[i]);
+                    var headphonesImage = new HeadphonesImage
+                    {
+                        IsMain = (i == 0),
+                        Url = result.Url,
+                        PublicId = result.PublicId
+                    };
+                    _context.HeadphonesImages.Add(headphonesImage);
+                    await _context.SaveChangesAsync();
+
+                    var variantImage = new HeadphonesVariantImage
+                    {
+                        VariantId = createImagesDto.VariantId,
+                        ImageId = headphonesImage.Id
+                    };
+
+                }
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
             }
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to save phone");
+                await transaction.RollbackAsync();
+                throw new Exception("Failed to save phone.", ex);
+            }
+
         }
 
         public async Task AddNewHeadphonesAsync(CreateHeadphonesDto headphonesDto)
         {
-            var itemId = await SaveItem(headphonesDto);
-            var priceId = await GetPriceId(headphonesDto.ModelId, headphonesDto.SpecId);
-
-            var phone = new Headphones
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                ModelId = headphonesDto.ModelId,
-                SpecId = headphonesDto.SpecId,
-                VariantId = priceId,
-                ItemId = itemId
-            };
-            _context.Headphones.Add(phone);
-            await _context.SaveChangesAsync();
+                var itemId = await _itemService.SaveItemAsync(headphonesDto.SerialNumber, CategoryType.HeadPhones);
 
-        }
-        private async Task<int> SaveItem(CreateHeadphonesDto createHeadphonesDto)
-        {
-            var item = new Item
-            {
-                SerialNumber = createHeadphonesDto.SerialNumber,
-                CategoryId = 2, //TODO: replace with enum
-                StatusId = 1,
-                LocationId = 1
-            };
+                var phone = new Headphones
+                {
 
-            _context.Items.Add(item);
-            await _context.SaveChangesAsync();
-            return item.Id;
-        }
-        private async Task<int> GetPriceId(int modelId, int specId)
-        {
-            var priceId = await _context.HeadphonesVariants
-                .Where(h => h.ModelId == modelId && h.SpecId == specId)
-               .Select(h => h.Id)
-               .FirstOrDefaultAsync();
-            if (priceId == 0)
-            {
-                throw new KeyNotFoundException($"Variant for {modelId} modelId and {specId} specId not found");
+                    VariantId = headphonesDto.VariantId,
+                    ItemId = itemId
+                };
+                _context.Headphones.Add(phone);
+                await _context.SaveChangesAsync();
             }
-            return priceId;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to save phone");
+                await transaction.RollbackAsync();
+                throw new Exception("Failed to save phone.", ex);
+            }
+
         }
-
-
-
-
         public async Task AddNewHeadphonesModelAsync(CreateHeadponesModelDto headphonesModelDto)
         {
             var phoneModel = new HeadphonesModel
             {
                 ManufacturerId = headphonesModelDto.ManufacturerId,
-                Name = headphonesModelDto.Name,
-                Color = headphonesModelDto.Color
+                Name = headphonesModelDto.Name
             };
             _context.HeadphonesModels.Add(phoneModel);
             await _context.SaveChangesAsync();
@@ -123,8 +130,19 @@ namespace ManagmentStoreService.Services.Impl
         public async Task<IEnumerable<HeadphonesSpecDto>> GetHeadphonesSpecsByModelIdAsync(int modelId)
         {
             var headphonesSpecs = await _context.HeadphonesSpecs
-                                              .Where(h => h.ModelId == modelId)
-                                              .ToListAsync();
+                .Join(_context.HeadphonesVariants,
+                    s => s.Id,
+                    p => p.SpecId,
+                    (s, p) => new { Spec = s, Variant = p })
+                .Where(x => x.Variant.ModelId == modelId)
+                .Select(x => new HeadphonesSpec
+                {
+                    Id = x.Spec.Id,
+                    IsWireless = x.Spec.IsWireless,
+                    FrequencyRangeHz = x.Spec.FrequencyRangeHz,
+                    CodecId = x.Spec.CodecId
+                })
+                .ToListAsync();
             return _mapper.Map<List<HeadphonesSpecDto>>(headphonesSpecs);
         }
 

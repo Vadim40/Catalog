@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StoreService.Models
+namespace ManagmentStoreService.Models
 {
     public class Item
     {

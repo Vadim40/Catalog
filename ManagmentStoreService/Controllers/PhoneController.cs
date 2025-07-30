@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ManagmentStoreService.Controllers
 {
         [ApiController]
-        [Route("api/[controller]")]
+        [Route("api/phones")]
         public class PhoneController : ControllerBase
         {
             private readonly IPhoneService _phoneService;
@@ -27,13 +27,13 @@ namespace ManagmentStoreService.Controllers
                 var specs = await _phoneService.GetPhoneSpecsByModelIdAsync(modelId);
                 return Ok(specs);
             }
-            [HttpPost("model")]
+            [HttpPost("models")]
             public async Task<IActionResult> AddModel([FromBody] CreatePhoneModelDto phoneModelDto )
             {
                 await _phoneService.AddNewPhoneModelAsync(phoneModelDto);
                 return Ok();
             }
-            [HttpPost("models/{modelId}/specs")]
+            [HttpPost("specs")]
             public async Task<IActionResult> AddSpec([FromBody] CreatePhoneSpecDto phoneSpecDto)
             {
                 await _phoneService.AddNewPhoneSpecAsync(phoneSpecDto);
