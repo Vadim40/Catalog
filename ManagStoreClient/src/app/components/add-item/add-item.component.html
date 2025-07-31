@@ -1,1 +1,15 @@
-<p>add-item works!</p>
+<div class="header">
+    <span> Add new item</span>
+</div>
+<div class="category-container">
+<select [(ngModel)]="selectedCategory">
+    <option value="" disabled selected> Select Category</option>
+    <option value="phone"> Phone</option>
+    <option value="headphones"> Headphones</option>
+</select>
+
+
+</div>
+<div class="content">
+    <app-add-phone *ngIf="selectedCategory === 'phone'"></app-add-phone>
+</div>
