@@ -2,14 +2,16 @@
     <span> Add new item</span>
 </div>
 <div class="category-container">
-<select [(ngModel)]="selectedCategory">
-    <option value="" disabled selected> Select Category</option>
-    <option value="phone"> Phone</option>
-    <option value="headphones"> Headphones</option>
-</select>
+    <select [(ngModel)]="selectedCategory">
+        <option value=0 disabled selected>Select Category</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+      
 
 
 </div>
 <div class="content">
-    <app-add-phone *ngIf="selectedCategory === 'phone'"></app-add-phone>
+    <app-add-phone *ngIf="selectedCategory == category.Phone"></app-add-phone>
 </div>

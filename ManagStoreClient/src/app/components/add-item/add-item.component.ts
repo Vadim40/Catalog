@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Category } from 'src/app/models/category';
+import { IIdName } from 'src/app/models/IIdName';
 
 @Component({
   selector: 'app-add-item',
@@ -7,5 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AddItemComponent {
 
-  selectedCategory : string =''
+  selectedCategory : number =0;
+
+  categories: IIdName[] = [ 
+    {id: 1, name: 'phone'},
+    {id: 2, name: 'headphones'}
+  ]
+  category =Category;
 }

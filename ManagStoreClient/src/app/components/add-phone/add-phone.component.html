@@ -1,56 +1,90 @@
 <div class="details">
     <div class="model-details">
         <span>Model details</span>
-        <input type="text" placeholder="Search model">
-        <button (click)="createModel()"> Create new model </button>
+        <div class="model-search-container">
+
+            <input type="text" placeholder="Search variant" class="search-input" [(ngModel)]="searchString"
+                (input)="onSearchChange($event)" />
+
+            <ul class="search-dropdown" *ngIf="searchString && !selectedModel">
+                <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="selectModel(phoneModel)">
+                    {{ phoneModel.manufacturerName}} {{phoneModel.name}}
+                </li>
+                <li class="dropdown-item create-option">
+                    Создать новую модель
+                </li>
+            </ul>
+        </div>
+
         <div class="fields">
             <div class="field">
                 <label>Model name</label>
-                <span class="param"></span>
+                <span class="param">{{this.selectedModel?.manufacturerName}} {{this.selectedModel?.name}}</span>
             </div>
             <div class="field">
-                <label>Model color</label>
-                <span class="param"></span>
+                <div class="custom-select"
+                [class.disabled]="!selectedModel"
+                [attr.aria-disabled]="!selectedModel" >
+           
+
+                    <div class="selected" (click)="toggleDropdown()">
+                        <span class="color-square" [style.background]="selectedColor?.hex"></span>
+                        {{ selectedColor?.name || 'Select color' }}
+                    </div>
+                    <ul *ngIf="dropdownOpen" class="options">
+                        <li *ngFor="let color of phoneColors" (click)="selectColor(color)" >
+                            <span class="color-square" [style.background]="color.hex"></span>
+                            {{ color.name }}
+                        </li>
+                        <li class="dropdown-item create-option">
+                            Добавить цвет
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
         <div class="item-images">
             <div class="main-image">
-                <img src="https://picsum.photos/id/237/200/300"/>
+                <img src="https://picsum.photos/id/237/200/300" />
             </div>
             <div class="thumbnail-images">
-              <img src="https://picsum.photos/id/237/200/300"/>
-              <img src="https://picsum.photos/id/237/200/300"/>
-              <img src="https://picsum.photos/id/237/200/300"/>
-              <img src="https://picsum.photos/id/237/200/300"/>
+                <img src="https://picsum.photos/id/237/200/300" />
+                <img src="https://picsum.photos/id/237/200/300" />
+                <img src="https://picsum.photos/id/237/200/300" />
+                <img src="https://picsum.photos/id/237/200/300" />
             </div>
 
-    
-          </div>
+
+        </div>
     </div>
     <div class="fields">
         <span> Specification details </span>
-        <select>
-            <option value="" disabled selected> Select specification</option>
+        <select [(ngModel)]="selectedSpec" [disabled]="!selectedColor">
+            <option [ngValue]="undefined" disabled selected> Select specification</option>
+            <option *ngFor="let phoneSpec of phoneSpecs" [ngValue]="phoneSpec">
+                {{phoneSpec.storageGb}}/{{phoneSpec.ramGb}}</option>
+                <option>Добавить спецификацию</option>
         </select>
         <button> Create new specification </button>
         <div class="field">
             <label>Storage</label>
-            <span class="param"> GB</span>
+            <span class="param">{{selectedSpec?.storageGb}} GB</span>
         </div>
 
         <div class="field">
             <label>RAM</label>
-            <span class="param"> GB</span>
+            <span class="param">{{selectedSpec?.ramGb}} GB</span>
         </div>
 
         <div class="field">
             <label>Display</label>
-            <span class="param">"</span>
+            <span class="param">{{selectedSpec?.displayIn}} In</span>
         </div>
 
         <div class="field">
             <label>Camera</label>
-            <span class="param"> MP</span>
+            <span class="param">{{selectedSpec?.cameraMp}} MP</span>
         </div>
 
     </div>
@@ -59,5 +93,3 @@
     <input type="text" placeholder="Serial number">
     <button> Add item</button>
 </div>
-
-

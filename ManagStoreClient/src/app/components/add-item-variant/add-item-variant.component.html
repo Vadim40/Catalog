@@ -1,0 +1,15 @@
+<div class="header">
+    <span> Add new variant</span>
+</div>
+<div class="category-container">
+<select [(ngModel)]="selectedCategory">
+    <option value="" disabled selected> Select Category</option>
+    <option value="phone"> Phone</option>
+    <option value="headphones"> Headphones</option>
+</select>
+
+
+</div>
+<div class="content"> 
+    <app-add-phone-variant *ngIf="selectedCategory=='phone'"></app-add-phone-variant>
+</div>
