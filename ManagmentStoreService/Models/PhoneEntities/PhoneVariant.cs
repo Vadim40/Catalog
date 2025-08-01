@@ -13,7 +13,8 @@ namespace ManagmentStoreService.Models.PhoneEntities
         public PhoneModel Model { get; set; }
         public int SpecId { get; set; }
         public PhoneSpec Spec { get; set; }
-        public string Color { get; set; }
+        public int ColorId { get; set; }
+        public Color Color { get; set; }
         public decimal Cost { get; set; }
 
         public List<PhoneVariantImage> VariantImages { get; set; }

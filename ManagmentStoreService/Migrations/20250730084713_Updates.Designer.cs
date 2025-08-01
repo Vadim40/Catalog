@@ -421,7 +421,7 @@ namespace ManagmentStoreService.Migrations
                     b.ToTable("PhoneVariants");
                 });
 
-            modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneVariantImage", b =>
+            modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneImage", b =>
                 {
                     b.Property<int>("VariantId")
                         .HasColumnType("INTEGER");
@@ -602,7 +602,7 @@ namespace ManagmentStoreService.Migrations
                     b.Navigation("Spec");
                 });
 
-            modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneVariantImage", b =>
+            modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneImage", b =>
                 {
                     b.HasOne("ManagmentStoreService.Models.PhoneEntities.PhoneImage", "Image")
                         .WithMany("VariantImages")
