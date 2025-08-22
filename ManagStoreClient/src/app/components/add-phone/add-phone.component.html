@@ -10,7 +10,7 @@
                 <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="selectModel(phoneModel)">
                     {{ phoneModel.manufacturerName}} {{phoneModel.name}}
                 </li>
-                <li class="dropdown-item create-option">
+                <li class="dropdown-item create-option" (click)="navigateToAddPhoneVariant()">
                     Создать новую модель
                 </li>
             </ul>
@@ -64,7 +64,7 @@
             <option [ngValue]="undefined" disabled selected> Select specification</option>
             <option *ngFor="let phoneSpec of phoneSpecs" [ngValue]="phoneSpec">
                 {{phoneSpec.storageGb}}/{{phoneSpec.ramGb}}</option>
-                <option>Добавить спецификацию</option>
+                <option (click)="navigateToAddPhoneVariant()" >Добавить спецификацию</option>
         </select>
         <button> Create new specification </button>
         <div class="field">

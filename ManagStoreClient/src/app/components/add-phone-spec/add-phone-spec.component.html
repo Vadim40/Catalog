@@ -1,0 +1,49 @@
+<div class="Spec-search-container">
+
+    <input type="text" placeholder="Search specification" class="search-input" [(ngModel)]="searchString"
+        (input)="onSearchChange($event)" />
+
+    <ul class="search-dropdown" *ngIf="searchString && !isSpecSelected">
+        <li class="dropdown-item" *ngFor="let phoneSpec of phoneSpecs" (click)="selectSpec(phoneSpec)">
+            {{ phoneSpec.storageGb}}GB/ {{phoneSpec.ramGb}}GB
+        </li>
+        <li class="dropdown-item create-option" (click)="isSpecCreating = true; searchString=''">
+           Create new specification
+        </li>
+    </ul>
+</div>
+<div class="fields">
+    <span *ngIf="isSpecCreating"> Specification creating </span>
+  
+    
+  
+    <div class="field" >
+      <label>Storage</label>
+      <input type="number" [(ngModel)]="spec.storageGb" [readOnly]="!isSpecCreating" />
+      <span class="param">GB</span>
+    </div>
+  
+    <div class="field" >
+      <label>RAM</label>
+      <input type="number" [(ngModel)]="spec.ramGb" [readOnly]="!isSpecCreating"/>
+      <span class="param">GB</span>
+    </div>
+  
+    <div class="field" *>
+      <label>Display</label>
+      <input type="number" [(ngModel)]="spec.displayIn"[readOnly]="!isSpecCreating" />
+      <span class="param">"</span>
+    </div>
+  
+    <div class="field" >
+      <label>Camera</label>
+      <input type="number" [(ngModel)]="spec.cameraMp" [readOnly]="!isSpecCreating"/>
+      <span class="param">MP</span>
+    </div>
+  
+    <div class="action" *ngIf="isSpecCreating">
+      <button (click)="saveSpec()">Save specification</button>
+      <button (click)="cancelSpecCreating()">Cancel</button>
+    </div>
+  </div>
+  

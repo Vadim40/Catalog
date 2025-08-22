@@ -1,0 +1,55 @@
+
+<div class="model-details">
+    <span>Model details</span>
+    <div class="model-search-container">
+
+        <input type="text" placeholder="Search model" class="search-input" [(ngModel)]="searchString"
+            (input)="onSearchChange($event)" />
+
+        <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
+            <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="selectModel(phoneModel)">
+                {{ phoneModel.manufacturerName}} {{phoneModel.name}}
+            </li>
+            <li class="dropdown-item create-option" (click)="isModelCreating = true; searchString=''">
+               Create new model
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="fields">
+        <span *ngIf="isModelCreating"> Model creating</span>
+        <div class="field">
+            <label>Manufacturer name</label>
+            <input [(ngModel)]="model.manufacturerName" type="text" readonly="true" *ngIf="!isModelCreating">
+            <select *ngIf="isModelCreating" [(ngModel)]="model.manufacturerName">
+                <option value="" disabled selected> Select manufacturer</option>
+                <option *ngFor="let m of manufacturers" value="m.name"> {{m.name}} </option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Model name</label>
+       
+            <input [(ngModel)]="model.name" type="text" [readonly]="!isModelCreating">
+        </div>
+       
+        <div class="action" *ngIf="isModelCreating">
+            <button (click)="saveModel()"> Save model</button>
+            <button (click)="cancelCreating()">Cancel</button>
+        </div>
+
+    </div>
+    <div class="item-images">
+        <div class="main-image">
+            <img src="https://picsum.photos/id/237/200/300"/>
+        </div>
+        <div class="thumbnail-images">
+          <img src="https://picsum.photos/id/237/200/300"/>
+          <img src="https://picsum.photos/id/237/200/300"/>
+          <img src="https://picsum.photos/id/237/200/300"/>
+          <img src="https://picsum.photos/id/237/200/300"/>
+        </div>
+
+
+      </div>
+</div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Color, COLORS } from 'src/app/models/color';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
-import { PhoneSpec } from 'src/app/models/phone/phoneSpecDto';
+import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
 
 @Component({
   selector: 'app-add-phone',
@@ -53,9 +53,7 @@ export class AddPhoneComponent {
 
   }
 
-  createModel(){
-    this.router.navigate(['/add-phone-variant'])
-  }
+
   selectModel(phoneModel: PhoneModel){
     this.selectedModel= phoneModel;
     this.searchString = phoneModel.manufacturerName + ' ' + phoneModel.name
@@ -79,5 +77,7 @@ selectColor(color: Color) {
   this.selectedColor = color;
   this.dropdownOpen = false;
 }
-
+navigateToAddPhoneVariant(){
+  this.router.navigate(['/add-phone-variant'])
+}
 }
