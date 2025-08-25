@@ -24,7 +24,7 @@
             <input [(ngModel)]="model.manufacturerName" type="text" readonly="true" *ngIf="!isModelCreating">
             <select *ngIf="isModelCreating" [(ngModel)]="model.manufacturerName">
                 <option value="" disabled selected> Select manufacturer</option>
-                <option *ngFor="let m of manufacturers" value="m.name"> {{m.name}} </option>
+                <option *ngFor="let m of manufacturers" [value]="m.name"> {{m.name}} </option>
             </select>
         </div>
         <div class="field">
@@ -39,17 +39,5 @@
         </div>
 
     </div>
-    <div class="item-images">
-        <div class="main-image">
-            <img src="https://picsum.photos/id/237/200/300"/>
-        </div>
-        <div class="thumbnail-images">
-          <img src="https://picsum.photos/id/237/200/300"/>
-          <img src="https://picsum.photos/id/237/200/300"/>
-          <img src="https://picsum.photos/id/237/200/300"/>
-          <img src="https://picsum.photos/id/237/200/300"/>
-        </div>
 
-
-      </div>
 </div>

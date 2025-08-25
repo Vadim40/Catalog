@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import Decimal from 'decimal.js';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
+import { Color } from 'src/app/models/color';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
 import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 import { WizardStep } from 'src/app/models/wizardStep';
@@ -35,7 +36,11 @@ export class AddPhoneVariantWizardComponent {
     id: 0,
     modelId: 0,
     specId: 0,
-    colorId: 0,
+    color : {
+      id: 0,
+      name: '',
+      hex: ''
+    },
     cost: new Decimal(0),
     images : []
   }
@@ -73,5 +78,13 @@ export class AddPhoneVariantWizardComponent {
   }
   onVariantChange(updated: PhoneVariant){
     this.variant = updated;
+  }
+  navigateToStep(index: number){
+   
+    if(this.isStepClickable(index))
+    this.currentStepIndex=index;
+  }
+  isStepClickable(index: number) : boolean{
+    return this.steps[index].isValid || (index!=0 && this.steps[index-1].isValid)
   }
 }

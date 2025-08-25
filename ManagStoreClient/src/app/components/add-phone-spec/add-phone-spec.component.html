@@ -7,7 +7,7 @@
         <li class="dropdown-item" *ngFor="let phoneSpec of phoneSpecs" (click)="selectSpec(phoneSpec)">
             {{ phoneSpec.storageGb}}GB/ {{phoneSpec.ramGb}}GB
         </li>
-        <li class="dropdown-item create-option" (click)="isSpecCreating = true; searchString=''">
+        <li class="dropdown-item create-option" (click)="createSpec()">
            Create new specification
         </li>
     </ul>

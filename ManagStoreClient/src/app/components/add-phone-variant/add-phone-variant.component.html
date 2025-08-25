@@ -1,0 +1,45 @@
+<div class="model-search-container">
+    <div class="color-input">
+        <span class="color-square" [style.background]="selectedColor?.hex"></span>
+        <input type="text" placeholder="Search color" [(ngModel)]="searchString"  (input)="onSearchChange($event)">
+      </div>
+      
+  
+    <ul *ngIf="searchString && !isVariantSelected && !isAddingVariant" class="options">
+      <li *ngFor="let color of colors" (click)="selectVariant(color)">
+        <span class="color-square" [style.background]="color.hex"></span>
+        {{ color.name }}
+      </li>
+      <li class="dropdown-item create-option" (click)="startAddVariant()">
+        ➕ Add Color Variant
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Add new variant -->
+  <div *ngIf="isAddingVariant" class="add-variant-form">
+    <h3>Add Color Variant</h3>
+  
+    <select [(ngModel)]="newColor">
+      <option *ngFor="let c of colors" [ngValue]="c">{{ c.name }}</option>
+    </select>
+  
+    <input type="file" multiple #newFiles />
+    <button (click)="cancelAddingVariant()">Cancel</button>
+    <button (click)="saveNewVariant(selectedColor, newFiles.files)">Save</button>
+    
+  </div>
+  
+  <!-- Images for selected variant -->
+  <div class="item-images" *ngIf="isVariantSelected">
+    <h3>{{ variant.color.name }} ({{ variant.color.hex }})</h3>
+  
+    <div class="main-image" *ngIf="variant.images.length > 0">
+      <img [src]="variant.images[0].url" />
+    </div>
+  
+    <div class="thumbnail-images">
+      <img *ngFor="let img of variant.images" [src]="img.url" />
+    </div>
+  </div>
+  

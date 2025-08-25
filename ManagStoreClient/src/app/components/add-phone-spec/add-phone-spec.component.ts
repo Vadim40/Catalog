@@ -18,7 +18,7 @@ export class AddPhoneSpecComponent {
 
 
 
- createSpec: CreatePhoneSpec = {
+ createSpecObj: CreatePhoneSpec = {
     storageGb: 0,
     ramGb : 0,
     displayIn : 0,
@@ -67,5 +67,9 @@ export class AddPhoneSpecComponent {
   saveSpec(){
     this.isSpecCreating = false
     // todo save Spec
+  }
+  createSpec(){
+    this.isSpecCreating = true;
+     this.searchString=''
   }
 }

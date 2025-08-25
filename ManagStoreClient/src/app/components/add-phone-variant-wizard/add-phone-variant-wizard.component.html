@@ -1,5 +1,5 @@
 <ul class="wizard-steps">
-    <li *ngFor="let step of steps; let i = index" [class.active]="i === currentStepIndex">
+    <li *ngFor="let step of steps; let i = index"   [class.clickable]="isStepClickable(i)" [class.active]="i === currentStepIndex" (click)="navigateToStep(i)" >
         {{ step.label }}
     </li>
 </ul>
@@ -14,7 +14,7 @@
             (selectedSpec)="onSpecChange($event)"></app-add-phone-spec>
 
         <!-- Step 3: Variant -->
-        <app-add-phone-variant *ngSwitchCase="1" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
+        <app-add-phone-variant *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
             (selectedVariant)="onVariantChange($event)"></app-add-phone-variant>
 
 

@@ -19,7 +19,10 @@ export class AddPhoneModelComponent {
     name : ""
   }
  
-  manufacturers: IIdName [] = []
+  manufacturers: IIdName [] = [
+    {id:1, name: 'Apple'},
+    {id:2, name: 'Xiaomi'}
+  ]
   searchString?: string ;
   isModelSelected: boolean = false;
   isModelCreating: boolean = false;
@@ -29,6 +32,7 @@ export class AddPhoneModelComponent {
     {id: 2, manufacturerName: 'Apple', name: "14" },
     {id: 3, manufacturerName: 'Apple', name: "15" },
   ]
+  
 
   ngOnInit(){
     this.updateSearchString();
@@ -50,6 +54,7 @@ export class AddPhoneModelComponent {
     this.isModelSelected = true
     this.model= phoneModel;
     this.searchString = phoneModel.manufacturerName + ' ' + phoneModel.name
+    
     this.stepValidity.emit(this.isModelSelected);
     this.selectedModel.emit(this.model);
     
@@ -64,8 +69,13 @@ export class AddPhoneModelComponent {
     this.isModelCreating = false
   }
   saveModel(){
+    this.updateSearchString();
     this.isModelCreating = false
-    // todo save model
+    this.isModelSelected = true
+
+    this.model.id = 4 ; // todo: save model
+    this.stepValidity.emit(this.isModelSelected);
+    this.selectedModel.emit(this.model);
   }
 
  
