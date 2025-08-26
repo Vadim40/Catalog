@@ -1,13 +1,19 @@
+:host{
+  padding: 20px;
+}
 .wizard-container {
-    width: 50%;
-    margin: 0 auto;
+  
     padding: 20px;
+
     border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
     border-radius: 5px;
     background-color: #f9f9f9;
   }
   
   .wizard-steps {
+ 
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -26,20 +32,26 @@
   }
   
   .wizard-steps li.active {
-    background-color: #007bff;
+    background-color: #9913FF;
     color: #fff;
   }
   
   .wizard-content {
     margin-bottom: 20px;
-    width: 50%;
+    width: 100%;
+ 
   }
   
   .wizard-navigation {
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
   }
   .wizard-steps li.clickable {
     cursor: pointer;
+  }
+  .btn-primary{
+   background-color: #9913FF;
+   border-color: #9913FF;
   }
   

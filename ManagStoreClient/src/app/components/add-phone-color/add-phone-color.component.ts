@@ -9,11 +9,11 @@ import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 import { WizardStep } from 'src/app/models/wizardStep';
 
 @Component({
-  selector: 'app-add-phone-variant',
-  templateUrl: './add-phone-variant.component.html',
-  styleUrls: ['./add-phone-variant.component.css']
+  selector: 'app-add-phone-color',
+  templateUrl: './add-phone-color.component.html',
+  styleUrls: ['./add-phone-color.component.css']
 })
-export class AddPhoneVariantComponent {
+export class AddPhoneColorComponent {
 
     @Input() variant!: PhoneVariant
     @Output() stepValidity = new EventEmitter<boolean>(); 
@@ -47,7 +47,8 @@ export class AddPhoneVariantComponent {
     this.variant.color = color
     console.log(this.variant.images)
     this.isVariantSelected =true
-
+    this.selectedVariant.emit(this.variant);
+    this.stepValidity.emit(this.isVariantSelected)
   }
 
   startAddVariant() {

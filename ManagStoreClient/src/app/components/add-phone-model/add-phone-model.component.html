@@ -1,9 +1,8 @@
-
-<div class="model-details">
-    <span>Model details</span>
-    <div class="model-search-container">
-
-        <input type="text" placeholder="Search model" class="search-input" [(ngModel)]="searchString"
+<div class="model-details" >
+  
+    <div class="search-container" *ngIf="!isModelCreating">
+        <h4> Model details</h4>
+        <input type="text" placeholder="Search model" class="search-input form-control mt-3" [(ngModel)]="searchString"
             (input)="onSearchChange($event)" />
 
         <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
@@ -11,31 +10,31 @@
                 {{ phoneModel.manufacturerName}} {{phoneModel.name}}
             </li>
             <li class="dropdown-item create-option" (click)="isModelCreating = true; searchString=''">
-               Create new model
+                Create new model
             </li>
         </ul>
     </div>
 
 
     <div class="fields">
-        <span *ngIf="isModelCreating"> Model creating</span>
+        <h4 *ngIf="isModelCreating">Create model</h4>
         <div class="field">
             <label>Manufacturer name</label>
-            <input [(ngModel)]="model.manufacturerName" type="text" readonly="true" *ngIf="!isModelCreating">
-            <select *ngIf="isModelCreating" [(ngModel)]="model.manufacturerName">
+            <input class="form-control" [(ngModel)]="model.manufacturerName" type="text" readonly="true" *ngIf="!isModelCreating">
+            <select class="form-control" *ngIf="isModelCreating" [(ngModel)]="model.manufacturerName">
                 <option value="" disabled selected> Select manufacturer</option>
                 <option *ngFor="let m of manufacturers" [value]="m.name"> {{m.name}} </option>
             </select>
         </div>
         <div class="field">
             <label>Model name</label>
-       
-            <input [(ngModel)]="model.name" type="text" [readonly]="!isModelCreating">
+
+            <input class="form-control" [(ngModel)]="model.name" type="text" [readonly]="!isModelCreating">
         </div>
-       
+
         <div class="action" *ngIf="isModelCreating">
-            <button (click)="saveModel()"> Save model</button>
-            <button (click)="cancelCreating()">Cancel</button>
+            <button class="btn btn-secondary" (click)="cancelCreating()">Cancel</button>
+            <button class="btn btn-primary" (click)="saveModel()"> Save model</button>
         </div>
 
     </div>

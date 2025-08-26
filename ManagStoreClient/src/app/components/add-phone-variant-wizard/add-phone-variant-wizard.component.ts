@@ -15,7 +15,8 @@ export class AddPhoneVariantWizardComponent {
   steps: WizardStep[] = [
     { id: 'modelSelect', label: 'Select model', isValid: false },
     { id: 'specSelect', label: ' Selec specification', isValid: false },
-    {id: 'variantSelect', label: 'Select variant', isValid: false}
+    {id: 'variantSelect', label: 'Select color', isValid: false},
+    {id: 'confirmDetalis', label: 'Confirm detalis', isValid:false}
 
   ];
   currentStepIndex = 0;

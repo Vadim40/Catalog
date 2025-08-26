@@ -8,11 +8,12 @@ import { AddItemComponent } from './components/add-item/add-item.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddPhoneComponent } from './components/add-phone/add-phone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddPhoneVariantComponent } from './components/add-phone-variant/add-phone-variant.component';
+import { AddPhoneColorComponent } from './components/add-phone-color/add-phone-color.component';
 import { AddItemVariantComponent } from './components/add-item-variant/add-item-variant.component';
 import { AddPhoneModelComponent } from './components/add-phone-model/add-phone-model.component';
 import { AddPhoneSpecComponent } from './components/add-phone-spec/add-phone-spec.component';
 import { AddPhoneVariantWizardComponent } from './components/add-phone-variant-wizard/add-phone-variant-wizard.component';
+import { AddPhoneDetailsComponent } from './components/add-phone-details/add-phone-details.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { AddPhoneVariantWizardComponent } from './components/add-phone-variant-w
     HomeComponent,
     AddItemComponent,
     AddPhoneComponent,
-    AddPhoneVariantComponent,
+    AddPhoneColorComponent,
     AddItemVariantComponent,
     AddPhoneModelComponent,
     AddPhoneSpecComponent,
-    AddPhoneVariantWizardComponent
+    AddPhoneVariantWizardComponent,
+    AddPhoneDetailsComponent
   ],
   imports: [
     BrowserModule,

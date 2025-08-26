@@ -1,0 +1,47 @@
+<div class="fields">
+    <div class="field">
+      <label>Manufacturer name</label>
+      <span>{{ model.manufacturerName }}</span>
+    </div>
+  
+    <div class="field">
+      <label>Model name</label>
+      <span>{{ model.name }}</span>
+    </div>
+  </div>
+  
+  <div class="fields">
+    <div class="field">
+      <label>Storage</label>
+      <span>{{ spec.storageGb }} GB</span>
+    </div>
+  
+    <div class="field">
+      <label>RAM</label>
+      <span>{{ spec.ramGb }} GB</span>
+    </div>
+  
+    <div class="field">
+      <label>Display</label>
+      <span>{{ spec.displayIn }}"</span>
+    </div>
+  
+    <div class="field">
+      <label>Camera</label>
+      <span>{{ spec.cameraMp }} MP</span>
+    </div>
+  </div>
+  
+  <div class="item-images">
+    <h3>{{ variant.color.name }} ({{ variant.color.hex }})</h3>
+  
+    <div class="main-image" *ngIf="variant.images.length > 0">
+      <img [src]="variant.images[0].url" />
+    </div>
+  
+    <div class="thumbnail-images">
+      <img *ngFor="let img of variant.images" [src]="img.url" />
+    </div>
+  </div>
+  
+  <input type="value" placeholder="Model Cost" [(ngModel)]="variant.cost">

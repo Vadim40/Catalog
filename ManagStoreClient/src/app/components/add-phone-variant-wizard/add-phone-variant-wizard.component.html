@@ -1,5 +1,8 @@
+<h3 class="ms-3">Add new variant</h3>
+<div class="wizard-container">
 <ul class="wizard-steps">
-    <li *ngFor="let step of steps; let i = index"   [class.clickable]="isStepClickable(i)" [class.active]="i === currentStepIndex" (click)="navigateToStep(i)" >
+    <li *ngFor="let step of steps; let i = index" [class.clickable]="isStepClickable(i)"
+        [class.active]="i === currentStepIndex" (click)="navigateToStep(i)">
         {{ step.label }}
     </li>
 </ul>
@@ -14,9 +17,13 @@
             (selectedSpec)="onSpecChange($event)"></app-add-phone-spec>
 
         <!-- Step 3: Variant -->
-        <app-add-phone-variant *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
-            (selectedVariant)="onVariantChange($event)"></app-add-phone-variant>
+        <app-add-phone-color *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
+            (selectedVariant)="onVariantChange($event)"></app-add-phone-color>
 
+        <!-- Step 4: Variant -->
+        <app-add-phone-details *ngSwitchCase="3" [variant]="variant" 
+            [model]="model" [spec]="spec"
+            (selectedVariant)="onVariantChange($event)"></app-add-phone-details>
 
 
         <!-- Navigation Controls -->
@@ -29,4 +36,5 @@
             <button *ngIf="isLastStep" class="btn btn-success" (click)="onSubmit()">Submit</button>
         </div>
     </ng-container>
+</div>
 </div>
