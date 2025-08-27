@@ -10,10 +10,13 @@ import { AddPhoneComponent } from './components/add-phone/add-phone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPhoneColorComponent } from './components/add-phone-color/add-phone-color.component';
 import { AddItemVariantComponent } from './components/add-item-variant/add-item-variant.component';
-import { AddPhoneModelComponent } from './components/add-phone-model/add-phone-model.component';
+import { AddPhoneModelComponent } from './components/phone-model-step/phone-model-step.component';
 import { AddPhoneSpecComponent } from './components/add-phone-spec/add-phone-spec.component';
 import { AddPhoneVariantWizardComponent } from './components/add-phone-variant-wizard/add-phone-variant-wizard.component';
 import { AddPhoneDetailsComponent } from './components/add-phone-details/add-phone-details.component';
+
+import { PhoneModelSearchComponent } from './components/phone-model-search/phone-model-search.component';
+import { PhoneModelFormComponent } from './components/phone-model-form/phone-model-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { AddPhoneDetailsComponent } from './components/add-phone-details/add-pho
     AddPhoneModelComponent,
     AddPhoneSpecComponent,
     AddPhoneVariantWizardComponent,
-    AddPhoneDetailsComponent
+    AddPhoneDetailsComponent,
+    PhoneModelSearchComponent,
+    PhoneModelFormComponent
   ],
   imports: [
     BrowserModule,

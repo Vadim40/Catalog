@@ -13,10 +13,10 @@ import { WizardStep } from 'src/app/models/wizardStep';
 })
 export class AddPhoneVariantWizardComponent {
   steps: WizardStep[] = [
-    { id: 'modelSelect', label: 'Select model', isValid: false },
-    { id: 'specSelect', label: ' Selec specification', isValid: false },
-    {id: 'variantSelect', label: 'Select color', isValid: false},
-    {id: 'confirmDetalis', label: 'Confirm detalis', isValid:false}
+    { id: 'modelSelect', label: 'Select model', isValid: true }, // todo: return false
+    { id: 'specSelect', label: ' Selec specification', isValid: true},
+    {id: 'variantSelect', label: 'Select color', isValid: true},
+    {id: 'confirmDetalis', label: 'Confirm detalis', isValid:true}
 
   ];
   currentStepIndex = 0;

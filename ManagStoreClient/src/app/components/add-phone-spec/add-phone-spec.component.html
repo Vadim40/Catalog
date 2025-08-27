@@ -19,15 +19,15 @@
 
       <label>Storage</label>
       <div class="input-group ">
-        <input type="number" class="form-control" [(ngModel)]="spec.storageGb" [readOnly]="!isSpecCreating" />
-        <span class="input-group-text">GB</span>
+        <input type="number" class="form-control" [(ngModel)]="spec.storageGb"  [disabled]="!isSpecCreating" />
+        <span class="input-group-text" >GB</span>
       </div>
 
     </div>
     <div class="field input-group">
       <label>RAM</label>
       <div class="input-group ">
-        <input type="number" class="form-control" [(ngModel)]="spec.ramGb" [readOnly]="!isSpecCreating" />
+        <input type="number" class="form-control" [(ngModel)]="spec.ramGb"  [disabled]="!isSpecCreating"/>
         <span class="input-group-text">GB</span>
       </div>
 
@@ -37,7 +37,7 @@
     <div class="field input-group">
       <label>Display</label>
       <div class="input-group ">
-        <input type="number" class="form-control " [(ngModel)]="spec.displayIn" [readOnly]="!isSpecCreating" />
+        <input type="number" class="form-control " [(ngModel)]="spec.displayIn"   [disabled]="!isSpecCreating" />
         <span class="input-group-text">"</span>
       </div>
 
@@ -48,7 +48,7 @@
     <div class="field input-group">
       <label>Camera</label>
       <div class="input-group ">
-        <input type="number" class="form-control" [(ngModel)]="spec.cameraMp" [readOnly]="!isSpecCreating" />
+        <input type="number" class="form-control" [(ngModel)]="spec.cameraMp"  [disabled]="!isSpecCreating" />
         <span class="input-group-text">MP</span>
       </div>
 

@@ -4,15 +4,16 @@ import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 
 @Component({
-  selector: 'app-add-phone-model',
-  templateUrl: './add-phone-model.component.html',
-  styleUrls: ['./add-phone-model.component.css']
+  selector: 'app-phone-model-step',
+  templateUrl: './phone-model-step.component.html',
+  styleUrls: ['./phone-model-step.component.css']
 })
 
 export class AddPhoneModelComponent {
   @Input() model!: PhoneModel
   @Output() stepValidity = new EventEmitter<boolean>(); 
   @Output() selectedModel = new EventEmitter<PhoneModel>();
+
   
   creteaModel: CreatePhoneModel = {
     manufacturerId : 0,
@@ -33,7 +34,7 @@ export class AddPhoneModelComponent {
     {id: 3, manufacturerName: 'Apple', name: "15" },
   ]
   
-
+  createPhoneModel?: CreatePhoneModel; 
   ngOnInit(){
     this.updateSearchString();
     this.checkModelSelected();
@@ -65,19 +66,30 @@ export class AddPhoneModelComponent {
     console.log(this.searchString && !this.isModelSelected)
     console.log(this.phoneModels)
   }
+  onManufacturerChange(event: Event){
+   
+  }
   cancelCreating(){
     this.isModelCreating = false
   }
-  saveModel(){
+  saveModel(newModel: PhoneModel){
     this.updateSearchString();
-    this.isModelCreating = false
+   this.isModelCreating=false;
     this.isModelSelected = true
 
-    this.model.id = 4 ; // todo: save model
+    this.model=newModel;
     this.stepValidity.emit(this.isModelSelected);
     this.selectedModel.emit(this.model);
   }
-
+  createModel(){
+    this.isModelCreating = true;
+    this.searchString=''
+    
+  }
  
+  onModelChange(selected: PhoneModel) {
+    this.model = selected;
+   
+  }
 
 }

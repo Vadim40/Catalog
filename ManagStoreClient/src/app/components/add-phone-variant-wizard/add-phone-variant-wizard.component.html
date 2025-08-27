@@ -9,8 +9,8 @@
 <div class="wizard-content">
     <ng-container [ngSwitch]="currentStepIndex">
         <!-- Step 1: Model -->
-        <app-add-phone-model *ngSwitchCase="0" [model]="model" (stepValidity)="onStepValidityChange($event)"
-            (selectedModel)="onModelChange($event)"></app-add-phone-model>
+        <app-phone-model-step *ngSwitchCase="0" [model]="model" (stepValidity)="onStepValidityChange($event)"
+            (selectedModel)="onModelChange($event)"></app-phone-model-step>
 
         <!-- Step 2: Spec -->
         <app-add-phone-spec *ngSwitchCase="1" [spec]="spec" (stepValidity)="onStepValidityChange($event)"

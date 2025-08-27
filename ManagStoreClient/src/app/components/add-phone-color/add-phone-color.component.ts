@@ -29,7 +29,22 @@ export class AddPhoneColorComponent {
   newColor?: Color;
   isAddingVariant = false;
 
+  ngOnInit(){
+    this.updateSearchString();
+    this.checkModelSelected();
+  }
+  updateSearchString() {
+    if (this.variant) {
+      const combined = `${this.variant.color.name}`;
+      this.searchString = combined.length > 0 ? combined : undefined;
 
+    }
+  }
+  checkModelSelected(){
+    if (this.variant.color.id!= 0) {
+      this.isVariantSelected = true
+    }
+  }
   onSearchChange(event: Event){
     this.selectedColor = undefined
     this.isVariantSelected =false
