@@ -4,15 +4,15 @@
            (input)="onSearchChange($event)" />
   
     <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
-      <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="selectModel(phoneModel)">
+      <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="onSelectModel(phoneModel)">
         {{ phoneModel.manufacturerName }} {{ phoneModel.name }}
       </li>
-      <li class="dropdown-item create-option" (click)="createModel()">
+      <li class="dropdown-item create-option" (click)="onCreateModel()">
         Create new model
       </li>
     </ul>
   </div>
-    <div class="fields" style="flex: 1;">
+    <div class="fields" >
      
       <div class="field">
         <label>Manufacturer name</label>

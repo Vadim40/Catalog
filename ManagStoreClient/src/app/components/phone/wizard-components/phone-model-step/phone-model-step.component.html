@@ -1,0 +1,10 @@
+<ng-container *ngIf="!isModelCreating">
+    <app-phone-model-search [model]="model" (modelSelected)="onModelSelected($event)"
+        (createModelEvent)="onModelCreate()">
+    </app-phone-model-search>
+</ng-container>
+
+<ng-container *ngIf="isModelCreating">
+    <app-phone-model-form (modelCreatingCanceled)="onModelCreatingCancel()" (modelCreated)="onSaveModel($event)">
+    </app-phone-model-form>
+</ng-container>

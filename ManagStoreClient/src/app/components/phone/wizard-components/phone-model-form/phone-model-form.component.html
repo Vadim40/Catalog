@@ -1,0 +1,28 @@
+<form [formGroup]="form" class="fields" (ngSubmit)="onSaveModel()">
+  <h4>Create model</h4>
+  <div class="field">
+    <label>Manufacturer name</label>
+    <select class="form-control" formControlName="manufacturerId">
+      <option value="0" disabled>Select manufacturer</option>
+      <option *ngFor="let m of manufacturers" [value]="m.id">
+        {{ m.name }}
+      </option>
+    </select>
+    <div *ngIf="form.controls['manufacturerId'].touched && form.controls['manufacturerId'].invalid" class="text-danger mt-2">
+      Manufacturer is required
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Model name</label>
+    <input class="form-control" formControlName="name" type="text">
+    <div *ngIf="form.controls['name'].touched && form.controls['name'].invalid" class="text-danger mt-2">
+      Model name is required (min 1 chars)
+    </div>
+  </div>
+
+  <div class="action">
+    <button class="btn btn-secondary" (click)="onCancelCreating()">Cancel</button>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save model</button>
+  </div>
+</form>

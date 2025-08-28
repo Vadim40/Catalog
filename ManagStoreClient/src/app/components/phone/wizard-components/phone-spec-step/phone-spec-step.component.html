@@ -1,0 +1,15 @@
+<ng-container *ngIf="!isSpecCreating; else createSpecForm">
+  <app-phone-spec-search 
+      [spec]="spec" 
+      (specSelected)="onSelectSpec($event)" 
+      (createSpecEvent)="onCreateSpec()">
+  </app-phone-spec-search>
+</ng-container>
+
+<ng-template #createSpecForm>
+  <app-phone-spec-form 
+     
+      (specCreated)="onSaveSpec($event)" 
+      (specCreatingCanceled)="onCancelSpecCreating()">
+  </app-phone-spec-form>
+</ng-template>

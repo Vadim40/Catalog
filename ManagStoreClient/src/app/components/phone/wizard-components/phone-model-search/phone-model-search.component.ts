@@ -11,8 +11,7 @@ import { PhoneModel } from 'src/app/models/phone/phoneModel';
 export class PhoneModelSearchComponent {
 
     @Input() model!: PhoneModel
-    @Output() stepValidity = new EventEmitter<boolean>(); 
-    @Output() selectedModel = new EventEmitter<PhoneModel>();
+    @Output() modelSelected = new EventEmitter<PhoneModel>();
     @Output() createModelEvent=new EventEmitter();
     
  manufacturers: IIdName [] = [
@@ -31,6 +30,7 @@ export class PhoneModelSearchComponent {
   
   createPhoneModel?: CreatePhoneModel; 
   ngOnInit(){
+
     this.updateSearchString();
     this.checkModelSelected();
   }
@@ -46,26 +46,16 @@ export class PhoneModelSearchComponent {
       this.isModelSelected = true
     }
   }
-  selectModel(phoneModel: PhoneModel){
+  onSelectModel(phoneModel: PhoneModel){
     this.isModelSelected = true
-    this.model= phoneModel;
     this.searchString = phoneModel.manufacturerName + ' ' + phoneModel.name
-    
-    this.stepValidity.emit(this.isModelSelected);
-    this.selectedModel.emit(this.model);
+    this.modelSelected.emit(phoneModel);
     
   }
   onSearchChange(event: Event){
     this.isModelSelected= false
-  
-    console.log(this.searchString && !this.isModelSelected)
-    console.log(this.phoneModels)
   }
-  onManufacturerChange(event: Event){
-
-  }
- 
-  createModel(){
+  onCreateModel(){
     this.createModelEvent.emit();
   }
  

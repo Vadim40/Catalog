@@ -1,0 +1,11 @@
+<ng-container *ngIf="!isColorAdding">
+ <app-phone-color-search [variant]="variant" (addColorEvent)="onSelectColor($event)" (addColorEvent)="onAddColor()">
+
+ </app-phone-color-search>
+</ng-container>
+
+<ng-container *ngIf="isColorAdding">
+ <app-phone-color-add (colorAdded)="onSaveColor($event)" (colorAddingCanceled)="onAddingColorCancel()">
+
+ </app-phone-color-add>
+</ng-container>

@@ -10,15 +10,15 @@
     <ng-container [ngSwitch]="currentStepIndex">
         <!-- Step 1: Model -->
         <app-phone-model-step *ngSwitchCase="0" [model]="model" (stepValidity)="onStepValidityChange($event)"
-            (selectedModel)="onModelChange($event)"></app-phone-model-step>
+            (modelSelected)="onModelChange($event)"></app-phone-model-step>
 
         <!-- Step 2: Spec -->
-        <app-add-phone-spec *ngSwitchCase="1" [spec]="spec" (stepValidity)="onStepValidityChange($event)"
-            (selectedSpec)="onSpecChange($event)"></app-add-phone-spec>
+        <app-phone-spec-step *ngSwitchCase="1" [spec]="spec" (stepValidity)="onStepValidityChange($event)"
+            (specSelected)="onSpecChange($event)"></app-phone-spec-step>
 
         <!-- Step 3: Variant -->
-        <app-add-phone-color *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
-            (selectedVariant)="onVariantChange($event)"></app-add-phone-color>
+        <app-phone-color-step *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
+            (colorSelected)="onVariantChange($event)"></app-phone-color-step>
 
         <!-- Step 4: Variant -->
         <app-add-phone-details *ngSwitchCase="3" [variant]="variant" 

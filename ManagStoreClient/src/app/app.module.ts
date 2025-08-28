@@ -8,15 +8,20 @@ import { AddItemComponent } from './components/add-item/add-item.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddPhoneComponent } from './components/add-phone/add-phone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddPhoneColorComponent } from './components/add-phone-color/add-phone-color.component';
 import { AddItemVariantComponent } from './components/add-item-variant/add-item-variant.component';
-import { AddPhoneModelComponent } from './components/phone-model-step/phone-model-step.component';
-import { AddPhoneSpecComponent } from './components/add-phone-spec/add-phone-spec.component';
-import { AddPhoneVariantWizardComponent } from './components/add-phone-variant-wizard/add-phone-variant-wizard.component';
-import { AddPhoneDetailsComponent } from './components/add-phone-details/add-phone-details.component';
+import { AddPhoneDetailsComponent } from './components/phone/wizard-components/add-phone-details/add-phone-details.component';
+import { AddPhoneVariantWizardComponent } from './components/phone/wizard-components/add-phone-variant-wizard/add-phone-variant-wizard.component';
+import { AddPhoneColorComponent } from './components/phone/wizard-components/phone-color-step/phone-color-step.component';
+import { PhoneModelFormComponent } from './components/phone/wizard-components/phone-model-form/phone-model-form.component';
+import { PhoneModelSearchComponent } from './components/phone/wizard-components/phone-model-search/phone-model-search.component';
+import { AddPhoneModelComponent } from './components/phone/wizard-components/phone-model-step/phone-model-step.component';
+import { PhoneSpecFormComponent } from './components/phone/wizard-components/phone-spec-form/phone-spec-form.component';
+import { PhoneSpecSearchComponent } from './components/phone/wizard-components/phone-spec-search/phone-spec-search.component';
+import { PhoneSpecStepComponent } from './components/phone/wizard-components/phone-spec-step/phone-spec-step.component';
+import { PhoneColorSearchComponent } from './components/phone/wizard-components/phone-color-search/phone-color-search.component';
 
-import { PhoneModelSearchComponent } from './components/phone-model-search/phone-model-search.component';
-import { PhoneModelFormComponent } from './components/phone-model-form/phone-model-form.component';
+import { PhoneColorAddComponent } from './components/phone/wizard-components/phone-color-add/phone-color-add.component';
+
 
 @NgModule({
   declarations: [
@@ -27,11 +32,16 @@ import { PhoneModelFormComponent } from './components/phone-model-form/phone-mod
     AddPhoneColorComponent,
     AddItemVariantComponent,
     AddPhoneModelComponent,
-    AddPhoneSpecComponent,
+    PhoneSpecStepComponent,
     AddPhoneVariantWizardComponent,
     AddPhoneDetailsComponent,
     PhoneModelSearchComponent,
-    PhoneModelFormComponent
+    PhoneModelFormComponent,
+    PhoneSpecSearchComponent,
+    PhoneSpecFormComponent,
+    PhoneColorSearchComponent,
+    PhoneModelFormComponent,
+    PhoneColorAddComponent
   ],
   imports: [
     BrowserModule,

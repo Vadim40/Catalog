@@ -1,0 +1,53 @@
+<form [formGroup]="form" class="fields">
+    <h4>Create Specification</h4>
+  
+    <div class="field input-group">
+      <label>Storage</label>
+      <div class="input-group">
+        <input type="number" class="form-control" formControlName="storageGb">
+        <span class="input-group-text">GB</span>
+      </div>
+      <div *ngIf="form.controls['storageGb'].touched && form.controls['storageGb'].invalid" class="text-danger mt-2">
+        Storage is required and must be greater than 0
+      </div>
+    </div>
+  
+    <div class="field input-group">
+      <label>RAM</label>
+      <div class="input-group">
+        <input type="number" class="form-control" formControlName="ramGb">
+        <span class="input-group-text">GB</span>
+      </div>
+      <div *ngIf="form.controls['ramGb'].touched && form.controls['ramGb'].invalid" class="text-danger mt-2">
+        RAM is required and must be greater than 0
+      </div>
+    </div>
+  
+    <div class="field input-group">
+      <label>Display</label>
+      <div class="input-group">
+        <input type="number" class="form-control" formControlName="displayIn">
+        <span class="input-group-text">"</span>
+      </div>
+      <div *ngIf="form.controls['displayIn'].touched && form.controls['displayIn'].invalid" class="text-danger mt-2">
+        Display size is required and must be greater than 0
+      </div>
+    </div>
+  
+    <div class="field input-group">
+      <label>Camera</label>
+      <div class="input-group">
+        <input type="number" class="form-control" formControlName="cameraMp">
+        <span class="input-group-text">MP</span>
+      </div>
+      <div *ngIf="form.controls['cameraMp'].touched && form.controls['cameraMp'].invalid" class="text-danger mt-2">
+        Camera is required and must be greater than 0
+      </div>
+    </div>
+  
+    <div class="action mt-3">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="onSave()" [disabled]="form.invalid">Save specification</button>
+    </div>
+  </form>
+  

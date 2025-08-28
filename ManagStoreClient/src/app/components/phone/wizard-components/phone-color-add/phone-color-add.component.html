@@ -1,0 +1,23 @@
+<div class="add-variant-form">
+    <h3>Add Color Variant</h3>
+  
+    <!-- Select new color -->
+    <div class="mb-2">
+      <label>Color</label>
+      <select [(ngModel)]="newColor" class="form-control">
+        <option *ngFor="let c of colors" [ngValue]="c">{{ c.name }}</option>
+      </select>
+    </div>
+  
+    <!-- Upload files for this new variant -->
+    <div class="mb-2">
+      <label>Images</label>
+      <input type="file" multiple #files class="form-control"/>
+    </div>
+  
+    <div class="action mt-2">
+      <button class="btn btn-secondary" (click)="onAddingCancel()">Cancel</button>
+      <button class="btn btn-primary" (click)="onSaveColor(files.files)">Save</button>
+    </div>
+  </div>
+  
