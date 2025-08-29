@@ -20,7 +20,7 @@ namespace ManagmentStoreService.Config
         public DbSet<Item> Items => Set<Item>();
         public DbSet<ItemStatus> ItemsStatuses => Set<ItemStatus>();
         public DbSet<Location> Locations => Set<Location>();
-        public DbSet<Manufacturer> Manufacturer => Set<Manufacturer>();
+        public DbSet<Manufacturer> Manufacturers => Set<Manufacturer>();
         public DbSet<PhoneImage> PhoneImages => Set<PhoneImage>();
         public DbSet<Phone> Phones => Set<Phone>();
         public DbSet<PhoneModel> PhoneModels => Set<PhoneModel>();

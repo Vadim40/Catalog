@@ -80,7 +80,7 @@ namespace ManagmentStoreService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Manufacturer",
+                name: "Manufacturers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -185,7 +185,7 @@ namespace ManagmentStoreService.Migrations
                     table.ForeignKey(
                         name: "FK_HeadphonesModels_Manufacturer_ManufacturerId",
                         column: x => x.ManufacturerId,
-                        principalTable: "Manufacturer",
+                        principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -205,7 +205,7 @@ namespace ManagmentStoreService.Migrations
                     table.ForeignKey(
                         name: "FK_PhoneModels_Manufacturer_ManufacturerId",
                         column: x => x.ManufacturerId,
-                        principalTable: "Manufacturer",
+                        principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -559,7 +559,7 @@ namespace ManagmentStoreService.Migrations
                 name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "Manufacturer");
+                name: "Manufacturers");
         }
     }
 }

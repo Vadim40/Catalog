@@ -248,7 +248,7 @@ namespace ManagmentStoreService.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("ManagmentStoreService.Models.Manufacturer", b =>
+            modelBuilder.Entity("ManagmentStoreService.Models.Manufacturers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +260,7 @@ namespace ManagmentStoreService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufacturer");
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("ManagmentStoreService.Models.Order", b =>
@@ -457,13 +457,13 @@ namespace ManagmentStoreService.Migrations
 
             modelBuilder.Entity("ManagmentStoreService.Models.HeadphonesEntities.HeadphonesModel", b =>
                 {
-                    b.HasOne("ManagmentStoreService.Models.Manufacturer", "Manufacturer")
+                    b.HasOne("ManagmentStoreService.Models.Manufacturers", "Manufacturers")
                         .WithMany()
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Manufacturer");
+                    b.Navigation("Manufacturers");
                 });
 
             modelBuilder.Entity("ManagmentStoreService.Models.HeadphonesEntities.HeadphonesSpec", b =>
@@ -574,13 +574,13 @@ namespace ManagmentStoreService.Migrations
 
             modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneModel", b =>
                 {
-                    b.HasOne("ManagmentStoreService.Models.Manufacturer", "Manufacturer")
+                    b.HasOne("ManagmentStoreService.Models.Manufacturers", "Manufacturers")
                         .WithMany()
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Manufacturer");
+                    b.Navigation("Manufacturers");
                 });
 
             modelBuilder.Entity("ManagmentStoreService.Models.PhoneEntities.PhoneVariant", b =>

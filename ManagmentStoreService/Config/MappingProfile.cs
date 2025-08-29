@@ -8,7 +8,8 @@ namespace ManagmentStoreService.Config
     {
         public MappingProfile() 
         {
-            CreateMap<PhoneModel, PhoneModelDto>();
+            CreateMap<PhoneModel, PhoneModelDto>()
+            .ForMember(dest => dest.ManufacturerName, opt => opt.MapFrom(src => src.Manufacturer.Name));
             CreateMap<PhoneSpec, PhoneSpecDto>();
         }
     }

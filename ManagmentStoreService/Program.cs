@@ -4,6 +4,16 @@ using ManagmentStoreService.Services.Impl;
 using Microsoft.EntityFrameworkCore;
 using ManagmentStoreService.Config;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Client", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // Angular dev server
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // if using cookies/auth
+    });
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("Client");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();

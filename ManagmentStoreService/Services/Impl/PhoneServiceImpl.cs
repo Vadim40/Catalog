@@ -6,8 +6,7 @@ using ManagmentStoreService.Models.Enums;
 using ManagmentStoreService.Models.PhoneEntities;
 using Microsoft.EntityFrameworkCore;
 using ManagmentStoreService.Config;
-using ManagmentStoreService.Models;
-using ManagmentStoreService.Models.PhoneEntities;
+
 
 namespace ManagmentStoreService.Services.Impl
 {
@@ -77,7 +76,7 @@ namespace ManagmentStoreService.Services.Impl
             try
             {
                 var itemId = await _itemService.SaveItemAsync(phoneDto.SerialNumber, CategoryType.Phones);
-               
+
 
                 var phone = new Phone
                 {
@@ -128,10 +127,17 @@ namespace ManagmentStoreService.Services.Impl
         public async Task<IEnumerable<PhoneModelDto>> GetPhoneModelsByNameAsync(string name)
         {
             var phoneModels = await _context.PhoneModels
-                .Where(p => Fuzz.Ratio(name, p.Name) > 0.7)
-                .ToListAsync();
+             .Include(p => p.Manufacturer)
+             .ToListAsync();
 
-            return _mapper.Map<List<PhoneModelDto>>(phoneModels);
+            
+            var filteredModels = phoneModels
+                .Where(x => Fuzz.PartialRatio(name, x.Manufacturer.Name + x.Name) > 60)
+                .ToList();
+
+         
+            return _mapper.Map<List<PhoneModelDto>>(filteredModels);
+
         }
 
         public async Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecsByModelIdAsync(int modelId)
