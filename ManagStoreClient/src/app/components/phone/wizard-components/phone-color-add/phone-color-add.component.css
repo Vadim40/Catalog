@@ -1,0 +1,7 @@
+input[type="file"]::-webkit-file-upload-button {
+    content: "Choose files";
+  }
+  input[type="file"]::file-selector-button {
+    content: "Choose files";
+  }
+  

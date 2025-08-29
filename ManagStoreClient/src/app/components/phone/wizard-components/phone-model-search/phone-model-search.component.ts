@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Subject, Observable, startWith, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap } from 'rxjs';
 import { IIdName } from 'src/app/models/IIdName';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
+import { PhoneService } from 'src/app/services/phone.service';
 
 @Component({
   selector: 'app-phone-model-search',
@@ -10,26 +12,45 @@ import { PhoneModel } from 'src/app/models/phone/phoneModel';
 })
 export class PhoneModelSearchComponent {
 
-    @Input() model!: PhoneModel
-    @Output() modelSelected = new EventEmitter<PhoneModel>();
-    @Output() createModelEvent=new EventEmitter();
-    
- manufacturers: IIdName [] = [
-    {id:1, name: 'Apple'},
-    {id:2, name: 'Xiaomi'}
+  @Input() model!: PhoneModel
+  @Output() modelSelected = new EventEmitter<PhoneModel>();
+  @Output() createModelEvent = new EventEmitter();
+
+  manufacturers: IIdName[] = [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Xiaomi' }
   ]
-  searchString?: string ;
+  searchString: string='';
   isModelSelected: boolean = false;
 
-  
-  phoneModels: PhoneModel[]= [
-    {id: 1, manufacturerName: 'Apple', name: "13" },
-    {id: 2, manufacturerName: 'Apple', name: "14" },
-    {id: 3, manufacturerName: 'Apple', name: "15" },
-  ]
-  
-  createPhoneModel?: CreatePhoneModel; 
-  ngOnInit(){
+
+  phoneModels: PhoneModel[] = []
+  createPhoneModel?: CreatePhoneModel;
+
+
+
+  search$ = new Subject<string>();
+
+  phoneModels$: Observable<PhoneModel[]> = this.search$.pipe(
+    tap(() => this.isModelSelected = false), 
+    debounceTime(300),
+    distinctUntilChanged(),
+    filter(name => !!name.trim()),
+    switchMap(name =>
+      this.phoneService.getModels(name).pipe(
+        catchError(err => {
+          console.error(err);
+          return of([]); 
+        })
+      )
+    )
+  );
+
+  constructor(
+    private phoneService: PhoneService
+  ) { }
+
+  ngOnInit() {
 
     this.updateSearchString();
     this.checkModelSelected();
@@ -37,27 +58,24 @@ export class PhoneModelSearchComponent {
   updateSearchString() {
     if (this.model) {
       const combined = `${this.model.manufacturerName} ${this.model.name}`.trim();
-      this.searchString = combined.length > 0 ? combined : undefined;
-
+   
     }
   }
-  checkModelSelected(){
-    if (this.model.id!= 0) {
+  checkModelSelected() {
+    if (this.model.id != 0) {
       this.isModelSelected = true
     }
   }
-  onSelectModel(phoneModel: PhoneModel){
+  onSelectModel(phoneModel: PhoneModel) {
     this.isModelSelected = true
     this.searchString = phoneModel.manufacturerName + ' ' + phoneModel.name
     this.modelSelected.emit(phoneModel);
-    
-  }
-  onSearchChange(event: Event){
-    this.isModelSelected= false
-  }
-  onCreateModel(){
-    this.createModelEvent.emit();
+
   }
  
+  onCreateModel() {
+    this.createModelEvent.emit();
+  }
+
 
 }

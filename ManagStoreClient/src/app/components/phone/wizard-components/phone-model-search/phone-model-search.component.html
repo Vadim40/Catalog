@@ -1,10 +1,10 @@
 <div class="search-container">
     <h4>Model details</h4>
-    <input type="text" placeholder="Search model" class="search-input form-control mt-3" [(ngModel)]="searchString"
-           (input)="onSearchChange($event)" />
-  
+    <input type="text" placeholder="Search model" class="search-input form-control mt-3"  [(ngModel)]="searchString"
+    (input)="search$.next(searchString)" />
+
     <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
-      <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="onSelectModel(phoneModel)">
+      <li class="dropdown-item" *ngFor="let phoneModel of phoneModels$ | async" (click)="onSelectModel(phoneModel)">
         {{ phoneModel.manufacturerName }} {{ phoneModel.name }}
       </li>
       <li class="dropdown-item create-option" (click)="onCreateModel()">
@@ -16,12 +16,12 @@
      
       <div class="field">
         <label>Manufacturer name</label>
-        <span class="form-control">{{ model.manufacturerName }}</span>
+        <span class="form-control">{{ model.manufacturerName }} &#8203;</span>
       </div>
-
+ 
       <div class="field" >
         <label>Model name</label>
-        <span class="form-control">{{ model.name }}</span>
+        <span class="form-control">{{ model.name }} &#8203;</span>
       </div>
     </div>
   

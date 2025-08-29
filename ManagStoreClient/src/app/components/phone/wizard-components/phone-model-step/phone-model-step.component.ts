@@ -9,7 +9,7 @@ import { PhoneModel } from 'src/app/models/phone/phoneModel';
   styleUrls: ['./phone-model-step.component.css']
 })
 
-export class AddPhoneModelComponent {
+export class PhoneModelStepComponent {
   @Input() model!: PhoneModel
   @Output() stepValidity = new EventEmitter<boolean>(); 
   @Output() modelSelected = new EventEmitter<PhoneModel>();

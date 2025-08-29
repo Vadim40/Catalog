@@ -20,6 +20,8 @@ export class PhoneColorAddComponent {
   selectedColor?: Color;
   newColor?: Color;
 
+  searchString?: string;
+  isColorSelected: boolean = false;
 
 
   
@@ -43,6 +45,22 @@ export class PhoneColorAddComponent {
     this.colorAddingCanceled.emit();
        // reset state
     // optionally clear file input as well
+  }
+  onSearchChange(event: Event) {
+    this.isColorSelected = false
+  }
+
+  onFilesSelected(files: FileList | null){
+
+  }
+
+
+
+  onSelectColor(color: Color) {
+    this.searchString = color.name;
+    this.selectedColor= color;
+    this.isColorSelected = true
+  
   }
   
 }

@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isColorAdding">
- <app-phone-color-search [variant]="variant" (addColorEvent)="onSelectColor($event)" (addColorEvent)="onAddColor()">
+ <app-phone-color-search [variant]="variant" (colorSelected)="onSelectColor($event)" (addColorEvent)="onAddColor()">
 
  </app-phone-color-search>
 </ng-container>

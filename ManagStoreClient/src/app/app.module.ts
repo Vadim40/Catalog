@@ -11,15 +11,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddItemVariantComponent } from './components/add-item-variant/add-item-variant.component';
 import { AddPhoneDetailsComponent } from './components/phone/wizard-components/add-phone-details/add-phone-details.component';
 import { AddPhoneVariantWizardComponent } from './components/phone/wizard-components/add-phone-variant-wizard/add-phone-variant-wizard.component';
-import { AddPhoneColorComponent } from './components/phone/wizard-components/phone-color-step/phone-color-step.component';
+import { PhoneColorStepComponent } from './components/phone/wizard-components/phone-color-step/phone-color-step.component';
 import { PhoneModelFormComponent } from './components/phone/wizard-components/phone-model-form/phone-model-form.component';
 import { PhoneModelSearchComponent } from './components/phone/wizard-components/phone-model-search/phone-model-search.component';
-import { AddPhoneModelComponent } from './components/phone/wizard-components/phone-model-step/phone-model-step.component';
+import { PhoneModelStepComponent } from './components/phone/wizard-components/phone-model-step/phone-model-step.component';
 import { PhoneSpecFormComponent } from './components/phone/wizard-components/phone-spec-form/phone-spec-form.component';
 import { PhoneSpecSearchComponent } from './components/phone/wizard-components/phone-spec-search/phone-spec-search.component';
 import { PhoneSpecStepComponent } from './components/phone/wizard-components/phone-spec-step/phone-spec-step.component';
 import { PhoneColorSearchComponent } from './components/phone/wizard-components/phone-color-search/phone-color-search.component';
-
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { PhoneColorAddComponent } from './components/phone/wizard-components/phone-color-add/phone-color-add.component';
 
 
@@ -29,9 +29,9 @@ import { PhoneColorAddComponent } from './components/phone/wizard-components/pho
     HomeComponent,
     AddItemComponent,
     AddPhoneComponent,
-    AddPhoneColorComponent,
+    PhoneColorStepComponent,
     AddItemVariantComponent,
-    AddPhoneModelComponent,
+    PhoneModelStepComponent,
     PhoneSpecStepComponent,
     AddPhoneVariantWizardComponent,
     AddPhoneDetailsComponent,
@@ -44,6 +44,7 @@ import { PhoneColorAddComponent } from './components/phone/wizard-components/pho
     PhoneColorAddComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

@@ -1,30 +1,29 @@
 <div class="search-container">
-    <h4>Color details</h4>
-    <div class="input-group">
-      <input class="form-control" type="text" placeholder="Search color"
-             [(ngModel)]="searchString" (input)="onSearchChange($event)">
-      <span class="input-group-text" [style.background]="variant.color.hex"></span>
-    </div>
-  
-    <ul *ngIf="searchString && !isColorSelected" class="search-dropdown">
-      <li class="dropdown-item" *ngFor="let color of colors" (click)="onSelectColor(color)">
-        <span class="color-square" [style.background]="color.hex"></span>
-        {{ color.name }}
-      </li>
-      <li class="dropdown-item create-option" (click)="onAddColor()">
-        Add Color Variant
-      </li>
-    </ul>
+  <h4>Color details</h4>
+  <div class="input-group">
+    <input class="form-control" type="text" placeholder="Search color" [(ngModel)]="searchString"
+      (input)="onSearchChange($event)">
+    <span class="input-group-text" [style.background]="variant.color.hex"></span>
   </div>
-  <div class="item-images" *ngIf="isColorSelected">
-   
 
-    <div class="main-image" *ngIf="variant.images.length > 0">
-      <img [src]="variant.images[0].url" />
-    </div>
+  <ul *ngIf="searchString && !isColorSelected" class="search-dropdown">
+    <li class="dropdown-item" *ngFor="let color of colors" (click)="onSelectColor(color)">
+      <span class="color-square" [style.background]="color.hex"></span>
+      {{ color.name }}
+    </li>
+    <li class="dropdown-item create-option" (click)="onAddColor()">
+      Add Color Variant
+    </li>
+  </ul>
+</div>
+<div class="item-images" *ngIf="isColorSelected">
 
-    <div class="thumbnail-images">
-      <img *ngFor="let img of variant.images" [src]="img.url" />
-    </div>
+
+  <div class="main-image" *ngIf="variant.images.length > 0">
+    <img [src]="variant.images[0].url" />
   </div>
-  
+
+  <div class="thumbnail-images">
+    <img *ngFor="let img of variant.images" [src]="img.url" />
+  </div>
+</div>

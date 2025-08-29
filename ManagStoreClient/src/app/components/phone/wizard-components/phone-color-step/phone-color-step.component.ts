@@ -13,14 +13,16 @@ import { WizardStep } from 'src/app/models/wizardStep';
   templateUrl: './phone-color-step.component.html',
   styleUrls: ['./phone-color-step.component.css']
 })
-export class AddPhoneColorComponent {
+export class PhoneColorStepComponent {
 
     @Input() variant!: PhoneVariant
     @Output() stepValidity = new EventEmitter<boolean>(); 
     @Output() colorSelected = new EventEmitter<PhoneVariant>();
   
 
-    
+  ngOnInit(){
+    console.log(this.variant)
+  }
   isVariantSelected: boolean = false;
   colors = COLORS;
  
@@ -41,6 +43,7 @@ export class AddPhoneColorComponent {
     this.colorSelected.emit(variant);
   }
   onAddingColorCancel(){
+    console.log(this.variant)
     this.isColorAdding = false;
   }
 }

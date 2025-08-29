@@ -21,9 +21,12 @@ export class PhoneColorSearchComponent {
 
 
   ngOnInit() {
+    console.log(this.variant)
     this.updateSearchString();
     this.checkModelSelected();
+    
   }
+
   updateSearchString() {
     if (this.variant) {
       const combined = `${this.variant.color.name}`;

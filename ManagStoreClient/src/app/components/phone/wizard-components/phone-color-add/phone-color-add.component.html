@@ -1,23 +1,33 @@
-<div class="add-variant-form">
-    <h3>Add Color Variant</h3>
-  
-    <!-- Select new color -->
-    <div class="mb-2">
-      <label>Color</label>
-      <select [(ngModel)]="newColor" class="form-control">
-        <option *ngFor="let c of colors" [ngValue]="c">{{ c.name }}</option>
-      </select>
+<div class="add-variant-form fields">
+  <h3>Add Color Variant</h3>
+
+  <div class="search-container">
+    <div class="input-group">
+      <input class="form-control" type="text" placeholder="Search color" [(ngModel)]="searchString"
+        (input)="onSearchChange($event)">
+      <span class="input-group-text" [style.background]="selectedColor?.hex"></span>
     </div>
-  
-    <!-- Upload files for this new variant -->
-    <div class="mb-2">
-      <label>Images</label>
-      <input type="file" multiple #files class="form-control"/>
-    </div>
-  
-    <div class="action mt-2">
-      <button class="btn btn-secondary" (click)="onAddingCancel()">Cancel</button>
-      <button class="btn btn-primary" (click)="onSaveColor(files.files)">Save</button>
-    </div>
+
+    <ul *ngIf="searchString && !isColorSelected" class="search-dropdown">
+      <li class="dropdown-item" *ngFor="let color of colors" (click)="onSelectColor(color)">
+        <span class="color-square" [style.background]="color.hex"></span>
+        {{ color.name }}
+      </li>
+      <!-- <li class="dropdown-item create-option" (click)="onAddColor()">
+      Add Color Variant
+    </li> -->
+    </ul>
   </div>
-  
+  <!-- Upload files for this new variant -->
+  <div class="field">
+    <label>Images</label>
+    <button class="btn btn-light" style="border: 1px #dee2e6 solid; " (click)="files.click()">Select images</button>
+    <input type="file" #files multiple style="display: none;" (change)="onFilesSelected(files.files)" />
+
+  </div>
+
+  <div class="action mt-2">
+    <button class="btn btn-secondary" (click)="onAddingCancel()">Cancel</button>
+    <button class="btn btn-primary" (click)="onSaveColor(files.files)">Save</button>
+  </div>
+</div>
