@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ManagmentStoreService.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ManagmentStoreService.Controllers
 {
@@ -6,7 +7,18 @@ namespace ManagmentStoreService.Controllers
     [Route("api/manufacturers")]
     public class ManufacturersController : ControllerBase
     {
+        private readonly IManufacturerService _manufacturerService;
+       
+        public ManufacturersController(IManufacturerService manufacturerService)
+        {
+            _manufacturerService = manufacturerService;
+        }
+
         [HttpGet]
-        public IActionResult<Manufa>
+        public async Task<IActionResult> GetAllAsync()
+        {
+           var manufacturers = await _manufacturerService.GetAllAsync();
+            return Ok(manufacturers);
+        }
     }
 }

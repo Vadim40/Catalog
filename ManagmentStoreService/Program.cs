@@ -26,6 +26,8 @@ builder.Services.AddScoped<ICloudinaryService, CloudinaryServiceImpl>();
 builder.Services.AddScoped<IPhoneService, PhoneServiceImpl>();
 builder.Services.AddScoped<IHeadphoneService, HeadphonesServiceImpl>();
 builder.Services.AddScoped<IItemService, ItemServiceImpl>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerServiceImpl>();
+builder.Services.AddScoped<IColorService, ColorServiceImpl>();
 DotEnv.Load();
 builder.Services.AddDbContext<ManagStoreDbContext>(options =>
     options.UseSqlite("Data Source=catalog.db"));

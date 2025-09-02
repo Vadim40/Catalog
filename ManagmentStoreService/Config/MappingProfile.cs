@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using ManagmentStoreService.Dto;
 using ManagmentStoreService.Dto.Phone;
+using ManagmentStoreService.Models;
 using ManagmentStoreService.Models.PhoneEntities;
 
 namespace ManagmentStoreService.Config
@@ -10,7 +12,12 @@ namespace ManagmentStoreService.Config
         {
             CreateMap<PhoneModel, PhoneModelDto>()
             .ForMember(dest => dest.ManufacturerName, opt => opt.MapFrom(src => src.Manufacturer.Name));
+
             CreateMap<PhoneSpec, PhoneSpecDto>();
+
+            CreateMap<Manufacturer, IdNameDto>();
+            
+            CreateMap<Color, ColorDto>();
         }
     }
 }

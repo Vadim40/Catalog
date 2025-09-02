@@ -30,7 +30,7 @@ namespace ManagmentStoreService.Services.Impl
             _logger = logger;
             _itemService = itemService;
         }
-        public async Task AddImagesToPhoneModelAsync(CreateImagesDto createImagesDto)
+        public async Task AddImagesToModelAsync(CreateImagesDto createImagesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -70,7 +70,7 @@ namespace ManagmentStoreService.Services.Impl
 
         }
 
-        public async Task AddNewPhoneAsync(CreatePhoneDto phoneDto)
+        public async Task AddPhoneAsync(CreatePhoneDto phoneDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -100,7 +100,7 @@ namespace ManagmentStoreService.Services.Impl
 
 
 
-        public async Task AddNewPhoneModelAsync(CreatePhoneModelDto phoneModelDto)
+        public async Task AddModelAsync(CreatePhoneModelDto phoneModelDto)
         {
             var phoneModel = new PhoneModel
             {
@@ -111,7 +111,7 @@ namespace ManagmentStoreService.Services.Impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddNewPhoneSpecAsync(CreatePhoneSpecDto phoneSpesDto)
+        public async Task AddSpecAsync(CreatePhoneSpecDto phoneSpesDto)
         {
             var phoneSpec = new PhoneSpec
             {
@@ -124,39 +124,45 @@ namespace ManagmentStoreService.Services.Impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PhoneModelDto>> GetPhoneModelsByNameAsync(string name)
+        public async Task<IEnumerable<PhoneModelDto>> SearchModelsAsync(string name)
         {
+           
             var phoneModels = await _context.PhoneModels
-             .Include(p => p.Manufacturer)
-             .ToListAsync();
+                             .Include(p => p.Manufacturer)
+                             .ToListAsync();
 
-            
+
             var filteredModels = phoneModels
-                .Where(x => Fuzz.PartialRatio(name, x.Manufacturer.Name + x.Name) > 60)
-                .ToList();
+                                .Where(x => Fuzz.PartialRatio(name, (x.Manufacturer.Name + x.Name).ToLower()) > 60)
+                                .ToList();
 
-         
+
             return _mapper.Map<List<PhoneModelDto>>(filteredModels);
 
         }
 
-        public async Task<IEnumerable<PhoneSpecDto>> GetPhoneSpecsByModelIdAsync(int modelId)
+        public async Task<IEnumerable<PhoneSpecDto>> GetSpecsAsync(int modelId)
         {
             var phoneSpecs = await _context.PhoneSpecs
-                .Join(_context.PhoneVariants,
-                    s => s.Id,
-                    p => p.SpecId,
-                    (s, p) => new { Spec = s, Variant = p })
-                .Where(x => x.Variant.ModelId == modelId)
-                .Select(x => new PhoneSpec
-                {
-                    Id = x.Spec.Id,
-                    RamGb = x.Spec.RamGb,
-                    DisplayIn = x.Spec.DisplayIn,
-                    CameraMp = x.Spec.CameraMp
-                })
-                .ToListAsync();
+                             .Where(s => _context.PhoneVariants
+                             .Any(v => v.SpecId == s.Id && v.ModelId == modelId))
+                             .ToListAsync();
 
+
+            return _mapper.Map<List<PhoneSpecDto>>(phoneSpecs);
+        }
+
+        public async Task<IEnumerable<PhoneSpecDto>> SearchSpecsAsync(string search)
+        {
+
+            var searchNumbers = search.Split('/')
+                                 .Select(s => int.Parse(s.Trim()))
+                                 .ToArray();
+
+            var phoneSpecs = await _context.PhoneSpecs
+                            .Where(p => p.RamGb == searchNumbers[0]
+                            && (searchNumbers.Length == 1 || p.StorageGb == searchNumbers[1]))
+                            .ToListAsync();
             return _mapper.Map<List<PhoneSpecDto>>(phoneSpecs);
         }
     }

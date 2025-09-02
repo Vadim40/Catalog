@@ -5,7 +5,7 @@ namespace ManagmentStoreService.Services
 {
     public interface IManufacturerService
     {
-        public Task<IEnumerable<IdNameDto>> getManufacturers();
+        public Task<IEnumerable<IdNameDto>> GetAllAsync();
        
     }
 }

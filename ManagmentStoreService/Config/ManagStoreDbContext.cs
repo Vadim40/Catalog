@@ -27,6 +27,8 @@ namespace ManagmentStoreService.Config
         public DbSet<PhoneSpec> PhoneSpecs => Set<PhoneSpec>();
         public DbSet<PhoneVariant> PhoneVariants => Set<PhoneVariant>();
         public DbSet<HeadphonesVariant> HeadphonesVariants => Set<HeadphonesVariant>();
+        
+        public DbSet<Color> Colors => Set<Color>();
 
         public DbSet<PhoneVariantImage> PhoneVariantImages => Set<PhoneVariantImage>();
         public DbSet<HeadphonesVariantImage> HeadphonesVariantImages => Set<HeadphonesVariantImage>();

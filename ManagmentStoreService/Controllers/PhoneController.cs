@@ -16,33 +16,40 @@ namespace ManagmentStoreService.Controllers
             }
 
             [HttpGet("models")]
-            public async Task<IActionResult> GetModelsByName([FromQuery] string name)
+            public async Task<IActionResult> SearchModels([FromQuery] string name)
             {
-                var models = await _phoneService.GetPhoneModelsByNameAsync(name);
+                var models = await _phoneService.SearchModelsAsync(name);
                 return Ok(models);
             }
-            [HttpGet("models/{modelId}/specs")]
-            public async Task<IActionResult> GetSpecsByModelId([FromRoute] int modelId)
+            [HttpGet("{modelId}/specs")]
+            public async Task<IActionResult> GetSpecs([FromRoute] int modelId)
             {
-                var specs = await _phoneService.GetPhoneSpecsByModelIdAsync(modelId);
+                var specs = await _phoneService.GetSpecsAsync(modelId);
                 return Ok(specs);
             }
+            [HttpGet("specs")]
+            public async Task<IActionResult> GetSpecs([FromQuery] string search )
+            {
+                var specs = await _phoneService.SearchSpecsAsync(search);
+                return Ok(specs);
+            }
+
             [HttpPost("models")]
             public async Task<IActionResult> AddModel([FromBody] CreatePhoneModelDto phoneModelDto )
             {
-                await _phoneService.AddNewPhoneModelAsync(phoneModelDto);
+                await _phoneService.AddModelAsync(phoneModelDto);
                 return Ok();
             }
             [HttpPost("specs")]
             public async Task<IActionResult> AddSpec([FromBody] CreatePhoneSpecDto phoneSpecDto)
             {
-                await _phoneService.AddNewPhoneSpecAsync(phoneSpecDto);
+                await _phoneService.AddSpecAsync(phoneSpecDto);
                 return Ok();
             }
             [HttpPost]
             public async Task<IActionResult> AddPhone([FromBody] CreatePhoneDto phoneDto)
             {
-                await _phoneService.AddNewPhoneAsync(phoneDto);
+                await _phoneService.AddPhoneAsync(phoneDto);
                 return Ok();
             }
         }
