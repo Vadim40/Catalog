@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
+import { PhoneService } from 'src/app/services/phone.service';
 
 @Component({
   selector: 'app-phone-spec-form',
@@ -9,13 +10,17 @@ import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
   styleUrls: ['./phone-spec-form.component.css']
 })
 export class PhoneSpecFormComponent {
- 
+
   @Output() specCreated = new EventEmitter<PhoneSpec>();
   @Output() specCreatingCanceled = new EventEmitter<void>();
 
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private phoneService: PhoneService,
+
+  ) { }
   createSpec?: CreatePhoneSpec
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -28,7 +33,14 @@ export class PhoneSpecFormComponent {
 
   onSave() {
     if (this.form.valid) {
-      this.specCreated.emit(this.form.value);
+       let spec= this.form.value as PhoneSpec;
+      this.phoneService.addSpec(this.form.value).subscribe({
+        next: (id: number) =>{
+          spec.id = id;
+          this.specCreated.emit(spec);
+        }
+      })
+     
     }
   }
 

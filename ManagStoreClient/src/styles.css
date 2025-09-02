@@ -59,7 +59,7 @@ html {
 
   font-family: 'Roboto' !important;
   font-size: 15px;
-  width: 200px !important;      
+  min-width: 200px !important;      
   flex: 0 1 auto !important;  
 
 }

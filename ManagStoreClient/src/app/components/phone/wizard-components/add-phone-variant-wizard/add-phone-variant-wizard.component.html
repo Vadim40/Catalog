@@ -13,7 +13,7 @@
             (modelSelected)="onModelChange($event)"></app-phone-model-step>
 
         <!-- Step 2: Spec -->
-        <app-phone-spec-step *ngSwitchCase="1" [spec]="spec" (stepValidity)="onStepValidityChange($event)"
+        <app-phone-spec-step *ngSwitchCase="1" [modelId]="model.id" [spec]="spec" (stepValidity)="onStepValidityChange($event)"
             (specSelected)="onSpecChange($event)"></app-phone-spec-step>
 
         <!-- Step 3: Variant -->

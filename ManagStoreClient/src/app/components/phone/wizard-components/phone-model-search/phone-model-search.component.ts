@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subject, Observable, startWith, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap } from 'rxjs';
+import { Subject, Observable, startWith, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap, BehaviorSubject } from 'rxjs';
 import { IIdName } from 'src/app/models/IIdName';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
@@ -16,10 +16,7 @@ export class PhoneModelSearchComponent {
   @Output() modelSelected = new EventEmitter<PhoneModel>();
   @Output() createModelEvent = new EventEmitter();
 
-  manufacturers: IIdName[] = [
-    { id: 1, name: 'Apple' },
-    { id: 2, name: 'Xiaomi' }
-  ]
+
   searchString: string='';
   isModelSelected: boolean = false;
 
@@ -27,14 +24,13 @@ export class PhoneModelSearchComponent {
   phoneModels: PhoneModel[] = []
   createPhoneModel?: CreatePhoneModel;
 
+  
 
+   search$ = new BehaviorSubject<string>("");
 
-  search$ = new Subject<string>();
-
-  phoneModels$: Observable<PhoneModel[]> = this.search$.pipe(
-    tap(() => this.isModelSelected = false), 
+  models$: Observable<PhoneModel[]> = this.search$.pipe(
     debounceTime(300),
-    distinctUntilChanged(),
+    distinctUntilChanged((a, b) => a.trim() === b.trim()),
     filter(name => !!name.trim()),
     switchMap(name =>
       this.phoneService.getModels(name).pipe(
@@ -51,16 +47,9 @@ export class PhoneModelSearchComponent {
   ) { }
 
   ngOnInit() {
-
-    this.updateSearchString();
     this.checkModelSelected();
   }
-  updateSearchString() {
-    if (this.model) {
-      const combined = `${this.model.manufacturerName} ${this.model.name}`.trim();
-   
-    }
-  }
+
   checkModelSelected() {
     if (this.model.id != 0) {
       this.isModelSelected = true
@@ -68,14 +57,29 @@ export class PhoneModelSearchComponent {
   }
   onSelectModel(phoneModel: PhoneModel) {
     this.isModelSelected = true
-    this.searchString = phoneModel.manufacturerName + ' ' + phoneModel.name
+  
     this.modelSelected.emit(phoneModel);
-
+   
+    
   }
  
   onCreateModel() {
     this.createModelEvent.emit();
   }
 
+  displayValue(): string {
+    return this.isModelSelected && this.model
+      ? `${this.model.manufacturerName} ${this.model.name}`
+      : this.searchString;
+  }
+  onInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchString = value;
+    this.isModelSelected = false; 
+    this.model = { id: 0, name: '', manufacturerName: '' };
+    this.search$.next(value);
+    
+  }
+  
 
 }

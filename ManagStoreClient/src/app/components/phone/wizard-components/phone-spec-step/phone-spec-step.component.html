@@ -1,6 +1,7 @@
 <ng-container *ngIf="!isSpecCreating; else createSpecForm">
   <app-phone-spec-search 
       [spec]="spec" 
+      [modelId]="modelId"
       (specSelected)="onSelectSpec($event)" 
       (createSpecEvent)="onCreateSpec()">
   </app-phone-spec-search>

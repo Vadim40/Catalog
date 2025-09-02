@@ -10,7 +10,7 @@ import { PhoneSpec, phoneSpecs } from 'src/app/models/phone/phoneSpec';
   styleUrls: ['./phone-spec-step.component.css']
 })
 export class PhoneSpecStepComponent {
-
+  @Input() modelId!: number;
   @Input() spec!: PhoneSpec
   @Output() stepValidity = new EventEmitter<boolean>(); 
   @Output() specSelected = new EventEmitter<PhoneSpec>();

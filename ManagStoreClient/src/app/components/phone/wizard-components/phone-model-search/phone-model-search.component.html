@@ -1,10 +1,11 @@
 <div class="search-container">
     <h4>Model details</h4>
-    <input type="text" placeholder="Search model" class="search-input form-control mt-3"  [(ngModel)]="searchString"
-    (input)="search$.next(searchString)" />
+    <input type="text" placeholder="Search model" class="form-control mt-3"   (input)="onInputChange($event)"
+    [value]="displayValue()"
+ />
 
     <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
-      <li class="dropdown-item" *ngFor="let phoneModel of phoneModels$ | async" (click)="onSelectModel(phoneModel)">
+      <li class="dropdown-item" *ngFor="let phoneModel of models$ | async" (click)="onSelectModel(phoneModel)">
         {{ phoneModel.manufacturerName }} {{ phoneModel.name }}
       </li>
       <li class="dropdown-item create-option" (click)="onCreateModel()">

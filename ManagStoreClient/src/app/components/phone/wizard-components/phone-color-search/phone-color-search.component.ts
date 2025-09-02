@@ -3,6 +3,7 @@ import { COLORS, Color } from 'src/app/models/color';
 import { IMAGES } from 'src/app/models/image';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-phone-color-search',
@@ -17,8 +18,12 @@ export class PhoneColorSearchComponent {
 
   searchString?: string;
   isColorSelected: boolean = false;
-  colors = COLORS;
+  colors  = COLORS
+  isDropdownOpen =false;
+  constructor(private colorService: ColorService){
 
+  }
+  
 
   ngOnInit() {
     console.log(this.variant)
@@ -52,11 +57,15 @@ export class PhoneColorSearchComponent {
     this.variant.images = IMAGES; // todo: load real images
     this.variant.color = color
     this.isColorSelected = true
+    this.isDropdownOpen = false
     this.colorSelected.emit(this.variant);
   }
 
 
   onAddColor(){
     this.addColorEvent.emit();
+  }
+  onSelectChange(){
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }
