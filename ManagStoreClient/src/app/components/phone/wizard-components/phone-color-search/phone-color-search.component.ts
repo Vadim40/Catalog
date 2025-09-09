@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { COLORS, Color } from 'src/app/models/color';
-import { IMAGES } from 'src/app/models/image';
+import { ApiImage, IMAGES } from 'src/app/models/image';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 import { ColorService } from 'src/app/services/color.service';
+import { ImageService } from 'src/app/services/image.service';
+import { PhoneService } from 'src/app/services/phone.service';
 
 @Component({
   selector: 'app-phone-color-search',
@@ -16,56 +18,81 @@ export class PhoneColorSearchComponent {
   @Output() addColorEvent = new EventEmitter();
 
 
-  searchString?: string;
   isColorSelected: boolean = false;
-  colors  = COLORS
-  isDropdownOpen =false;
-  constructor(private colorService: ColorService){
+  colors: Color[] = [];
+  isDropdownOpen = false;
+  imagesUrl: string[] = []
+
+  constructor(
+    private colorService: ColorService,
+    private phoneService: PhoneService,
+    private imageService: ImageService,
+
+  ) {
 
   }
-  
+
+
 
   ngOnInit() {
     console.log(this.variant)
-    this.updateSearchString();
+    this.getModelColors();
     this.checkModelSelected();
-    
+    this.setImages()
+
   }
-
-  updateSearchString() {
-    if (this.variant) {
-      const combined = `${this.variant.color.name}`;
-      this.searchString = combined.length > 0 ? combined : undefined;
-
+  setImages() {
+    this.imagesUrl = [];
+    if (this.variant.apiImages) {
+      this.variant.apiImages.forEach(i => {
+        this.imagesUrl.push(i.url);
+      }
+      )
+    }
+    else if (this.variant.images) {
+     this.imagesUrl = this.imageService.retriveImageUrls(this.variant.images)
     }
   }
+  getModelColors() {
+    this.colorService.getColorsByModelId(this.variant.modelId).subscribe({
+      next: (colors: Color[]) => {
+        this.colors = colors
+      }
+    })
+  }
+
   checkModelSelected() {
     if (this.variant.color.id != 0) {
       this.isColorSelected = true
     }
   }
-  onSearchChange(event: Event) {
-    this.isColorSelected = false
-  }
-
-
-
-
 
   onSelectColor(color: Color) {
-    this.searchString = color.name;
-    this.variant.images = IMAGES; // todo: load real images
-    this.variant.color = color
-    this.isColorSelected = true
-    this.isDropdownOpen = false
-    this.colorSelected.emit(this.variant);
+
+    this.phoneService.getImages(this.variant.modelId, color.id).subscribe({
+      next: (images: ApiImage[]) => {
+        this.variant.apiImages = images;
+
+        images.forEach(i => {
+          this.imagesUrl.push(i.url);
+        })
+        this.variant.color = color
+
+        this.isColorSelected = true
+        this.isDropdownOpen = false
+        this.colorSelected.emit(this.variant);
+      }
+    })
+
+
+
   }
 
 
-  onAddColor(){
+  onAddColor() {
     this.addColorEvent.emit();
   }
-  onSelectChange(){
+  onSelectChange() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

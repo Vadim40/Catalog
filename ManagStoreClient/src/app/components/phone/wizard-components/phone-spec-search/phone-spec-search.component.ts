@@ -11,9 +11,9 @@ import { PhoneService } from 'src/app/services/phone.service';
   styleUrls: ['./phone-spec-search.component.css']
 })
 export class PhoneSpecSearchComponent {
-  @Input() spec!: PhoneSpec
+  @Input() spec: PhoneSpec | null = null;
   @Input() modelId!: number;
-  @Output() specSelected = new EventEmitter<PhoneSpec>();
+  @Output() specSelected = new EventEmitter<PhoneSpec | undefined>();
   @Output() createSpecEvent = new EventEmitter();
 
 
@@ -57,7 +57,7 @@ export class PhoneSpecSearchComponent {
     })
   }
   checkModelSelected() {
-    if (this.spec.id != 0) {
+    if (this.spec?.id != 0) {
       this.isSpecSelected = true
     }
   }
@@ -68,25 +68,18 @@ export class PhoneSpecSearchComponent {
     this.specSelected.emit(this.spec);
 
   }
-  onSearchChange(event: Event) {
-    this.isSpecSelected = false;
-
-
-  }
-
+ 
   onCreateSpec() {
     this.createSpecEvent.emit();
   }
   displayValue(): string {
     return this.isSpecSelected && this.spec
-      ? `${this.spec.ramGb} GB / ${this.spec.storageGb} GB`
+      ? `${this.spec.ramGb} / ${this.spec.storageGb}`
       : this.searchString;
   }
   onInputChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.searchString = value;
-    console.log('Input value:', JSON.stringify(value));
-
     this.isSpecSelected = false;
     this.spec = {
       id: 0,
@@ -96,6 +89,7 @@ export class PhoneSpecSearchComponent {
       cameraMp: 0
     };
     this.search$.next(value);
+    this.specSelected.emit(undefined);
 
   }
 

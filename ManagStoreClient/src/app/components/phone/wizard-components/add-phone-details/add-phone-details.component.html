@@ -17,46 +17,48 @@
       <h4>Specification</h4>
       <div class="field">
         <label>Storage</label>
-        <span class="form-control">{{ spec.storageGb }} GB</span>
+        <span class="form-control">{{ spec?.storageGb }} GB</span>
       </div>
 
       <div class="field">
         <label>RAM</label>
-        <span class="form-control">{{ spec.ramGb }} GB</span>
+        <span class="form-control">{{ spec?.ramGb }} GB</span>
       </div>
 
       <div class="field">
         <label>Display</label>
-        <span class="form-control">{{ spec.displayIn }}"</span>
+        <span class="form-control">{{ spec?.displayIn }}"</span>
       </div>
 
       <div class="field">
         <label>Camera</label>
-        <span class="form-control">{{ spec.cameraMp }} MP</span>
+        <span class="form-control">{{ spec?.cameraMp }} MP</span>
       </div>
 
     </div>
     <div class="item-images" style="flex: 2;">
-      <div class="main-image" *ngIf="variant.images.length > 0">
-        <img [src]="variant.images[0].url" />
+      <div class="main-image" *ngIf="imagesUrl.length > 0">
+        <img [src]="imagesUrl[0]" />
       </div>
   
       <div class="thumbnail-images">
-        <img *ngFor="let img of variant.images" [src]="img.url" />
+        <img *ngFor="let img of imagesUrl.slice(1, imagesUrl.length)" [src]="img" />
       </div>
     </div>
   </div>
   
-  <div class="fields mt-3">
+  <form [formGroup]="form" class="fields mt-3">
     <h4>Details</h4>
     <div class="field input-group">
       <label >Cost</label>
       <div class="input-group">
-        <input class="form-control" type="value" placeholder="Model Cost" [(ngModel)]="variant.cost">
+        <input class="form-control" type="value" placeholder="Model Cost" formControlName="variantCost">
         <span class="input-group-text" >$</span>
       </div>
-      
+      <div class="text-danger" *ngIf="form.get('variantCost')?.touched && form.get('variantCost')?.invalid">
+        Cost must be at least 1 
+      </div>
     </div>
-  </div>
+  </form>
 
 </div>

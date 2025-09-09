@@ -7,6 +7,9 @@ import { HttpParams } from '@angular/common/http';
 import { CreatePhoneModel } from '../models/phone/createPhoneModel';
 
 import { PhoneSpec } from '../models/phone/phoneSpec';
+import { UploadImages } from '../models/uploadImages';
+import { ApiImage } from '../models/image';
+import { CreatePhoneVariant } from '../models/phone/createPhonVariant';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +42,27 @@ export class PhoneService {
     return this.httpService.get<PhoneSpec []>(endpoint);
   }
   
- addSpec(specCreate: CreatePhoneModel) : Observable<number> {
-    const endpoint =`${this.baseUrl}/specs`
-    return this.httpService.post<number>(endpoint, specCreate);
- }
+  addSpec(specCreate: CreatePhoneModel) : Observable<number> {
+      const endpoint =`${this.baseUrl}/specs`
+      return this.httpService.post<number>(endpoint, specCreate);
+  }
+  addImages(uploadImages: UploadImages) : Observable<void>{
+    const endpoint  =`${this.baseUrl}/images`
+    const formData = new FormData;
+    Array.from(uploadImages.images).forEach( image =>{
+      formData.append('uploadImages',image);
+    })
+    return this.httpService.post(endpoint, formData)
+  }
+  getImages(modelId: number, colorId: number) : Observable<ApiImage []>{
+     const endpoint  =`${this.baseUrl}/images`
+     const params = new HttpParams;
+     params.set("modelId", modelId)
+     params.set("colorId", colorId);
+     return this.httpService.get<ApiImage []>(endpoint, params);
+  }
+  addVariant(createVariant: CreatePhoneVariant) : Observable<number> {
+      const endpoint  =`${this.baseUrl}/variants`
+      return this.httpService.post<number>(endpoint, createVariant);
+  }
 }

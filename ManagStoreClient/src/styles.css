@@ -21,18 +21,7 @@ html {
   gap: 20px;
 }
 
-.param {
-  display: inline-block;
-  /* Or block if stacked */
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  font-family: inherit;
-  font-size: 14px;
-  width: 200px;
 
-}
 .input-group-text {
   cursor: default;
   min-width: 40px;
@@ -40,7 +29,7 @@ html {
 .fields {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .field {
@@ -157,6 +146,7 @@ html {
 .search-container {
   position: relative;
   width: fit-content;
+  box-sizing: content-box
 }
 
 

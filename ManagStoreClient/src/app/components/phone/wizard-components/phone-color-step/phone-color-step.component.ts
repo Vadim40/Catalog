@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Color, COLORS } from 'src/app/models/color';
 import { IIdName } from 'src/app/models/IIdName';
-import { IMAGES } from 'src/app/models/image';
+import { ApiImage, IMAGES } from 'src/app/models/image';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
@@ -17,11 +17,12 @@ export class PhoneColorStepComponent {
 
     @Input() variant!: PhoneVariant
     @Output() stepValidity = new EventEmitter<boolean>(); 
+    @Output() colorAdded = new EventEmitter<{files: FileList, color: Color}>();
     @Output() colorSelected = new EventEmitter<PhoneVariant>();
   
 
   ngOnInit(){
-    console.log(this.variant)
+
   }
   isVariantSelected: boolean = false;
   colors = COLORS;
@@ -32,15 +33,18 @@ export class PhoneColorStepComponent {
  
 
   onSelectColor(variant: PhoneVariant) {
-   this.colorSelected.emit(variant);
+    this.colorSelected.emit(variant);
+    this.stepValidity.emit(true)
   }
 
   onAddColor() {
     this.isColorAdding = true;
   }
 
-  onSaveColor(variant: PhoneVariant){
-    this.colorSelected.emit(variant);
+  onSaveColor(event: { files: FileList; color: Color }) {
+    this.colorAdded.emit({files: event.files, color: event.color});
+    this.isColorAdding = false
+    this.stepValidity.emit(true)
   }
   onAddingColorCancel(){
     console.log(this.variant)

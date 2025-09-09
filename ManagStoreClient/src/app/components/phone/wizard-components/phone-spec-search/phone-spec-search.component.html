@@ -1,18 +1,18 @@
 <div class="spec-container">
-
-
+  <h4>Specification details</h4>
   <div class="field">
-    <select class="form-control" >
-      <option [defaultSelected]="true">Choose existing default specs</option>
-      <option *ngFor="let s of specsDefault" [value]="s.id">
-        {{ s.ramGb }} / {{s.storageGb}}
+    <select [(ngModel)]="spec"   (ngModelChange)="onSelectSpec($event)"  class="form-control">
+      <option [ngValue]="null" disabled>Choose existing specifications</option>
+      <option *ngFor="let s of specsDefault" [ngValue]="s">
+        {{ s.ramGb }} / {{ s.storageGb }}
       </option>
     </select>
+    
 
   </div>
 
-  <div class="search-container" style="flex: 1;">
-    <h4>Specification details</h4>
+  <div class="search-container" >
+  
     <input type="text" placeholder="Search specification" class="search-input form-control mt-3"
     (input)="onInputChange($event)"
     [value]="displayValue()"/>
@@ -28,25 +28,25 @@
   </div>
 
 
-  <div class="fields">
+  <div class="fields  mt-3">
     <div class="field">
       <label>Storage</label>
-      <span class="form-control">{{ spec.storageGb }} GB</span>
+      <span class="form-control">{{ spec?.storageGb }} GB</span>
     </div>
 
     <div class="field">
       <label>RAM</label>
-      <span class="form-control">{{ spec.ramGb }} GB</span>
+      <span class="form-control">{{ spec?.ramGb }} GB</span>
     </div>
 
     <div class="field">
       <label>Display</label>
-      <span class="form-control">{{ spec.displayIn }}"</span>
+      <span class="form-control">{{ spec?.displayIn }}"</span>
     </div>
 
     <div class="field">
       <label>Camera</label>
-      <span class="form-control">{{ spec.cameraMp }} MP</span>
+      <span class="form-control">{{ spec?.cameraMp }} MP</span>
     </div>
   </div>
 </div>

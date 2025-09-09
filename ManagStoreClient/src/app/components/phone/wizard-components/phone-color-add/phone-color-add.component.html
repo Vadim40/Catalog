@@ -1,33 +1,58 @@
-<div class="add-variant-form fields">
+<form [formGroup]="form" (ngSubmit)="onSaveColor()" class="add-variant-form fields">
   <h3>Add Color Variant</h3>
 
   <div class="search-container">
     <div class="input-group">
-      <input class="form-control" type="text" placeholder="Search color" [(ngModel)]="searchString"
-        (input)="onSearchChange($event)">
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Search color"
+        (input)="onInputChange($event)"
+        [value]="displayValue()" />
       <span class="input-group-text" [style.background]="selectedColor?.hex"></span>
     </div>
 
     <ul *ngIf="searchString && !isColorSelected" class="search-dropdown">
-      <li class="dropdown-item" *ngFor="let color of colors" (click)="onSelectColor(color)">
+      <li class="dropdown-item" *ngFor="let color of colors$ | async" (click)="onSelectColor(color)">
         <span class="color-square" [style.background]="color.hex"></span>
         {{ color.name }}
       </li>
-      <!-- <li class="dropdown-item create-option" (click)="onAddColor()">
-      Add Color Variant
-    </li> -->
     </ul>
+    <div class="text-danger" *ngIf="form.get('isColorSelected')?.touched && form.get('isColorSelected')?.invalid">
+      You must select a color.
+    </div>
   </div>
-  <!-- Upload files for this new variant -->
+
   <div class="field">
     <label>Images</label>
-    <button class="btn btn-light" style="border: 1px #dee2e6 solid; " (click)="files.click()">Select images</button>
-    <input type="file" #files multiple style="display: none;" (change)="onFilesSelected(files.files)" />
-
+    <button class="btn btn-light" type="button" style="border: 1px #dee2e6 solid;" (click)="files.click()">
+      Select images
+    </button>
+    <input
+      type="file"
+      accept="image/png, image/gif, image/jpeg"
+      #files
+      multiple
+      style="display: none;"
+      (change)="onFilesSelected(files.files)" />
+    <div class="text-danger" *ngIf="form.get('imagesUrl')?.touched && form.get('imagesUrl')?.invalid">
+      You must upload at least one image.
+    </div>
   </div>
 
+ 
+  <div class="item-images mt-3" *ngIf="imagesUrl.length > 0">
+    <div class="main-image">
+      <img [src]="imagesUrl[0]" />
+    </div>
+    <div class="thumbnail-images">
+      <img *ngFor="let img of imagesUrl.slice(1)" [src]="img" />
+    </div>
+  </div>
+
+ 
   <div class="action mt-2">
-    <button class="btn btn-secondary" (click)="onAddingCancel()">Cancel</button>
-    <button class="btn btn-primary" (click)="onSaveColor(files.files)">Save</button>
+    <button class="btn btn-secondary" type="button" (click)="onAddingCancel()">Cancel</button>
+    <button class="btn btn-primary" type="submit">Save</button>
   </div>
-</div>
+</form>

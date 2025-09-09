@@ -1,40 +1,41 @@
 <h3 class="ms-3">Add new variant</h3>
 <div class="wizard-container">
-<ul class="wizard-steps">
-    <li *ngFor="let step of steps; let i = index" [class.clickable]="isStepClickable(i)"
-        [class.active]="i === currentStepIndex" (click)="navigateToStep(i)">
-        {{ step.label }}
-    </li>
-</ul>
-<div class="wizard-content">
-    <ng-container [ngSwitch]="currentStepIndex">
-        <!-- Step 1: Model -->
-        <app-phone-model-step *ngSwitchCase="0" [model]="model" (stepValidity)="onStepValidityChange($event)"
-            (modelSelected)="onModelChange($event)"></app-phone-model-step>
+    <ul class="wizard-steps">
+        <li *ngFor="let step of steps; let i = index" [class.clickable]="isStepClickable(i)"
+            [class.active]="i === currentStepIndex" (click)="navigateToStep(i)">
+            {{ step.label }}
+        </li>
+    </ul>
+    <div class="wizard-content">
+        <ng-container [ngSwitch]="currentStepIndex">
+            <!-- Step 1: Model -->
+            <app-phone-model-step *ngSwitchCase="0" [model]="model" (stepValidity)="onStepValidityChange($event)"
+                (modelSelected)="onModelChange($event)"></app-phone-model-step>
 
-        <!-- Step 2: Spec -->
-        <app-phone-spec-step *ngSwitchCase="1" [modelId]="model.id" [spec]="spec" (stepValidity)="onStepValidityChange($event)"
-            (specSelected)="onSpecChange($event)"></app-phone-spec-step>
+            <!-- Step 2: Spec -->
+            <app-phone-spec-step *ngSwitchCase="1" [modelId]="model.id" [spec]="spec"
+                (stepValidity)="onStepValidityChange($event)"
+                (specSelected)="onSpecChange($event)"></app-phone-spec-step>
 
-        <!-- Step 3: Variant -->
-        <app-phone-color-step *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
-            (colorSelected)="onVariantChange($event)"></app-phone-color-step>
+            <!-- Step 3: Variant -->
+            <app-phone-color-step *ngSwitchCase="2" [variant]="variant" (stepValidity)="onStepValidityChange($event)"
+                (colorSelected)="onVariantChange($event)"
+                (colorAdded)="onVariantColorAdded($event)"></app-phone-color-step>
 
-        <!-- Step 4: Variant -->
-        <app-add-phone-details *ngSwitchCase="3" [variant]="variant" 
-            [model]="model" [spec]="spec"
-            (selectedVariant)="onVariantChange($event)"></app-add-phone-details>
+            <!-- Step 4: Variant -->
+            <app-add-phone-details *ngSwitchCase="3" [variant]="variant" [model]="model"
+                [spec]="spec"></app-add-phone-details>
 
 
-        <!-- Navigation Controls -->
-        <div class="wizard-navigation">
-            <button class="btn btn-secondary" (click)="previousStep()" [disabled]="isFirstStep">Back</button>
-            <button *ngIf="!isLastStep" class="btn btn-primary" (click)="nextStep()"
-                [disabled]="!steps[currentStepIndex].isValid">
-                Next
-            </button>
-            <button *ngIf="isLastStep" class="btn btn-success" (click)="onSubmit()">Submit</button>
-        </div>
-    </ng-container>
-</div>
+            <!-- Navigation Controls -->
+            <div class="wizard-navigation">
+                <button class="btn btn-secondary" (click)="previousStep()" [disabled]="isFirstStep">Back</button>
+                <button *ngIf="!isLastStep" class="btn btn-primary" (click)="nextStep()"
+                    [disabled]="!steps[currentStepIndex].isValid">
+                    Next
+                </button>
+                <button *ngIf="isLastStep" class="btn btn-success" (click)="onSubmit()">Submit</button>
+            </div>
+        </ng-container>
+    </div>
 </div>

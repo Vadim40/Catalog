@@ -1,6 +1,8 @@
+import Decimal from "decimal.js";
+
 export interface CreatePhoneSpec {
     storageGb: number;
     ramGb: number;
-    displayIn: number;
+    displayIn: Decimal
     cameraMp: number
 }

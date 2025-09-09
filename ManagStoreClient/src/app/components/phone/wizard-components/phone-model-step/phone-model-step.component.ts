@@ -27,9 +27,16 @@ export class PhoneModelStepComponent {
   }
 
  
-  onModelSelected(selected: PhoneModel) {
+  onModelSelected(selected: PhoneModel | undefined) {
+    if(selected)
+    {
     this.model = selected;
     this.modelSelected.emit(this.model);
+    this.stepValidity.emit(true);
+    } else {
+     
+      this.stepValidity.emit(false);
+    }
   }
   onModelCreate(){
     this.isModelCreating = true

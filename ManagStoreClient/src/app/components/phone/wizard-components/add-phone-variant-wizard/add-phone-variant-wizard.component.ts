@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import Decimal from 'decimal.js';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { Color } from 'src/app/models/color';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
 import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 import { WizardStep } from 'src/app/models/wizardStep';
+import { AddPhoneDetailsComponent } from '../add-phone-details/add-phone-details.component';
+import { PhoneService } from 'src/app/services/phone.service';
+import { CreatePhoneVariant } from 'src/app/models/phone/createPhonVariant';
 
 @Component({
   selector: 'app-add-phone-variant-wizard',
@@ -12,13 +15,18 @@ import { WizardStep } from 'src/app/models/wizardStep';
   styleUrls: ['./add-phone-variant-wizard.component.css']
 })
 export class AddPhoneVariantWizardComponent {
+
+  @ViewChild(AddPhoneDetailsComponent)
+  step4Component!: AddPhoneDetailsComponent;
+
   steps: WizardStep[] = [
-    { id: 'modelSelect', label: 'Select model', isValid: true }, // todo: return false
-    { id: 'specSelect', label: ' Selec specification', isValid: true},
-    {id: 'variantSelect', label: 'Select color', isValid: true},
+    { id: 'modelSelect', label: 'Select model', isValid: false }, 
+    { id: 'specSelect', label: ' Selec specification', isValid: false},
+    {id: 'variantSelect', label: 'Select color', isValid: false},
     {id: 'confirmDetalis', label: 'Confirm detalis', isValid:true}
 
   ];
+
   currentStepIndex = 0;
 
   model: PhoneModel = {
@@ -26,13 +34,7 @@ export class AddPhoneVariantWizardComponent {
     name: "",
     manufacturerName: ""
   }
-  spec: PhoneSpec = {
-    id: 0,
-    storageGb: 0,
-    ramGb: 0,
-    displayIn: 0,
-    cameraMp: 0
-  }
+  spec: PhoneSpec | null = null;
   variant: PhoneVariant ={
     id: 0,
     modelId: 0,
@@ -43,8 +45,15 @@ export class AddPhoneVariantWizardComponent {
       hex: ''
     },
     cost: new Decimal(0),
-    images : []
   }
+
+
+  constructor(
+    private phoneService: PhoneService,
+  ) {
+
+  }
+
   get isLastStep(): boolean {
     return this.currentStepIndex === this.steps.length - 1;
   }
@@ -66,19 +75,45 @@ export class AddPhoneVariantWizardComponent {
   }
   onSubmit(): void {
 
-    alert('Profile submitted successfully!');
+    const step4Data = this.step4Component.validateAndGetData();
+    if (!step4Data) {
+      return; 
+    }
+  
+  
+    this.variant.cost = step4Data.variantCost
+    let createVariant : CreatePhoneVariant = {
+      modelId: this.variant.modelId,
+      specId: this.variant.specId,
+      colorId: this.variant.color.id,
+      cost: this.variant.cost
+
+    }
+    console.log(this.variant)
+    this.phoneService.addVariant(createVariant).subscribe({
+      next: (variantId: number) =>{
+        console.log(variantId);
+      }
+    })
   }
   onStepValidityChange(isValid: boolean): void {
     this.steps[this.currentStepIndex].isValid = isValid;
   }
   onModelChange(updated: PhoneModel) {
     this.model = updated;
+    this.variant.modelId = updated.id
+   
   }
   onSpecChange(updated: PhoneSpec){
     this.spec = updated;
+    this.variant.specId = updated.id
   }
   onVariantChange(updated: PhoneVariant){
     this.variant = updated;
+  }
+  onVariantColorAdded(event: {files: FileList, color: Color}){
+    this.variant.images = event.files;
+    this.variant.color = event.color
   }
   navigateToStep(index: number){
    

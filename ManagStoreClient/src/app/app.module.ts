@@ -21,6 +21,7 @@ import { PhoneSpecStepComponent } from './components/phone/wizard-components/pho
 import { PhoneColorSearchComponent } from './components/phone/wizard-components/phone-color-search/phone-color-search.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { PhoneColorAddComponent } from './components/phone/wizard-components/phone-color-add/phone-color-add.component';
+import { GlobalErrorInterceptor } from './interceptors/global-error.interceptor';
 
 
 @NgModule({
@@ -50,7 +51,9 @@ import { PhoneColorAddComponent } from './components/phone/wizard-components/pho
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

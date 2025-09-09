@@ -11,66 +11,33 @@ import { PhoneSpec, phoneSpecs } from 'src/app/models/phone/phoneSpec';
 })
 export class PhoneSpecStepComponent {
   @Input() modelId!: number;
-  @Input() spec!: PhoneSpec
+  @Input() spec: PhoneSpec | null = null
   @Output() stepValidity = new EventEmitter<boolean>(); 
   @Output() specSelected = new EventEmitter<PhoneSpec>();
 
 
-
-
- createSpecObj: CreatePhoneSpec = {
-    storageGb: 0,
-    ramGb : 0,
-    displayIn : 0,
-    cameraMp: 0
-  }
-
-
-  searchString?: string;
-  isSpecSelected: boolean = false
   isSpecCreating: boolean = false;
-  phoneSpecs = phoneSpecs
-  
 
-  ngOnInit(){
-    this.updateSearchString();
-    this.checkModelSelected();
-  }
-  updateSearchString() {
-    if (this.spec) {
-    
-
-    }
-  }
-  checkModelSelected(){
-    if (this.spec.id!= 0) {
-      this.isSpecSelected = true
-    }
-  }
- 
-  onSelectSpec(phoneSpec: PhoneSpec){
-    this.isSpecSelected = true;
+  onSelectSpec(phoneSpec: PhoneSpec | undefined){
+    if(phoneSpec){
     this.spec= phoneSpec;
-    this.searchString = phoneSpec.storageGb + 'GB/' + phoneSpec.ramGb + 'GB'
-    this.stepValidity.emit(this.isSpecSelected);
+    this.stepValidity.emit(true);
     this.specSelected.emit(this.spec);
+  } else {
+    this.stepValidity.emit(false)
+  }
     
   }
-  onSearchChange(event: Event){
-    this.isSpecSelected = false;
-  
-   
-  }
+
   onCancelSpecCreating(){
     this.isSpecCreating = false
   }
   onSaveSpec(spec: PhoneSpec){
     this.isSpecCreating = false
     this.specSelected.emit(spec)
-    // todo save Spec
+
   }
   onCreateSpec(){
     this.isSpecCreating = true;
-     this.searchString=''
   }
 }

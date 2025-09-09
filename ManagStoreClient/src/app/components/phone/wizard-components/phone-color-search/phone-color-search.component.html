@@ -1,9 +1,9 @@
 <div class="search-container">
   <h4>Color details</h4>
 
-  <div class="form-control" (click)="onSelectChange()">
+  <div class="form-control" style="width: fit-content !important;" (click)="onSelectChange()">
     <span class="color-square" [style.background]="variant.color.hex"></span>
-    {{ variant.color?.name || 'Select color' }}
+    {{ variant.color.name || 'Select color' }}
     <span class="arrow">&#9662;</span>
   </div>
 
@@ -18,14 +18,14 @@
     </li>
   </ul>
 </div>
-<div class="item-images" *ngIf="isColorSelected">
+<div class="item-images mt-3" *ngIf="isColorSelected">
 
 
-  <div class="main-image" *ngIf="variant.images.length > 0">
-    <img [src]="variant.images[0].url" />
+  <div class="main-image" *ngIf=" imagesUrl.length > 0">
+    <img [src]="imagesUrl[0]" />
   </div>
 
   <div class="thumbnail-images">
-    <img *ngFor="let img of variant.images" [src]="img.url" />
+    <img *ngFor="let img of imagesUrl.slice(1, imagesUrl.length)" [src]="img" />
   </div>
 </div>

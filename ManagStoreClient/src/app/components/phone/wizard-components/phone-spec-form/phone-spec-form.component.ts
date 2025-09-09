@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import Decimal from 'decimal.js';
 import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
 import { PhoneService } from 'src/app/services/phone.service';
@@ -21,13 +22,18 @@ export class PhoneSpecFormComponent {
     private phoneService: PhoneService,
 
   ) { }
-  createSpec?: CreatePhoneSpec
+  createSpec: CreatePhoneSpec ={
+    storageGb : 0,
+    ramGb: 0,
+    cameraMp: 0,
+    displayIn: new Decimal(0)
+  }
   ngOnInit(): void {
     this.form = this.fb.group({
-      storageGb: [this.createSpec?.storageGb || 0, [Validators.required, Validators.min(1)]],
-      ramGb: [this.createSpec?.ramGb || 0, [Validators.required, Validators.min(1)]],
-      displayIn: [this.createSpec?.displayIn || 0, [Validators.required, Validators.min(1)]],
-      cameraMp: [this.createSpec?.cameraMp || 0, [Validators.required, Validators.min(1)]]
+      storageGb: [this.createSpec.storageGb, [Validators.required, Validators.min(1)]],
+      ramGb: [this.createSpec.ramGb, [Validators.required, Validators.min(1)]],
+      displayIn: [this.createSpec.displayIn, [Validators.required, Validators.min(1)]],
+      cameraMp: [this.createSpec.cameraMp, [Validators.required, Validators.min(1)]]
     });
   }
 

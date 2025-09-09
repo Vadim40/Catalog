@@ -13,9 +13,9 @@ import { PhoneService } from 'src/app/services/phone.service';
 export class PhoneModelSearchComponent {
 
   @Input() model!: PhoneModel
-  @Output() modelSelected = new EventEmitter<PhoneModel>();
+  @Output() modelSelected = new EventEmitter<PhoneModel | undefined>();
   @Output() createModelEvent = new EventEmitter();
-
+  
 
   searchString: string='';
   isModelSelected: boolean = false;
@@ -78,6 +78,7 @@ export class PhoneModelSearchComponent {
     this.isModelSelected = false; 
     this.model = { id: 0, name: '', manufacturerName: '' };
     this.search$.next(value);
+    this.modelSelected.emit(undefined);
     
   }
   

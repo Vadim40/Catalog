@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { Image } from 'src/app/models/image'
+import { ApiImage } from 'src/app/models/image'
 import { Color } from '../color';
 export interface PhoneVariant {
     id: number;
@@ -7,5 +7,6 @@ export interface PhoneVariant {
     specId: number;
     color: Color;
     cost: Decimal;
-    images: Image [];
+    apiImages?: ApiImage [];
+    images?: FileList
 }
