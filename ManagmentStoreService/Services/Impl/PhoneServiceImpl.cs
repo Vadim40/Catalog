@@ -6,6 +6,7 @@ using ManagmentStoreService.Models.Enums;
 using ManagmentStoreService.Models.PhoneEntities;
 using Microsoft.EntityFrameworkCore;
 using ManagmentStoreService.Config;
+using EntityFramework.Exceptions.Common;
 
 
 namespace ManagmentStoreService.Services.Impl
@@ -30,7 +31,7 @@ namespace ManagmentStoreService.Services.Impl
             _logger = logger;
             _itemService = itemService;
         }
-        public async Task AddImagesToModelAsync(CreateImagesDto createImagesDto)
+        public async Task AddImagesToModelAsync(UploadVariantImagesDto createImagesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -111,17 +112,21 @@ namespace ManagmentStoreService.Services.Impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddSpecAsync(CreatePhoneSpecDto phoneSpesDto)
+        public async Task AddSpecAsync(CreatePhoneSpecDto phoneSpecDto)
         {
-            var phoneSpec = new PhoneSpec
-            {
-                StorageGb = phoneSpesDto.StorageGb,
-                RamGb = phoneSpesDto.RamGb,
-                DisplayIn = phoneSpesDto.DisplayIn,
-                CameraMp = phoneSpesDto.CameraMp
-            };
+            var phoneSpec = _mapper.Map<PhoneSpec>(phoneSpecDto);
+
+            try { 
             _context.PhoneSpecs.Add(phoneSpec);
             await _context.SaveChangesAsync();
+            }
+            catch(UniqueConstraintException ex)
+            {
+                if( true /*ex.ConstraintName == "IX_UniquePhoneSpec"*/) //todo: replace
+                {
+                    throw new InvalidOperationException("This spec already exist", ex);
+                }
+            }
         }
 
         public async Task<IEnumerable<PhoneModelDto>> SearchModelsAsync(string name)
@@ -133,7 +138,7 @@ namespace ManagmentStoreService.Services.Impl
 
 
             var filteredModels = phoneModels
-                                .Where(x => Fuzz.PartialRatio(name, (x.Manufacturer.Name + x.Name).ToLower()) > 60)
+                                .Where(x => Fuzz.PartialRatio(name.ToLower(), (x.Manufacturer.Name + x.Name).ToLower()) > 60)
                                 .ToList();
 
 
@@ -164,6 +169,25 @@ namespace ManagmentStoreService.Services.Impl
                             && (searchNumbers.Length == 1 || p.StorageGb == searchNumbers[1]))
                             .ToListAsync();
             return _mapper.Map<List<PhoneSpecDto>>(phoneSpecs);
+        }
+
+        public async Task<IEnumerable<ImageDto>> GetImagesAsync(int modelId, int colorId)
+        {
+            var images = await (from i in _context.PhoneImages
+                                join vi in _context.PhoneVariantImages on i.Id equals vi.ImageId
+                                join pv in _context.PhoneVariants on vi.VariantId equals pv.Id
+                                where pv.ModelId == modelId && pv.ColorId == colorId
+                                select i)
+                    .ToListAsync();
+            return _mapper.Map<List<ImageDto>>(images);
+        }
+
+        public async Task<int> AddPhoneVariantAsync(CreatePhoneVariantDto variantDto)
+        {
+           var variant = _mapper.Map<PhoneVariant>(variantDto);
+            _context.PhoneVariants.Add(variant);
+            await _context.SaveChangesAsync();
+            return variant.Id;
         }
     }
 }

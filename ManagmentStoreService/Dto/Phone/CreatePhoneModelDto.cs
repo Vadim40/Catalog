@@ -4,11 +4,11 @@ namespace ManagmentStoreService.Dto.Phone
 {
     public class CreatePhoneModelDto
     {
-        [Required]
-        public int ManufacturerId { get; set; }
+      
+        public int ManufacturerId { get; init; }
 
-        [Required]
-        public string Name { get; set; }
+  
+        public string Name { get; init; }
 
     }
 }

@@ -2,10 +2,10 @@
 {
     public class HeadphonesFilter
     {
-        public List<int>? Manufacturers { get; set; }
-        public decimal? MinCost { get; set; }
-        public decimal? MaxCost { get; set; }
-        public bool? IsWireless { get; set; }
-        public List<int>? Codecs { get; set; }
+        public List<int>? Manufacturers { get; init; }
+        public decimal? MinCost { get; init; }
+        public decimal? MaxCost { get; init; }
+        public bool? IsWireless { get; init; }
+        public List<int>? Codecs { get; init; }
     }
 }

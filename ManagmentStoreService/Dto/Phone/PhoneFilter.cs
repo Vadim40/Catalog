@@ -3,28 +3,28 @@
     public class PhoneFilter
     {
 
-        public List<int>? Manufacturers { get; set; }
+        public List<int>? Manufacturers { get; init; }
 
 
-        public string Color { get; set; }
+        public string Color { get; init; }
 
 
-        public int? MinStorageGb { get; set; }
-        public int? MaxStorageGb { get; set; }
+        public int? MinStorageGb { get; init; }
+        public int? MaxStorageGb { get; init; }
 
-        public int? MinRamGb { get; set; }
-        public int? MaxRamGb { get; set; }
+        public int? MinRamGb { get; init; }
+        public int? MaxRamGb { get; init; }
 
-        public float? MinDisplayIn { get; set; }
-        public float? MaxDisplayIn { get; set; }
+        public float? MinDisplayIn { get; init; }
+        public float? MaxDisplayIn { get; init; }
 
-        public string DisplayType { get; set; }
+        public string DisplayType { get; init; }
 
-        public float? MinCameraMp { get; set; }
-        public float? MaxCameraMp { get; set; }
+        public float? MinCameraMp { get; init; }
+        public float? MaxCameraMp { get; init; }
 
-        public decimal? MinCost { get; set; }
-        public decimal? MaxCost { get; set; }
+        public decimal? MinCost { get; init; }
+        public decimal? MaxCost { get; init; }
     }
 
 }

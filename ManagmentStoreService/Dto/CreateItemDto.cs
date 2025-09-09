@@ -4,7 +4,7 @@ namespace ManagmentStoreService.Dto
 {
     public class CreateItemDto
     {
-        public string SerialNumber { get; set; }
-        public CategoryType Category { get; set; }
+        public string SerialNumber { get; init; }
+        public CategoryType Category { get; init; }
     }
 }

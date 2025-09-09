@@ -33,7 +33,7 @@ namespace ManagmentStoreService.Services.Impl
             _logger = logger;
             _itemService = itemService;
         }
-        public async Task AddImagesToHeadphonesModelAsync(CreateImagesDto createImagesDto)
+        public async Task AddImagesToHeadphonesModelAsync(UploadVariantImagesDto createImagesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try

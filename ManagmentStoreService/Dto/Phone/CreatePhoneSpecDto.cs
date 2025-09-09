@@ -4,15 +4,15 @@ namespace ManagmentStoreService.Dto.Phone
 {
     public class CreatePhoneSpecDto
     {
-        [Required]
-        public int StorageGb { get; set; }
+       
+        public int StorageGb { get; init; }
 
-        [Required]
-        public int RamGb { get; set; }
-        [Required]
-        public float DisplayIn { get; set; }
-        [Required]
-        public float CameraMp { get; set; }
+       
+        public int RamGb { get; init; }
+       
+        public float DisplayIn { get; init; }
+  
+        public float CameraMp { get; init; }
 
     }
 }

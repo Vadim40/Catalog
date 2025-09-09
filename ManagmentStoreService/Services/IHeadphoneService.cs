@@ -12,6 +12,6 @@ namespace ManagmentStoreService.Services
         public Task<IEnumerable<HeadphonesModelDto>> GetHeadphonesModelsByNameAsync(string name);
         public Task<IEnumerable<HeadphonesSpecDto>> GetHeadphonesSpecsByModelIdAsync(int modelId);
 
-        public Task AddImagesToHeadphonesModelAsync(CreateImagesDto images);
+        public Task AddImagesToHeadphonesModelAsync(UploadVariantImagesDto images);
     }
 }

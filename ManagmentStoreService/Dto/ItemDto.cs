@@ -5,16 +5,16 @@ namespace ManagmentStoreService.Dto
 {
     public class ItemDto
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
       
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; init; }
 
        
-        public int CategoryId { get; set; }
+        public int CategoryId { get; init; }
         
-        public int? StatusId { get; set; }
+        public int? StatusId { get; init; }
         
-        public int? LocationId { get; set; }
+        public int? LocationId { get; init; }
        
        
     }

@@ -2,7 +2,7 @@
 {
     public class CreateHeadphonesDto
     {
-        public string SerialNumber { get; set; }
-        public int VariantId { get; set; }
+        public string SerialNumber { get; init; }
+        public int VariantId { get; init; }
     }
 }

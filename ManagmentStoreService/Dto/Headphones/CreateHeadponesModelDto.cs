@@ -2,8 +2,8 @@
 {
     public class CreateHeadponesModelDto
     {
-        public int ManufacturerId { get; set; }
-        public string Name { get; set; }
-        public string Color { get; set; }
+        public int ManufacturerId { get; init; }
+        public string Name { get; init; }
+        public string Color { get; init; }
     }
 }

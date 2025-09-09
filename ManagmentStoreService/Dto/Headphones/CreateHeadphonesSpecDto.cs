@@ -2,8 +2,8 @@
 {
     public class CreateHeadphonesSpecDto
     {
-       public bool IsWireless { get; set; }
-        public string FrequencyRangeHz { get; set; }
-        public int CodecId { get; set; }
+       public bool IsWireless { get; init; }
+        public string FrequencyRangeHz { get; init; }
+        public int CodecId { get; init; }
     }
 }

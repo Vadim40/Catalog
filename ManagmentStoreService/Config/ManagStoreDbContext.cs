@@ -12,6 +12,10 @@ namespace ManagmentStoreService.Config
         public ManagStoreDbContext(DbContextOptions<ManagStoreDbContext> options) : base(options)
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<HeadphonesImage> HeadphonesImages => Set<HeadphonesImage>();
         public DbSet<Headphones> Headphones => Set<Headphones>();

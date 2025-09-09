@@ -2,10 +2,10 @@
 {
     public class PhoneSpecDto
     {
-        public int Id { get; set; }
-        public int StorageGb { get; set; }
-        public int RamGb { get; set; }
-        public float DisplayIn { get; set; }
-        public float CameraMp { get; set; }
+        public int Id { get; init; }
+        public int StorageGb { get; init; }
+        public int RamGb { get; init; }
+        public float DisplayIn { get; init; }
+        public float CameraMp { get; init; }
     }
 }

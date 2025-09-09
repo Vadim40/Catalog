@@ -3,6 +3,7 @@ using ManagmentStoreService.Services;
 using ManagmentStoreService.Services.Impl;
 using Microsoft.EntityFrameworkCore;
 using ManagmentStoreService.Config;
+using EntityFramework.Exceptions.Sqlite;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
@@ -21,7 +22,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryServiceImpl>();
 builder.Services.AddScoped<IPhoneService, PhoneServiceImpl>();
 builder.Services.AddScoped<IHeadphoneService, HeadphonesServiceImpl>();
@@ -30,7 +32,8 @@ builder.Services.AddScoped<IManufacturerService, ManufacturerServiceImpl>();
 builder.Services.AddScoped<IColorService, ColorServiceImpl>();
 DotEnv.Load();
 builder.Services.AddDbContext<ManagStoreDbContext>(options =>
-    options.UseSqlite("Data Source=catalog.db"));
+    options.UseSqlite("Data Source=catalog.db")
+    .UseExceptionProcessor());
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
@@ -46,7 +49,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();
 
-
+app.UseExceptionHandler();
 app.Run();
 
 

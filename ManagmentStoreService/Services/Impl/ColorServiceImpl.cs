@@ -20,7 +20,7 @@ namespace ManagmentStoreService.Services.Impl
         {
             var colors = await _context.Colors.ToListAsync();
 
-            var filteredColors = colors.Where(c => Fuzz.PartialRatio(search, c.Name.ToLower()) > 70);
+            var filteredColors = colors.Where(c => Fuzz.PartialRatio(search.ToLower(), c.Name.ToLower()) > 70);
 
             return _mapper.Map<List<ColorDto>>(filteredColors);
         }
