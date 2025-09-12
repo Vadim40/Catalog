@@ -163,10 +163,12 @@ namespace ManagmentStoreService.Services.Impl
             var searchNumbers = search.Split('/')
                                  .Select(s => int.Parse(s.Trim()))
                                  .ToArray();
-
             var phoneSpecs = await _context.PhoneSpecs
-                            .Where(p => p.RamGb == searchNumbers[0]
-                            && (searchNumbers.Length == 1 || p.StorageGb == searchNumbers[1]))
+                            .Where(p =>
+                                (searchNumbers.Length >= 1 ? p.RamGb.ToString().StartsWith(searchNumbers[0].ToString()) : true)
+                                &&
+                                (searchNumbers.Length == 2 ? p.StorageGb.ToString().StartsWith(searchNumbers[1].ToString()) : true)
+                            )
                             .ToListAsync();
             return _mapper.Map<List<PhoneSpecDto>>(phoneSpecs);
         }

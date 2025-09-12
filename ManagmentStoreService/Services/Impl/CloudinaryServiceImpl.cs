@@ -36,8 +36,9 @@ namespace ManagmentStoreService.Services.Impl
                     Overwrite = true
                 };
 
-                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                return (uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            return (uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
             
         }
     }
