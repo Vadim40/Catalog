@@ -4,12 +4,12 @@
       <h4>Model</h4>
       <div class="field">
         <label>Manufacturer name</label>
-        <span class="form-control">{{ model.manufacturerName }}</span>
+        <span class="form-control">{{ variant.model?.manufacturerName }}</span> 
       </div>
 
       <div class="field" >
         <label>Model name</label>
-        <span class="form-control">{{ model.name }}</span>
+        <span class="form-control">{{ variant.model?.name }}</span>
       </div>
     </div>
 
@@ -17,22 +17,22 @@
       <h4>Specification</h4>
       <div class="field">
         <label>Storage</label>
-        <span class="form-control">{{ spec?.storageGb }} GB</span>
+        <span class="form-control">{{ variant.spec?.storageGb }} GB</span>
       </div>
 
       <div class="field">
         <label>RAM</label>
-        <span class="form-control">{{ spec?.ramGb }} GB</span>
+        <span class="form-control">{{ variant.spec?.ramGb }} GB</span>
       </div>
 
       <div class="field">
         <label>Display</label>
-        <span class="form-control">{{ spec?.displayIn }}"</span>
+        <span class="form-control">{{ variant.spec?.displayIn }}"</span>
       </div>
 
       <div class="field">
         <label>Camera</label>
-        <span class="form-control">{{ spec?.cameraMp }} MP</span>
+        <span class="form-control">{{ variant.spec?.cameraMp }} MP</span>
       </div>
 
     </div>

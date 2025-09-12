@@ -31,7 +31,7 @@
     border-radius: 4px;
     background-color: #eee;
     margin-right: 5px;
-    font-weight: bold;
+    font-weight: normal;
   }
   
   .wizard-steps li.active {
@@ -58,4 +58,4 @@
    background-color: #9913FF;
    border-color: #9913FF;
   }
-  
+ 

@@ -1,28 +1,30 @@
-<div class="search-container">
-    <h4>Model details</h4>
-    <input type="text" placeholder="Search model" class="form-control mt-3"   (input)="onInputChange($event)"
-    [value]="displayValue()"
- />
+<div class="fields">
+<h4>Model details</h4>
+<mat-form-field appearance="outline" class="field"  >
+  <mat-label>Search model</mat-label>
+  <input type="text" matInput [formControl]="searchCtrl" [matAutocomplete]="auto" >
+  <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
 
-    <ul class="search-dropdown" *ngIf="searchString && !isModelSelected">
-      <li class="dropdown-item" *ngFor="let phoneModel of models$ | async" (click)="onSelectModel(phoneModel)">
-        {{ phoneModel.manufacturerName }} {{ phoneModel.name }}
-      </li>
-      <li class="dropdown-item create-option" (click)="onCreateModel()">
-        Create new model
-      </li>
-    </ul>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let phoneModel of models$ | async" (onSelectionChange)="onSelectModel(phoneModel)">
+      {{ phoneModel.manufacturerName }} {{ phoneModel.name }}
+    </mat-option>
+
+    <mat-option class="create-option" (onSelectionChange)="onCreateModel()">
+      ➕ Create new model
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+
+
+  <div class="field">
+    <label>Manufacturer name</label>
+    <span class="form-control">{{ model?.manufacturerName }} &#8203;</span>
   </div>
-    <div class="fields mt-3">
-     
-      <div class="field">
-        <label>Manufacturer name</label>
-        <span class="form-control">{{ model.manufacturerName }} &#8203;</span>
-      </div>
- 
-      <div class="field" >
-        <label>Model name</label>
-        <span class="form-control">{{ model.name }} &#8203;</span>
-      </div>
-    </div>
-  
+
+  <div class="field">
+    <label>Model name</label>
+    <span class="form-control">{{ model?.name }} &#8203;</span>
+  </div>
+</div>

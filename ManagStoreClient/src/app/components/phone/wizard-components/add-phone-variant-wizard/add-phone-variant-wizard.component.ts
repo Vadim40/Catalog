@@ -8,6 +8,8 @@ import { WizardStep } from 'src/app/models/wizardStep';
 import { AddPhoneDetailsComponent } from '../add-phone-details/add-phone-details.component';
 import { PhoneService } from 'src/app/services/phone.service';
 import { CreatePhoneVariant } from 'src/app/models/phone/createPhonVariant';
+import { UploadImages } from 'src/app/models/uploadImages';
+import { ApiImage } from 'src/app/models/image';
 
 @Component({
   selector: 'app-add-phone-variant-wizard',
@@ -29,22 +31,13 @@ export class AddPhoneVariantWizardComponent {
 
   currentStepIndex = 0;
 
-  model: PhoneModel = {
-    id: 0,
-    name: "",
-    manufacturerName: ""
-  }
-  spec: PhoneSpec | null = null;
   variant: PhoneVariant ={
     id: 0,
-    modelId: 0,
-    specId: 0,
-    color : {
-      id: 0,
-      name: '',
-      hex: ''
-    },
+    color: null,
+    model: null,
+    spec: null,
     cost: new Decimal(0),
+
   }
 
 
@@ -83,37 +76,54 @@ export class AddPhoneVariantWizardComponent {
   
     this.variant.cost = step4Data.variantCost
     let createVariant : CreatePhoneVariant = {
-      modelId: this.variant.modelId,
-      specId: this.variant.specId,
-      colorId: this.variant.color.id,
+      modelId: this.variant.model!.id,
+      specId: this.variant.spec!.id,
+      colorId: this.variant.color!.id,
       cost: this.variant.cost
 
     }
-    console.log(this.variant)
+  
     this.phoneService.addVariant(createVariant).subscribe({
       next: (variantId: number) =>{
-        console.log(variantId);
+        if(this.variant.images){
+        const uploadImages : UploadImages ={
+          images: this.variant.images,
+          variantId: variantId
+        }
+      
+        this.phoneService.addImages(uploadImages).subscribe({})
+      }
       }
     })
   }
   onStepValidityChange(isValid: boolean): void {
+    if(isValid == false){
+
+    
+    this.steps.slice(this.currentStepIndex, this.steps.length).forEach(step =>{
+      step.isValid = isValid;
+    })
+  }
+  else{
     this.steps[this.currentStepIndex].isValid = isValid;
   }
+  }
   onModelChange(updated: PhoneModel) {
-    this.model = updated;
-    this.variant.modelId = updated.id
+    this.variant.model = updated;
    
   }
   onSpecChange(updated: PhoneSpec){
-    this.spec = updated;
-    this.variant.specId = updated.id
+    this.variant.spec = updated;
   }
-  onVariantChange(updated: PhoneVariant){
-    this.variant = updated;
+  onColorChange(event: {files: ApiImage[] , color: Color}){
+    this.variant.color = event.color;
+    this.variant.apiImages = event.files;
+  
   }
   onVariantColorAdded(event: {files: FileList, color: Color}){
     this.variant.images = event.files;
     this.variant.color = event.color
+    this.variant.apiImages = undefined;
   }
   navigateToStep(index: number){
    

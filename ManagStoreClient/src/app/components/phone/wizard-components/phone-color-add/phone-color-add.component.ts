@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of } from 'rxjs';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap } from 'rxjs';
 import { COLORS, Color } from 'src/app/models/color';
 import { IMAGES } from 'src/app/models/image';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
@@ -19,29 +19,11 @@ export class PhoneColorAddComponent {
   @Output() colorAdded = new EventEmitter<{ files: FileList, color: Color }>();
   @Output() colorAddingCanceled = new EventEmitter();
 
-
-
-
   selectedColor?: Color;
 
+  searchCtrl = new FormControl;
+  colors$?: Observable<Color[]> ;
 
-  searchString: string = '';
-  search$ = new BehaviorSubject<string>("");
-
-  colors$: Observable<Color[]> = this.search$.pipe(
-    debounceTime(300),
-    distinctUntilChanged((a, b) => a.trim() === b.trim()),
-    filter(name => !!name.trim()),
-    switchMap(name =>
-      this.colorService.getColors(name).pipe(
-        catchError(err => {
-          console.error(err);
-          return of([]);
-        })
-      )
-    )
-  );
-  isColorSelected: boolean = false;
   imagesUrl: string[] = []
   fileList?: FileList;
   form!: FormGroup
@@ -55,10 +37,28 @@ export class PhoneColorAddComponent {
 
   }
   ngOnInit() {
+    this.colors$= this.searchCtrl.valueChanges.pipe(
+      debounceTime(300),
+      filter(val => typeof val === "string" && !!val.trim()),
+      distinctUntilChanged((a, b) => a.trim() === b.trim()), 
+      tap(()=>{
+        this.selectedColor= undefined;
+        this.form.get('isColorSelected')?.setValue(false);
+      }),
+      switchMap(name =>
+        this.colorService.getColors(name).pipe(
+          catchError(err => {
+            console.error(err);
+            return of([]);
+          })
+        )
+      )
+    );
     this.form = this.fb.group({
       isColorSelected: [false, Validators.requiredTrue],
       imagesUrl: [[], this.arrayNotEmpty]
     });
+
   }
   arrayNotEmpty(control: AbstractControl): ValidationErrors | null {
     return Array.isArray(control.value) && control.value.length > 0
@@ -66,7 +66,7 @@ export class PhoneColorAddComponent {
       : { arrayNotEmpty: true };
   }
   onSaveColor() {
-
+    console.log(this.form)
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -94,26 +94,16 @@ export class PhoneColorAddComponent {
 
  
   onSelectColor(color: Color) {
-    this.searchString = color.name;
     this.selectedColor = color;
-    this.isColorSelected = true
+    this.searchCtrl.setValue(this.displayValue(), {emitEvent: false})
     this.form.get('isColorSelected')?.setValue(true);
 
   }
   displayValue(): string {
-    return this.isColorSelected && this.selectedColor
+    return this.selectedColor
       ? `${this.selectedColor.name}`
-      : this.searchString;
+      : '';
   }
-  onInputChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchString = value;
 
-    this.isColorSelected = false;
-    this.selectedColor = undefined
-    this.search$.next(value);
-    this.form.get('isColorSelected')?.setValue(false);
-
-  }
 
 }

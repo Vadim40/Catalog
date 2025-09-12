@@ -1,4 +1,4 @@
-<div class="search-container">
+<!-- <div class="search-container">
   <h4>Color details</h4>
 
   <div class="form-control" style="width: fit-content !important;" (click)="onSelectChange()">
@@ -17,8 +17,31 @@
       Add Color Variant
     </li>
   </ul>
-</div>
-<div class="item-images mt-3" *ngIf="isColorSelected">
+</div> -->
+<mat-form-field appearance="outline" class="field">
+  <mat-label>Select color</mat-label>
+  <mat-select [(ngModel)]="variant.color">
+
+
+    <mat-select-trigger>
+      <span class="color-square" [style.background]="variant.color?.hex"></span>
+      {{ variant.color?.name }}
+    </mat-select-trigger>
+
+    <mat-option *ngFor="let color of colors" [value]="color" (onSelectionChange)="onSelectColor(color)">
+      <span class="color-square" [style.background]="color.hex"></span>
+      {{ color.name }}
+    </mat-option>
+    <mat-option (onSelectionChange)="onAddColor()">
+      ➕ Add new color
+    </mat-option>
+    <mat-option *ngIf="variant.color " [value]="variant.color" style="display: none;">
+      {{ variant.color.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="item-images mt-3" *ngIf="variant.color">
 
 
   <div class="main-image" *ngIf=" imagesUrl.length > 0">

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subject, Observable, startWith, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap, BehaviorSubject } from 'rxjs';
 import { IIdName } from 'src/app/models/IIdName';
 import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
@@ -12,75 +13,66 @@ import { PhoneService } from 'src/app/services/phone.service';
 })
 export class PhoneModelSearchComponent {
 
-  @Input() model!: PhoneModel
-  @Output() modelSelected = new EventEmitter<PhoneModel | undefined>();
+  @Input() model: PhoneModel | null = null;
+  @Output() modelSelected = new EventEmitter<PhoneModel | null>();
   @Output() createModelEvent = new EventEmitter();
-  
-
-  searchString: string='';
-  isModelSelected: boolean = false;
 
 
   phoneModels: PhoneModel[] = []
   createPhoneModel?: CreatePhoneModel;
 
-  
 
-   search$ = new BehaviorSubject<string>("");
 
-  models$: Observable<PhoneModel[]> = this.search$.pipe(
-    debounceTime(300),
-    distinctUntilChanged((a, b) => a.trim() === b.trim()),
-    filter(name => !!name.trim()),
-    switchMap(name =>
-      this.phoneService.getModels(name).pipe(
-        catchError(err => {
-          console.error(err);
-          return of([]); 
-        })
-      )
-    )
-  );
+  searchCtrl = new FormControl;
+
+  models$?: Observable<PhoneModel[]> ;
 
   constructor(
     private phoneService: PhoneService
   ) { }
 
   ngOnInit() {
-    this.checkModelSelected();
+   this.models$ = this.searchCtrl.valueChanges.pipe(
+      debounceTime(300),
+      filter(val => typeof val === 'string' && !!val.trim() ),
+      distinctUntilChanged((a, b) => a.trim() === b.trim()),
+      tap(()=>{
+        this.model =null
+        this.modelSelected.emit(null);
+      }),
+      switchMap(name =>
+    
+        this.phoneService.getModels(name).pipe(
+          catchError(err => {
+            console.error(err);
+            return of([]);
+          })
+        )
+        
+      )
+    );
+    
+    this.searchCtrl.setValue(this.displayValue(), { emitEvent: false });
   }
 
-  checkModelSelected() {
-    if (this.model.id != 0) {
-      this.isModelSelected = true
-    }
-  }
+
   onSelectModel(phoneModel: PhoneModel) {
-    this.isModelSelected = true
-  
     this.modelSelected.emit(phoneModel);
-   
-    
+    this.model = phoneModel;
+    this.searchCtrl.setValue(this.displayValue(), { emitEvent: false });
+
   }
- 
+
   onCreateModel() {
     this.createModelEvent.emit();
   }
 
   displayValue(): string {
-    return this.isModelSelected && this.model
+    return this.model
       ? `${this.model.manufacturerName} ${this.model.name}`
-      : this.searchString;
+      : '';
   }
-  onInputChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchString = value;
-    this.isModelSelected = false; 
-    this.model = { id: 0, name: '', manufacturerName: '' };
-    this.search$.next(value);
-    this.modelSelected.emit(undefined);
-    
-  }
-  
+
+
 
 }

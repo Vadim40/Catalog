@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subject, Observable, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap, BehaviorSubject } from 'rxjs';
 import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
@@ -17,25 +18,15 @@ export class PhoneSpecSearchComponent {
   @Output() createSpecEvent = new EventEmitter();
 
 
-  searchString: string = '';
-  isSpecSelected: boolean = false
+  searchCtrl = new FormControl;
+
   specsDefault: PhoneSpec[] = []
+  specsFound$?: Observable<PhoneSpec[]>
 
-
-
-  search$ = new BehaviorSubject<string>("");
-  specsFound$: Observable<PhoneSpec[]> = this.search$.pipe(
-    debounceTime(300),
-    switchMap(search => {
-      return this.phoneService.getSpecs(search).pipe(
-        catchError(err => {
-          console.error(err);
-          return of([]);
-        })
-      );
-    })
-  );
+  regex =  /^\s*\d+\s*(\/\s*\d+)?\s*$/
   
+ 
+
 
 
   constructor(private phoneService: PhoneService) {
@@ -43,54 +34,58 @@ export class PhoneSpecSearchComponent {
   }
 
   ngOnInit() {
-    this.search$.subscribe();
+
+    this.specsFound$= this.searchCtrl.valueChanges.pipe(
+      debounceTime(300),
+      filter(val => typeof val === 'string' && !!val.trim() ),
+      distinctUntilChanged((a, b) => a.trim() === b.trim()),
+      tap(()=>{
+        this.spec =null
+      }),
+      switchMap(search => {
+        if (this.regex.test(search)) {
+          return this.phoneService.getSpecs(search).pipe(
+            catchError(err => {
+              console.error(err);
+              return of([]);
+            })
+          );
+        }
+        else {
+          return of([]);
+        }
+      })
+    );
     this.getDefaultSpecs();
-    this.checkModelSelected();
+   
+    this.searchCtrl.setValue(this.displayValue(), {emitEvent: false})
 
   }
 
-  getDefaultSpecs(){
+  getDefaultSpecs() {
     this.phoneService.getSpecsByModelId(this.modelId).subscribe({
       next: (specs: PhoneSpec[]) => {
         this.specsDefault = specs;
       }
     })
   }
-  checkModelSelected() {
-    if (this.spec?.id != 0) {
-      this.isSpecSelected = true
-    }
-  }
+
 
   onSelectSpec(phoneSpec: PhoneSpec) {
-    this.isSpecSelected = true;
     this.spec = phoneSpec;
+    this.searchCtrl.setValue(this.displayValue(), {emitEvent: false})
     this.specSelected.emit(this.spec);
 
   }
- 
+
   onCreateSpec() {
     this.createSpecEvent.emit();
   }
   displayValue(): string {
-    return this.isSpecSelected && this.spec
+    return  this.spec
       ? `${this.spec.ramGb} / ${this.spec.storageGb}`
-      : this.searchString;
+      : '';
   }
-  onInputChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchString = value;
-    this.isSpecSelected = false;
-    this.spec = {
-      id: 0,
-      ramGb: 0,
-      storageGb: 0,
-      displayIn: 0,
-      cameraMp: 0
-    };
-    this.search$.next(value);
-    this.specSelected.emit(undefined);
 
-  }
 
 }

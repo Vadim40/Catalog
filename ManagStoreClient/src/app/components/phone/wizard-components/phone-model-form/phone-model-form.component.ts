@@ -18,7 +18,6 @@ export class PhoneModelFormComponent {
   form!: FormGroup
   manufacturers: IIdName[] = [];
 
-  isModelSelected: boolean = false;
   createPhoneModel: CreatePhoneModel = {
     manufacturerId: 0,
     name: ''

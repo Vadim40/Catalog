@@ -1,34 +1,34 @@
-<div class="spec-container">
+<div class="fields">
   <h4>Specification details</h4>
-  <div class="field">
-    <select [(ngModel)]="spec"   (ngModelChange)="onSelectSpec($event)"  class="form-control">
-      <option [ngValue]="null" disabled>Choose existing specifications</option>
-      <option *ngFor="let s of specsDefault" [ngValue]="s">
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Existing specifications</mat-label>
+    <mat-select 
+        [(ngModel)]="spec" 
+        (selectionChange)="onSelectSpec($event.value)">
+        
+      <mat-option *ngFor="let s of specsDefault" [value]="s">
         {{ s.ramGb }} / {{ s.storageGb }}
-      </option>
-    </select>
-    
-
-  </div>
-
-  <div class="search-container" >
+      </mat-option>
+      
+    </mat-select>
+  </mat-form-field>
   
-    <input type="text" placeholder="Search specification" class="search-input form-control mt-3"
-    (input)="onInputChange($event)"
-    [value]="displayValue()"/>
 
-    <ul class="search-dropdown" *ngIf="searchString && !isSpecSelected">
-      <li class="dropdown-item" *ngFor="let phoneSpec of specsFound$ | async" (click)="onSelectSpec(phoneSpec)">
+  <mat-form-field appearance="outline" class="field" >
+      <mat-label>Search specification</mat-label>
+    <input matInput [formControl]="searchCtrl" [matAutocomplete]="auto" type="text" />
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option class="dropdown-item" *ngFor="let phoneSpec of specsFound$ | async" (onSelectionChange)="onSelectSpec(phoneSpec)">
         {{ phoneSpec.ramGb }}GB / {{ phoneSpec.storageGb }}GB
-      </li>
-      <li class="dropdown-item create-option" (click)="onCreateSpec()">
-        Create new specification
-      </li>
-    </ul>
-  </div>
+      </mat-option>
+      <mat-option class="dropdown-item create-option" (click)="onCreateSpec()">
+        ➕ Create new  specification
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
 
-  <div class="fields  mt-3">
     <div class="field">
       <label>Storage</label>
       <span class="form-control">{{ spec?.storageGb }} GB</span>
@@ -49,4 +49,3 @@
       <span class="form-control">{{ spec?.cameraMp }} MP</span>
     </div>
   </div>
-</div>

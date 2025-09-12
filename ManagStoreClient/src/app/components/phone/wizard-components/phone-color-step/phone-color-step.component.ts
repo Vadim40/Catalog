@@ -18,7 +18,7 @@ export class PhoneColorStepComponent {
     @Input() variant!: PhoneVariant
     @Output() stepValidity = new EventEmitter<boolean>(); 
     @Output() colorAdded = new EventEmitter<{files: FileList, color: Color}>();
-    @Output() colorSelected = new EventEmitter<PhoneVariant>();
+    @Output() colorSelected = new EventEmitter<{files: ApiImage [], color: Color}>();
   
 
   ngOnInit(){
@@ -32,8 +32,8 @@ export class PhoneColorStepComponent {
 
  
 
-  onSelectColor(variant: PhoneVariant) {
-    this.colorSelected.emit(variant);
+  onSelectColor(event: { files: ApiImage []; color: Color }) {
+    this.colorSelected.emit({files: event.files, color: event.color});
     this.stepValidity.emit(true)
   }
 

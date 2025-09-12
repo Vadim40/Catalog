@@ -50,15 +50,16 @@ export class PhoneService {
     const endpoint  =`${this.baseUrl}/images`
     const formData = new FormData;
     Array.from(uploadImages.images).forEach( image =>{
-      formData.append('uploadImages',image);
+      formData.append('images',image);
     })
+    formData.append('variantId', uploadImages.variantId.toString())
     return this.httpService.post(endpoint, formData)
   }
   getImages(modelId: number, colorId: number) : Observable<ApiImage []>{
      const endpoint  =`${this.baseUrl}/images`
-     const params = new HttpParams;
-     params.set("modelId", modelId)
-     params.set("colorId", colorId);
+     const params = new HttpParams()
+     .set("modelId", modelId.toString())
+     .set("colorId", colorId.toString());
      return this.httpService.get<ApiImage []>(endpoint, params);
   }
   addVariant(createVariant: CreatePhoneVariant) : Observable<number> {

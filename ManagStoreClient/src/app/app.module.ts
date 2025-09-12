@@ -22,6 +22,14 @@ import { PhoneColorSearchComponent } from './components/phone/wizard-components/
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { PhoneColorAddComponent } from './components/phone/wizard-components/phone-color-add/phone-color-add.component';
 import { GlobalErrorInterceptor } from './interceptors/global-error.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatOptionModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -50,6 +58,15 @@ import { GlobalErrorInterceptor } from './interceptors/global-error.interceptor'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatOptionModule
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalErrorInterceptor, multi: true }

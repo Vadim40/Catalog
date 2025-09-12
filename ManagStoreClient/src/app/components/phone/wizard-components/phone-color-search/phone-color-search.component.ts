@@ -14,13 +14,12 @@ import { PhoneService } from 'src/app/services/phone.service';
 })
 export class PhoneColorSearchComponent {
   @Input() variant!: PhoneVariant
-  @Output() colorSelected = new EventEmitter<PhoneVariant>();
+  @Output() colorSelected = new EventEmitter<{ files: ApiImage [], color: Color }>();
   @Output() addColorEvent = new EventEmitter();
 
 
-  isColorSelected: boolean = false;
   colors: Color[] = [];
-  isDropdownOpen = false;
+
   imagesUrl: string[] = []
 
   constructor(
@@ -31,13 +30,9 @@ export class PhoneColorSearchComponent {
   ) {
 
   }
-
-
-
   ngOnInit() {
     console.log(this.variant)
     this.getModelColors();
-    this.checkModelSelected();
     this.setImages()
 
   }
@@ -50,49 +45,41 @@ export class PhoneColorSearchComponent {
       )
     }
     else if (this.variant.images) {
-     this.imagesUrl = this.imageService.retriveImageUrls(this.variant.images)
+      this.imagesUrl = this.imageService.retriveImageUrls(this.variant.images)
     }
   }
   getModelColors() {
-    this.colorService.getColorsByModelId(this.variant.modelId).subscribe({
+    this.colorService.getColorsByModelId(this.variant.model!.id).subscribe({
       next: (colors: Color[]) => {
         this.colors = colors
       }
     })
   }
 
-  checkModelSelected() {
-    if (this.variant.color.id != 0) {
-      this.isColorSelected = true
-    }
-  }
-
+  
   onSelectColor(color: Color) {
-
-    this.phoneService.getImages(this.variant.modelId, color.id).subscribe({
+    console.log(this.variant)
+    console.log(color);
+    this.phoneService.getImages(this.variant.model!.id, color.id).subscribe({
       next: (images: ApiImage[]) => {
         this.variant.apiImages = images;
-
+        this.imagesUrl =[]
         images.forEach(i => {
           this.imagesUrl.push(i.url);
         })
         this.variant.color = color
 
-        this.isColorSelected = true
-        this.isDropdownOpen = false
-        this.colorSelected.emit(this.variant);
+        this.colorSelected.emit({files: this.variant.apiImages, color: this.variant.color});
       }
+      
     })
 
-
-
   }
-
+  compareColors(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 
   onAddColor() {
     this.addColorEvent.emit();
-  }
-  onSelectChange() {
-    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

@@ -12,8 +12,6 @@ import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 })
 export class AddPhoneDetailsComponent {
 
-  @Input() model!: PhoneModel;
-  @Input() spec: PhoneSpec | null = null;
   @Input() variant!: PhoneVariant;
 
 

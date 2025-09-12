@@ -10,7 +10,7 @@ import { PhoneModel } from 'src/app/models/phone/phoneModel';
 })
 
 export class PhoneModelStepComponent {
-  @Input() model!: PhoneModel
+  @Input() model: PhoneModel | null = null;
   @Output() stepValidity = new EventEmitter<boolean>(); 
   @Output() modelSelected = new EventEmitter<PhoneModel>();
 
@@ -27,7 +27,7 @@ export class PhoneModelStepComponent {
   }
 
  
-  onModelSelected(selected: PhoneModel | undefined) {
+  onModelSelected(selected: PhoneModel | null) {
     if(selected)
     {
     this.model = selected;
