@@ -36,27 +36,27 @@ namespace ManagmentStoreService.Controllers
         }
 
         [HttpPost("models")]
-        public async Task<IActionResult> AddModel([FromBody] CreatePhoneModelDto phoneModelDto)
+        public async Task<IActionResult> AddModel([FromBody] PhoneModelCreateDto phoneModelDto)
         {
             await _phoneService.AddModelAsync(phoneModelDto);
             return Ok();
         }
         [HttpPost("specs")]
-        public async Task<IActionResult> AddSpec([FromBody] CreatePhoneSpecDto phoneSpecDto)
+        public async Task<IActionResult> AddSpec([FromBody] PhoneSpecCreateDto phoneSpecDto)
         {
             Console.WriteLine(phoneSpecDto.DisplayIn);
             await _phoneService.AddSpecAsync(phoneSpecDto);
             return Ok();
         }
         [HttpPost]
-        public async Task<IActionResult> AddPhone([FromBody] CreatePhoneDto phoneDto)
+        public async Task<IActionResult> AddPhone([FromBody] PhoneCreateDto phoneDto)
         {
             await _phoneService.AddPhoneAsync(phoneDto);
             return Ok();
         }
 
         [HttpPost("images")]
-        public async Task<IActionResult> AddImages([FromForm] UploadVariantImagesDto uploadImages)
+        public async Task<IActionResult> AddImages([FromForm] VariantImagesUploadDto uploadImages)
         {
             await _phoneService.AddImagesToModelAsync(uploadImages);
             return Ok();
@@ -69,10 +69,17 @@ namespace ManagmentStoreService.Controllers
         }
 
         [HttpPost("variants")]
-        public async Task<IActionResult> AddVariant([FromBody] CreatePhoneVariantDto variantDto)
+        public async Task<IActionResult> AddVariant([FromBody] PhoneVariantCreateDto variantDto)
         {
             var variantId = await _phoneService.AddPhoneVariantAsync(variantDto);
             return Ok(variantId);
+        }
+        [HttpGet("variants")]
+        public async Task<IActionResult> SearchVariants([FromQuery] string name)
+        {
+            Console.Write("test()");
+            var variants = await _phoneService.SearchVariantsAsync(name);
+            return Ok(variants);
         }
     }
 }

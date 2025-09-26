@@ -1,7 +1,7 @@
 ﻿
 namespace ManagmentStoreService.Dto.Phone
 {
-    public class CreatePhoneVariantDto
+    public class PhoneVariantCreateDto
     {
      
 

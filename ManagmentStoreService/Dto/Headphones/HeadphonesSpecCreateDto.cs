@@ -1,6 +1,6 @@
 ﻿namespace ManagmentStoreService.Dto.Headphones
 {
-    public class CreateHeadphonesSpecDto
+    public class HeadphonesSpecCreateDto
     {
        public bool IsWireless { get; init; }
         public string FrequencyRangeHz { get; init; }

@@ -1,16 +1,17 @@
 ﻿using ManagmentStoreService.Dto;
 using ManagmentStoreService.Dto.Phone;
 using ManagmentStoreService.Models;
+using ManagmentStoreService.Models.PhoneEntities;
 
 namespace ManagmentStoreService.Services
 {
     public interface IPhoneService
     {
-        public Task AddModelAsync(CreatePhoneModelDto phoneModelDto);
-        public Task AddSpecAsync(CreatePhoneSpecDto phoneSpecDto);
-        public Task AddPhoneAsync(CreatePhoneDto phonDto);
-        public Task AddImagesToModelAsync(UploadVariantImagesDto images);
-        public Task<int> AddPhoneVariantAsync( CreatePhoneVariantDto variantDto);
+        public Task AddModelAsync(PhoneModelCreateDto phoneModelDto);
+        public Task AddSpecAsync(PhoneSpecCreateDto phoneSpecDto);
+        public Task AddPhoneAsync(PhoneCreateDto phonDto);
+        public Task AddImagesToModelAsync(VariantImagesUploadDto images);
+        public Task<int> AddPhoneVariantAsync( PhoneVariantCreateDto variantDto);
 
         public Task<IEnumerable<PhoneModelDto>> SearchModelsAsync(string name);
         public Task<IEnumerable<PhoneSpecDto>> GetSpecsAsync(int modelId);
@@ -18,6 +19,7 @@ namespace ManagmentStoreService.Services
 
         public Task<IEnumerable<ImageDto>> GetImagesAsync(int modelId, int colorId);
 
+        public Task<IEnumerable<PhoneVariantDto>> SearchVariantsAsync(string name);
      
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ManagmentStoreService.Dto.Phone
 {
-    public class CreatePhoneDto
+    public class PhoneCreateDto
     {
         [Required]
         public string SerialNumber { get; init; }

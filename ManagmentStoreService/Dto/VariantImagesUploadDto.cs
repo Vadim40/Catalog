@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ManagmentStoreService.Dto
 {
-    public class UploadVariantImagesDto
+    public class VariantImagesUploadDto
     {
         
         public int VariantId { get; init; }

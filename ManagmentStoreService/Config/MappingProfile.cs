@@ -19,8 +19,8 @@ namespace ManagmentStoreService.Config
             
             CreateMap<Color, ColorDto>();
             CreateMap<PhoneImage, ImageDto>();
-            CreateMap<CreatePhoneVariantDto, PhoneVariant>();
-            CreateMap<CreatePhoneSpecDto, PhoneSpec>();
+            CreateMap<PhoneVariantCreateDto, PhoneVariant>();
+            CreateMap<PhoneSpecCreateDto, PhoneSpec>();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ManagmentStoreService.Dto.Phone
 {
-    public class CreatePhoneModelDto
+    public class PhoneModelCreateDto
     {
       
         public int ManufacturerId { get; init; }

@@ -1,9 +1,11 @@
 ﻿using ManagmentStoreService.Models.PhoneEntities;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ManagmentStoreService.Models.PhoneEntities
 {
+    [Index(nameof(ModelId), nameof(SpecId), nameof(ColorId), IsUnique =true, Name ="IX_UniquePhoneVariant")]
     public class PhoneVariant
     {
         [Key]

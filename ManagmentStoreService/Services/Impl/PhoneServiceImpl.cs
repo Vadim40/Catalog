@@ -31,7 +31,7 @@ namespace ManagmentStoreService.Services.Impl
             _logger = logger;
             _itemService = itemService;
         }
-        public async Task AddImagesToModelAsync(UploadVariantImagesDto createImagesDto)
+        public async Task AddImagesToModelAsync(VariantImagesUploadDto createImagesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -71,7 +71,7 @@ namespace ManagmentStoreService.Services.Impl
 
         }
 
-        public async Task AddPhoneAsync(CreatePhoneDto phoneDto)
+        public async Task AddPhoneAsync(PhoneCreateDto phoneDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -101,7 +101,7 @@ namespace ManagmentStoreService.Services.Impl
 
 
 
-        public async Task AddModelAsync(CreatePhoneModelDto phoneModelDto)
+        public async Task AddModelAsync(PhoneModelCreateDto phoneModelDto)
         {
             var phoneModel = new PhoneModel
             {
@@ -112,17 +112,18 @@ namespace ManagmentStoreService.Services.Impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddSpecAsync(CreatePhoneSpecDto phoneSpecDto)
+        public async Task AddSpecAsync(PhoneSpecCreateDto phoneSpecDto)
         {
             var phoneSpec = _mapper.Map<PhoneSpec>(phoneSpecDto);
 
-            try { 
-            _context.PhoneSpecs.Add(phoneSpec);
-            await _context.SaveChangesAsync();
-            }
-            catch(UniqueConstraintException ex)
+            try
             {
-                if( true /*ex.ConstraintName == "IX_UniquePhoneSpec"*/) //todo: replace
+                _context.PhoneSpecs.Add(phoneSpec);
+                await _context.SaveChangesAsync();
+            }
+            catch (UniqueConstraintException ex)
+            {
+                if (true /*ex.ConstraintName == "IX_UniquePhoneSpec"*/) //todo: replace
                 {
                     throw new InvalidOperationException("This spec already exist", ex);
                 }
@@ -131,7 +132,7 @@ namespace ManagmentStoreService.Services.Impl
 
         public async Task<IEnumerable<PhoneModelDto>> SearchModelsAsync(string name)
         {
-           
+
             var phoneModels = await _context.PhoneModels
                              .Include(p => p.Manufacturer)
                              .ToListAsync();
@@ -184,12 +185,60 @@ namespace ManagmentStoreService.Services.Impl
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task<int> AddPhoneVariantAsync(CreatePhoneVariantDto variantDto)
+        public async Task<int> AddPhoneVariantAsync(PhoneVariantCreateDto variantDto)
         {
-           var variant = _mapper.Map<PhoneVariant>(variantDto);
-            _context.PhoneVariants.Add(variant);
-            await _context.SaveChangesAsync();
-            return variant.Id;
+            try
+            {
+                var variant = _mapper.Map<PhoneVariant>(variantDto);
+                _context.PhoneVariants.Add(variant);
+                await _context.SaveChangesAsync();
+                return variant.Id;
+            }
+            catch (UniqueConstraintException ex)
+            {
+                if (true /*ex.ConstraintName == "IX_UniquePhoneSpec"*/) //todo: replace
+                {
+                    throw new InvalidOperationException("This variant already exist", ex);
+                }
+            }
+        }
+
+        public async Task<IEnumerable<PhoneVariantDto>> SearchVariantsAsync(string name)
+        {
+            // todo: replace this temporary solution
+
+            var variants = await _context.PhoneVariants
+                            .Join(_context.PhoneModels,
+                                  ph => ph.ModelId,
+                                  pm => pm.Id,
+                                  (ph, pm) => new { ph, pm })
+                            .Join(_context.Manufacturers,
+                                x => x.pm.ManufacturerId,
+                                m => m.Id,
+                                (x, m) => new { x.ph, x.pm, m })
+                            .Join(_context.Colors,
+                                x => x.ph.ColorId,
+                                c => c.Id,
+                                (x, c) => new PhoneVariantDto
+                                {
+                                    Id = x.ph.Id,
+                                    ModelId = x.pm.Id,
+                                    ColorId = c.Id,
+                                    Cost = x.ph.Cost,
+                                    Name = x.m.Name + " " + x.pm.Name + " " + c.Name,
+
+                                })
+                            .ToListAsync();
+
+            var filteredVariants = variants.Where(v => Fuzz.PartialRatio(name.ToLower(), v.Name) > 70);
+            foreach (var item in filteredVariants)
+            {
+                item.Specs = (await GetSpecsAsync(item.ModelId)).ToList();
+                item.Images = (await GetImagesAsync(item.ModelId, item.ColorId)).ToList();
+
+            }
+
+            return filteredVariants;
         }
     }
 }

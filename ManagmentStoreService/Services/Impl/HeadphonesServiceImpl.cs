@@ -33,7 +33,7 @@ namespace ManagmentStoreService.Services.Impl
             _logger = logger;
             _itemService = itemService;
         }
-        public async Task AddImagesToHeadphonesModelAsync(UploadVariantImagesDto createImagesDto)
+        public async Task AddImagesToHeadphonesModelAsync(VariantImagesUploadDto createImagesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -71,7 +71,7 @@ namespace ManagmentStoreService.Services.Impl
 
         }
 
-        public async Task AddNewHeadphonesAsync(CreateHeadphonesDto headphonesDto)
+        public async Task AddNewHeadphonesAsync(HeadphonesCreateDto headphonesDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -95,7 +95,7 @@ namespace ManagmentStoreService.Services.Impl
             }
 
         }
-        public async Task AddNewHeadphonesModelAsync(CreateHeadponesModelDto headphonesModelDto)
+        public async Task AddNewHeadphonesModelAsync(HeadponesModelCreateDto headphonesModelDto)
         {
             var phoneModel = new HeadphonesModel
             {
@@ -107,7 +107,7 @@ namespace ManagmentStoreService.Services.Impl
         }
 
 
-        public async Task AddNewHeadphonesSpecAsync(CreateHeadphonesSpecDto headphonesSpesDto)
+        public async Task AddNewHeadphonesSpecAsync(HeadphonesSpecCreateDto headphonesSpesDto)
         {
             var phoneSpec = new HeadphonesSpec
             {
