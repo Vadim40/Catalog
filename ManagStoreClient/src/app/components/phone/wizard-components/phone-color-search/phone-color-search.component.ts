@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { COLORS, Color } from 'src/app/models/color';
 import { ApiImage, IMAGES } from 'src/app/models/image';
-import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
-import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { PhoneModelCreate } from 'src/app/models/phone/phoneModelCreate';
+import { PhoneVariantForm } from 'src/app/models/phone/phoneVariantInput';
 import { ColorService } from 'src/app/services/color.service';
 import { ImageService } from 'src/app/services/image.service';
 import { PhoneService } from 'src/app/services/phone.service';
@@ -13,7 +13,7 @@ import { PhoneService } from 'src/app/services/phone.service';
   styleUrls: ['./phone-color-search.component.css']
 })
 export class PhoneColorSearchComponent {
-  @Input() variant!: PhoneVariant
+  @Input() variant!: PhoneVariantForm
   @Output() colorSelected = new EventEmitter<{ files: ApiImage [], color: Color }>();
   @Output() addColorEvent = new EventEmitter();
 

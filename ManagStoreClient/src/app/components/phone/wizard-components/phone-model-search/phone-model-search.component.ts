@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject, Observable, startWith, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap, BehaviorSubject } from 'rxjs';
 import { IIdName } from 'src/app/models/IIdName';
-import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
+import { PhoneModelCreate } from 'src/app/models/phone/phoneModelCreate';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { PhoneService } from 'src/app/services/phone.service';
 
@@ -19,7 +19,7 @@ export class PhoneModelSearchComponent {
 
 
   phoneModels: PhoneModel[] = []
-  createPhoneModel?: CreatePhoneModel;
+  createPhoneModel?: PhoneModelCreate;
 
 
 

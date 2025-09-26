@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IIdName } from 'src/app/models/IIdName';
-import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
+import { PhoneModelCreate } from 'src/app/models/phone/phoneModelCreate';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { ManufacturersService } from 'src/app/services/manufacturers.service';
 import { PhoneService } from 'src/app/services/phone.service';
@@ -11,14 +11,14 @@ import { PhoneService } from 'src/app/services/phone.service';
   templateUrl: './phone-model-form.component.html',
   styleUrls: ['./phone-model-form.component.css']
 })
-export class PhoneModelFormComponent {
+export class PhoneModelFormComponent implements OnInit {
   @Output() modelCreated = new EventEmitter<PhoneModel>();
   @Output() modelCreatingCanceled = new EventEmitter();
 
   form!: FormGroup
   manufacturers: IIdName[] = [];
 
-  createPhoneModel: CreatePhoneModel = {
+  createPhoneModel: PhoneModelCreate = {
     manufacturerId: 0,
     name: ''
   };
@@ -64,7 +64,7 @@ export class PhoneModelFormComponent {
   }
   
   private prepareModelFromForm(): void {
-    this.createPhoneModel = this.form.value as CreatePhoneModel;
+    this.createPhoneModel = this.form.value as PhoneModelCreate;
     const selectedManufacturer = this.manufacturers.find(
       m => m.id === this.createPhoneModel.manufacturerId
     );

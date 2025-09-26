@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormRecord, Validators } from '@angular/forms';
 import Decimal from 'decimal.js';
-import { PhoneModel } from 'src/app/models/phone/phoneModel';
-import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
-import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { PhoneVariantForm } from 'src/app/models/phone/phoneVariantInput';
 
 @Component({
   selector: 'app-add-phone-details',
@@ -12,7 +10,7 @@ import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
 })
 export class AddPhoneDetailsComponent {
 
-  @Input() variant!: PhoneVariant;
+  @Input() variant!: PhoneVariantForm;
 
 
   form!: FormGroup

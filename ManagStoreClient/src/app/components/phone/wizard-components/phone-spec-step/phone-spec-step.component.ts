@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
+import { PhoneSpecCreate } from 'src/app/models/phone/phoneSpecCreate.';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { PhoneSpec, phoneSpecs } from 'src/app/models/phone/phoneSpec';
 

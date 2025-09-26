@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Decimal from 'decimal.js';
-import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
+import { PhoneSpecCreate } from 'src/app/models/phone/phoneSpecCreate.';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
 import { PhoneService } from 'src/app/services/phone.service';
 
@@ -22,7 +22,7 @@ export class PhoneSpecFormComponent {
     private phoneService: PhoneService,
 
   ) { }
-  createSpec: CreatePhoneSpec ={
+  createSpec: PhoneSpecCreate ={
     storageGb : 0,
     ramGb: 0,
     cameraMp: 0,

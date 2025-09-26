@@ -1,6 +1,6 @@
 import Decimal from "decimal.js"
 
-export interface CreatePhoneVariant {
+export interface PhoneVariantCreate {
     modelId : number
     specId: number
     colorId: number

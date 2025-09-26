@@ -311,3 +311,29 @@ h5,
 h6 {
   font-weight: normal;
 }
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.category-container {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;   
+  justify-content: center; 
+  text-align: center;
+  padding: 10px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+  
+}
+.category-container:hover {
+  border: 1px solid 
+  var(--mdc-outlined-text-field-caret-color)
+}
+.category-image img {
+  height: 300px;
+  width: 300px;
+}

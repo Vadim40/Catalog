@@ -1,95 +1,47 @@
-<div class="details">
-    <div class="model-details">
-        <span>Model details</span>
-        <div class="model-search-container">
 
-            <input type="text" placeholder="Search variant" class="search-input" [(ngModel)]="searchString"
-                (input)="onSearchChange($event)" />
-
-            <ul class="search-dropdown" *ngIf="searchString && !selectedModel">
-                <li class="dropdown-item" *ngFor="let phoneModel of phoneModels" (click)="selectModel(phoneModel)">
-                    {{ phoneModel.manufacturerName}} {{phoneModel.name}}
-                </li>
-                <li class="dropdown-item create-option" (click)="navigateToAddPhoneVariant()">
-                    Создать новую модель
-                </li>
-            </ul>
-        </div>
-
-        <div class="fields">
-            <div class="field">
-                <label>Model name</label>
-                <span class="param">{{this.selectedModel?.manufacturerName}} {{this.selectedModel?.name}}</span>
-            </div>
-            <div class="field">
-                <div class="custom-select"
-                [class.disabled]="!selectedModel"
-                [attr.aria-disabled]="!selectedModel" >
-           
-
-                    <div class="selected" (click)="toggleDropdown()">
-                        <span class="color-square" [style.background]="selectedColor?.hex"></span>
-                        {{ selectedColor?.name || 'Select color' }}
-                    </div>
-                    <ul *ngIf="dropdownOpen" class="options">
-                        <li *ngFor="let color of phoneColors" (click)="selectColor(color)" >
-                            <span class="color-square" [style.background]="color.hex"></span>
-                            {{ color.name }}
-                        </li>
-                        <li class="dropdown-item create-option">
-                            Добавить цвет
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-        <div class="item-images">
-            <div class="main-image">
-                <img src="https://picsum.photos/id/237/200/300" />
-            </div>
-            <div class="thumbnail-images">
-                <img src="https://picsum.photos/id/237/200/300" />
-                <img src="https://picsum.photos/id/237/200/300" />
-                <img src="https://picsum.photos/id/237/200/300" />
-                <img src="https://picsum.photos/id/237/200/300" />
-            </div>
+<div style="padding: 20px;">
+  <h3>Model details</h3>
+  <mat-form-field appearance="outline" class="field">
+    <input type="text" matInput [matAutocomplete]="auto" [formControl]="searchCtrl">
+    <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let variant of variants$ | async" (onSelectionChange)="onSelectVariant(variant)">
+        {{variant.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <div class="details">
 
 
-        </div>
+    <div class="item-images" style="flex: 2;" *ngIf="selectedVariant">
+      <div class="main-image">
+        <img [src]="selectedVariant.images[0].url" />
+      </div>
+
+      <div class="thumbnail-images">
+        <img *ngFor="let img of selectedVariant.images.slice(1, selectedVariant.images.length)" [src]="img.url" />
+      </div>
     </div>
-    <div class="fields">
-        <span> Specification details </span>
-        <select [(ngModel)]="selectedSpec" [disabled]="!selectedColor">
-            <option [ngValue]="undefined" disabled selected> Select specification</option>
-            <option *ngFor="let phoneSpec of phoneSpecs" [ngValue]="phoneSpec">
-                {{phoneSpec.storageGb}}/{{phoneSpec.ramGb}}</option>
-                <option (click)="navigateToAddPhoneVariant()" >Добавить спецификацию</option>
-        </select>
-        <button> Create new specification </button>
-        <div class="field">
-            <label>Storage</label>
-            <span class="param">{{selectedSpec?.storageGb}} GB</span>
-        </div>
 
-        <div class="field">
-            <label>RAM</label>
-            <span class="param">{{selectedSpec?.ramGb}} GB</span>
-        </div>
+    <div class="specs">
+      <div class="param">
+        <h4>Ram GB </h4>
+        <div *ngFor="let spec of selectedVariant?.specs"> {{spec.ramGb}} </div>
+      </div>
+      <div class="param">
 
-        <div class="field">
-            <label>Display</label>
-            <span class="param">{{selectedSpec?.displayIn}} In</span>
-        </div>
+      </div>
+      <div class="param">
 
-        <div class="field">
-            <label>Camera</label>
-            <span class="param">{{selectedSpec?.cameraMp}} MP</span>
-        </div>
+      </div>
+      <div class="param">
+
+      </div>
 
     </div>
-</div>
-<div style="margin-top:  20px;">
+  </div>
+  <div style="margin-top:  20px;">
     <input type="text" placeholder="Serial number">
     <button> Add item</button>
+  </div>
 </div>

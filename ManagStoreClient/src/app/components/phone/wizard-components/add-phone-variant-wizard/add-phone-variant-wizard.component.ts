@@ -3,12 +3,12 @@ import Decimal from 'decimal.js';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { Color } from 'src/app/models/color';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
-import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { PhoneVariantForm } from 'src/app/models/phone/phoneVariantInput';
 import { WizardStep } from 'src/app/models/wizardStep';
 import { AddPhoneDetailsComponent } from '../add-phone-details/add-phone-details.component';
 import { PhoneService } from 'src/app/services/phone.service';
-import { CreatePhoneVariant } from 'src/app/models/phone/createPhonVariant';
-import { UploadImages } from 'src/app/models/uploadImages';
+import { PhoneVariantCreate } from 'src/app/models/phone/phoneVariantCreate';
+import { ImagesUpload } from 'src/app/models/imagesUpload';
 import { ApiImage } from 'src/app/models/image';
 
 @Component({
@@ -31,7 +31,7 @@ export class AddPhoneVariantWizardComponent {
 
   currentStepIndex = 0;
 
-  variant: PhoneVariant ={
+  variant: PhoneVariantForm ={
     id: 0,
     color: null,
     model: null,
@@ -75,7 +75,7 @@ export class AddPhoneVariantWizardComponent {
   
   
     this.variant.cost = step4Data.variantCost
-    let createVariant : CreatePhoneVariant = {
+    let createVariant : PhoneVariantCreate = {
       modelId: this.variant.model!.id,
       specId: this.variant.spec!.id,
       colorId: this.variant.color!.id,
@@ -86,7 +86,7 @@ export class AddPhoneVariantWizardComponent {
     this.phoneService.addVariant(createVariant).subscribe({
       next: (variantId: number) =>{
         if(this.variant.images){
-        const uploadImages : UploadImages ={
+        const uploadImages : ImagesUpload ={
           images: this.variant.images,
           variantId: variantId
         }

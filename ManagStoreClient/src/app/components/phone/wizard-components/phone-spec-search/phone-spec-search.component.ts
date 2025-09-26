@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject, Observable, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap, BehaviorSubject } from 'rxjs';
-import { CreatePhoneSpec } from 'src/app/models/phone/createPhoneSpec.';
-import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { PhoneSpec, phoneSpecs } from 'src/app/models/phone/phoneSpec';
 import { PhoneService } from 'src/app/services/phone.service';
 

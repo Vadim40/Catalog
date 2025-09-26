@@ -1,17 +1,16 @@
-<div class="header">
-    <span> Add new item</span>
-</div>
-<div class="category-container">
-    <select [(ngModel)]="selectedCategory">
-        <option value=0 disabled selected>Select Category</option>
-        <option *ngFor="let category of categories" [value]="category.id">
-          {{ category.name }}
-        </option>
-      </select>
-      
+<h3 class="ms-3"> Add new item</h3>
 
-
-</div>
-<div class="content">
-    <app-add-phone *ngIf="selectedCategory == category.Phone"></app-add-phone>
-</div>
+    <div class="categories">
+      <div class="category-container" routerLink="/add-phone">
+        <div class="category-image">
+          <img src="assets\phone.webp">
+        </div>
+        <span> Phone</span>
+      </div>
+      <div class="category-container">
+        <div class="category-image">
+          <img src="assets\headphones.webp">
+        </div>
+        <span> Headphones</span>
+      </div>
+    </div>

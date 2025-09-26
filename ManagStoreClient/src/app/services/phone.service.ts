@@ -4,12 +4,13 @@ import { environment } from '../environments/environment';
 import { PhoneModel } from '../models/phone/phoneModel';
 import { Observable, retry } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { CreatePhoneModel } from '../models/phone/createPhoneModel';
+import { PhoneModelCreate } from '../models/phone/phoneModelCreate';
 
 import { PhoneSpec } from '../models/phone/phoneSpec';
-import { UploadImages } from '../models/uploadImages';
+import { ImagesUpload } from '../models/imagesUpload';
 import { ApiImage } from '../models/image';
-import { CreatePhoneVariant } from '../models/phone/createPhonVariant';
+import { PhoneVariantCreate } from '../models/phone/phoneVariantCreate';
+import { PhoneVariant } from '../models/phone/phoneVariant';
 
 @Injectable({
   providedIn: 'root'
@@ -22,48 +23,53 @@ export class PhoneService {
   ) { }
 
 
-  getModels(name: string) : Observable<PhoneModel []>{
+  getModels(name: string): Observable<PhoneModel[]> {
     const endpoint = `${this.baseUrl}/models`
     const params = new HttpParams().set('name', name);
-     return this.httpService.get<PhoneModel[]>(endpoint, params)
+    return this.httpService.get<PhoneModel[]>(endpoint, params)
   }
-  createModel(model: CreatePhoneModel) : Observable<number>{
+  createModel(model: PhoneModelCreate): Observable<number> {
     const endpoint = `${this.baseUrl}/models`
-     return this.httpService.post<number>(endpoint, model)
+    return this.httpService.post<number>(endpoint, model)
   }
-  
-  getSpecs(search: string) : Observable<PhoneSpec []> {
-    const endpoint =`${this.baseUrl}/specs`
+
+  getSpecs(search: string): Observable<PhoneSpec[]> {
+    const endpoint = `${this.baseUrl}/specs`
     const params = new HttpParams().set('search', search);
-    return this.httpService.get<PhoneSpec []>(endpoint,params);
+    return this.httpService.get<PhoneSpec[]>(endpoint, params);
   }
-  getSpecsByModelId(modelId: number) : Observable<PhoneSpec []> {
-    const endpoint =`${this.baseUrl}/${modelId}/specs`
-    return this.httpService.get<PhoneSpec []>(endpoint);
+  getSpecsByModelId(modelId: number): Observable<PhoneSpec[]> {
+    const endpoint = `${this.baseUrl}/${modelId}/specs`
+    return this.httpService.get<PhoneSpec[]>(endpoint);
   }
-  
-  addSpec(specCreate: CreatePhoneModel) : Observable<number> {
-      const endpoint =`${this.baseUrl}/specs`
-      return this.httpService.post<number>(endpoint, specCreate);
+
+  addSpec(specCreate: PhoneModelCreate): Observable<number> {
+    const endpoint = `${this.baseUrl}/specs`
+    return this.httpService.post<number>(endpoint, specCreate);
   }
-  addImages(uploadImages: UploadImages) : Observable<void>{
-    const endpoint  =`${this.baseUrl}/images`
+  addImages(uploadImages: ImagesUpload): Observable<void> {
+    const endpoint = `${this.baseUrl}/images`
     const formData = new FormData;
-    Array.from(uploadImages.images).forEach( image =>{
-      formData.append('images',image);
+    Array.from(uploadImages.images).forEach(image => {
+      formData.append('images', image);
     })
     formData.append('variantId', uploadImages.variantId.toString())
     return this.httpService.post(endpoint, formData)
   }
-  getImages(modelId: number, colorId: number) : Observable<ApiImage []>{
-     const endpoint  =`${this.baseUrl}/images`
-     const params = new HttpParams()
-     .set("modelId", modelId.toString())
-     .set("colorId", colorId.toString());
-     return this.httpService.get<ApiImage []>(endpoint, params);
+  getImages(modelId: number, colorId: number): Observable<ApiImage[]> {
+    const endpoint = `${this.baseUrl}/images`
+    const params = new HttpParams()
+      .set("modelId", modelId.toString())
+      .set("colorId", colorId.toString());
+    return this.httpService.get<ApiImage[]>(endpoint, params);
   }
-  addVariant(createVariant: CreatePhoneVariant) : Observable<number> {
-      const endpoint  =`${this.baseUrl}/variants`
-      return this.httpService.post<number>(endpoint, createVariant);
+  addVariant(createVariant: PhoneVariantCreate): Observable<number> {
+    const endpoint = `${this.baseUrl}/variants`
+    return this.httpService.post<number>(endpoint, createVariant);
+  }
+  searchVariant(name: string): Observable<PhoneVariant[]> {
+    const endpoint = `${this.baseUrl}/variants`
+    const params = new HttpParams().set("name", name);
+    return this.httpService.get<PhoneVariant[]>(endpoint, params)
   }
 }

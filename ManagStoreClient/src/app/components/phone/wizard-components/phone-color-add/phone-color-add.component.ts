@@ -3,9 +3,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged, filter, switchMap, catchError, of, tap } from 'rxjs';
 import { COLORS, Color } from 'src/app/models/color';
 import { IMAGES } from 'src/app/models/image';
-import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
+import { PhoneModelCreate } from 'src/app/models/phone/phoneModelCreate';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
-import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { PhoneVariantForm } from 'src/app/models/phone/phoneVariantInput';
 import { ColorService } from 'src/app/services/color.service';
 import { ImageService } from 'src/app/services/image.service';
 

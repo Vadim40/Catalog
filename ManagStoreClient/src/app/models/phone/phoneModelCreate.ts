@@ -1,4 +1,4 @@
-export interface CreatePhoneModel {
+export interface PhoneModelCreate {
     manufacturerId: number;
     name: string;
 }

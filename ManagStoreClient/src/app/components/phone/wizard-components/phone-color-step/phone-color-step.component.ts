@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Color, COLORS } from 'src/app/models/color';
 import { IIdName } from 'src/app/models/IIdName';
 import { ApiImage, IMAGES } from 'src/app/models/image';
-import { CreatePhoneModel } from 'src/app/models/phone/createPhoneModel';
+import { PhoneModelCreate } from 'src/app/models/phone/phoneModelCreate';
 import { PhoneModel } from 'src/app/models/phone/phoneModel';
 import { PhoneSpec } from 'src/app/models/phone/phoneSpec';
-import { PhoneVariant } from 'src/app/models/phone/phoneVariant';
+import { PhoneVariantForm } from 'src/app/models/phone/phoneVariantInput';
 import { WizardStep } from 'src/app/models/wizardStep';
 
 @Component({
@@ -15,7 +15,7 @@ import { WizardStep } from 'src/app/models/wizardStep';
 })
 export class PhoneColorStepComponent {
 
-    @Input() variant!: PhoneVariant
+    @Input() variant!: PhoneVariantForm
     @Output() stepValidity = new EventEmitter<boolean>(); 
     @Output() colorAdded = new EventEmitter<{files: FileList, color: Color}>();
     @Output() colorSelected = new EventEmitter<{files: ApiImage [], color: Color}>();

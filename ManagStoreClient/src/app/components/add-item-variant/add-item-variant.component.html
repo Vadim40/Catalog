@@ -1,15 +1,16 @@
-<div class="header">
-    <span> Add new variant</span>
-</div>
-<div class="category-container">
-<select [(ngModel)]="selectedCategory">
-    <option value="" disabled selected> Select Category</option>
-    <option value="phone"> Phone</option>
-    <option value="headphones"> Headphones</option>
-</select>
+<h3 class="ms-3"> Add new variant</h3>
 
-
-</div>
-<div class="content"> 
-    <app-add-phone-variant-wizard *ngIf="selectedCategory=='phone'"></app-add-phone-variant-wizard>
+<div class="categories">
+    <div class="category-container" routerLink="/add-phone-variant">
+        <div class="category-image">
+            <img src="assets\phone.webp">
+        </div>
+        <span> Phone</span>
+    </div>
+    <div class="category-container">
+        <div class="category-image">
+            <img src="assets\headphones.webp">
+        </div>
+        <span> Headphones</span>
+    </div>
 </div>

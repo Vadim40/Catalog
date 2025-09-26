@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 
-export interface CreatePhoneSpec {
+export interface PhoneSpecCreate {
     storageGb: number;
     ramGb: number;
     displayIn: Decimal

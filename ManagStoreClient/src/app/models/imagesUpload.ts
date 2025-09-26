@@ -1,4 +1,4 @@
-export interface UploadImages{
+export interface ImagesUpload{
     variantId: number,
     images: FileList
 }
